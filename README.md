@@ -1,1 +1,1 @@
-# haks.github.io
+# Hesaplayıcı ve Açık Kaynak Sorgulayıcısı
