@@ -661,10 +661,10 @@ footer {
     background: rgba(0, 123, 255, 0.8);
 }
 
-/* Mobile devices (portrait) */
-@media screen and (max-width: 768px) {
+/* Mobile devices and tablets (1024px and below) */
+@media screen and (max-width: 1024px) {
     .globe-icon {
-        display: none; /* Hide globe on mobile */
+        display: none; /* Hide globe on mobile and tablets */
     }
     
     .header-content {
@@ -678,12 +678,12 @@ footer {
     
     .title-section {
         margin-left: 0;
-        text-align: center; /* Center align for mobile */
+        text-align: center; /* Center align for mobile and tablets */
     }
     
     .subtitle {
         font-size: clamp(0.7rem, 2vw, 0.9rem);
-        text-align: center; /* Center align subtitle for mobile */
+        text-align: center; /* Center align subtitle for mobile and tablets */
     }
     
     .mobile-menu-btn {
@@ -800,6 +800,437 @@ footer {
     
     .subtitle {
         font-size: clamp(0.7rem, 2vw, 0.9rem);
+    }
+}
+
+/* iPhone SE and similar small devices (375px and below) */
+@media screen and (max-width: 375px) {
+    header {
+        padding: 3rem 0; /* Increased padding for better spacing */
+    }
+    
+    .globe-icon {
+        display: none; /* Hide globe on small phones */
+    }
+    
+    .mobile-menu-btn {
+        display: flex;
+        left: 15px;
+        top: 20px; /* Move to top instead of center */
+        transform: none;
+        z-index: 1003;
+    }
+    
+    .header-content {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding-left: 0;
+        padding-top: 40px; /* Space for mobile menu button */
+    }
+    
+    .title-section {
+        margin-left: 0;
+        text-align: center;
+        margin-bottom: 15px; /* Space between title and time */
+        order: 1;
+    }
+    
+    .header-content h1 {
+        font-size: clamp(1.8rem, 6vw, 2.2rem); /* Slightly larger */
+        margin-bottom: 5px;
+        line-height: 1.1;
+    }
+    
+    .subtitle {
+        font-size: clamp(0.75rem, 3vw, 0.95rem);
+        text-align: center;
+        line-height: 1.3;
+    }
+    
+    .time-info {
+        position: static; /* Remove absolute positioning */
+        transform: none;
+        right: auto;
+        order: 2;
+        text-align: center;
+        width: 100%;
+    }
+    
+    .time-display {
+        font-size: 1.2rem;
+        margin-bottom: 5px;
+    }
+    
+    .date-day-info {
+        font-size: 0.85rem;
+        margin-bottom: 3px;
+    }
+    
+    .date-info {
+        font-size: 0.75rem;
+    }
+    
+    .left-container {
+        width: 85%; /* Slightly wider on small screens */
+        margin-top: calc(3rem + 80px); /* Adjust for larger header */
+        height: calc(100vh - 6rem - 140px);
+    }
+    
+    .page-container {
+        padding: 0 0.5rem; /* Reduced horizontal padding */
+    }
+    
+    header, footer {
+        padding: 1.5rem 10px;
+    }
+    
+    .container {
+        padding: 10px;
+    }
+    
+    /* Adjust form elements for small screens */
+    .form-group {
+        margin-bottom: 12px;
+    }
+    
+    .form-select, .form-input {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+    
+    .hesapla-btn, .temizle-btn {
+        padding: 10px 18px;
+        font-size: 0.9rem;
+    }
+    
+    .form-actions {
+        gap: 8px;
+    }
+    
+    /* Adjust result display */
+    .tapu-hesaplama-sonuc {
+        padding: 15px;
+    }
+    
+    .sonuc-satir {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 6px 0;
+    }
+    
+    .sonuc-satir .label {
+        font-size: 0.9rem;
+        margin-bottom: 2px;
+    }
+    
+    .sonuc-satir .value {
+        font-size: 1rem;
+        align-self: flex-end;
+    }
+    
+    .tapu-hesaplama-sonuc h4 {
+        font-size: 1.1rem;
+        margin-bottom: 12px;
+        padding-bottom: 8px;
+    }
+}
+
+/* iPhone 12, 13, 14, 15 and similar devices (390px - 430px) */
+@media screen and (min-width: 376px) and (max-width: 430px) {
+    header {
+        padding: 2.5rem 0;
+    }
+    
+    .globe-icon {
+        display: none;
+    }
+    
+    .mobile-menu-btn {
+        display: flex;
+        left: 15px;
+        top: 25px;
+        transform: none;
+        z-index: 1003;
+    }
+    
+    .header-content {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding-left: 0;
+        padding-top: 35px;
+    }
+    
+    .title-section {
+        margin-left: 0;
+        text-align: center;
+        margin-bottom: 12px;
+        order: 1;
+    }
+    
+    .header-content h1 {
+        font-size: clamp(1.9rem, 5.5vw, 2.4rem);
+        margin-bottom: 4px;
+        line-height: 1.1;
+    }
+    
+    .subtitle {
+        font-size: clamp(0.8rem, 2.8vw, 1rem);
+        text-align: center;
+        line-height: 1.3;
+    }
+    
+    .time-info {
+        position: static;
+        transform: none;
+        right: auto;
+        order: 2;
+        text-align: center;
+        width: 100%;
+    }
+    
+    .time-display {
+        font-size: 1.3rem;
+        margin-bottom: 4px;
+    }
+    
+    .date-day-info {
+        font-size: 0.9rem;
+        margin-bottom: 3px;
+    }
+    
+    .date-info {
+        font-size: 0.8rem;
+    }
+    
+    .left-container {
+        width: 82%;
+        margin-top: calc(2.5rem + 70px);
+        height: calc(100vh - 5rem - 130px);
+    }
+}
+
+/* Small mobile devices (520px and below) */
+@media screen and (max-width: 520px) {
+    header {
+        padding: 1.8rem 0; /* Reduced padding */
+        position: relative;
+    }
+    
+    .globe-icon {
+        display: none;
+    }
+    
+    .mobile-menu-btn {
+        display: flex;
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 1003;
+        width: 30px;
+        height: 30px;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .mobile-menu-btn span {
+        width: 20px;
+        height: 2px;
+        margin: 2px 0;
+    }
+    
+    .header-content {
+        display: flex;
+        flex-direction: row; /* Keep horizontal layout */
+        align-items: center;
+        justify-content: center;
+        padding: 0 60px; /* Space for nav button and time */
+        position: relative;
+        width: 100%;
+    }
+    
+    .title-section {
+        flex: 1;
+        text-align: center;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .header-content h1 {
+        font-size: clamp(1.3rem, 4.5vw, 1.8rem);
+        margin-bottom: 0; /* Remove margin since subtitle is hidden */
+        line-height: 1.1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .subtitle {
+        display: none; /* Hide subtitle on small screens */
+    }
+    
+    .time-info {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        text-align: right;
+        width: auto;
+        min-width: 45px;
+    }
+    
+    .time-display {
+        font-size: 0.9rem;
+        margin-bottom: 2px;
+        line-height: 1;
+    }
+    
+    .date-day-info {
+        font-size: 0.65rem;
+        margin-bottom: 1px;
+        line-height: 1;
+    }
+    
+    .date-info {
+        font-size: 0.6rem;
+        line-height: 1;
+    }
+    
+    .left-container {
+        width: 85%;
+        margin-top: calc(1.8rem + 50px);
+        height: calc(100vh - 3.6rem - 100px);
+    }
+    
+    .page-container {
+        padding: 0 0.3rem;
+    }
+    
+    .container {
+        padding: 8px;
+    }
+    
+    /* Optimize form elements */
+    .form-group {
+        margin-bottom: 10px;
+    }
+    
+    .form-group label {
+        font-size: 0.9rem;
+        margin-bottom: 3px;
+    }
+    
+    .form-select, .form-input {
+        padding: 8px;
+        font-size: 0.85rem;
+        border-width: 1px;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .hesapla-btn, .temizle-btn {
+        width: 100%;
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+    
+    /* Optimize result display */
+    .tapu-hesaplama-sonuc {
+        padding: 12px;
+        margin: 10px 0;
+    }
+    
+    .tapu-hesaplama-sonuc h4 {
+        font-size: 1rem;
+        margin-bottom: 10px;
+        padding-bottom: 6px;
+    }
+    
+    .sonuc-satir {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 4px 0;
+        gap: 2px;
+    }
+    
+    .sonuc-satir .label {
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+    
+    .sonuc-satir .value {
+        font-size: 0.9rem;
+        align-self: flex-end;
+        font-weight: bold;
+    }
+    
+    .sonuc-satir.toplam {
+        background: rgba(0, 123, 255, 0.15);
+        padding: 8px;
+        border-radius: 4px;
+        margin-top: 8px;
+    }
+    
+    .sonuc-satir.toplam .label {
+        font-size: 0.85rem;
+    }
+    
+    .sonuc-satir.toplam .value {
+        font-size: 1rem;
+    }
+    
+    .uyari {
+        margin-top: 10px;
+    }
+    
+    .uyari p {
+        font-size: 0.75rem;
+        line-height: 1.3;
+        color: #555;
+    }
+}
+
+/* Very small devices (320px and below) */
+@media screen and (max-width: 320px) {
+    .header-content {
+        padding: 0 50px;
+    }
+    
+    .header-content h1 {
+        font-size: clamp(1.1rem, 4vw, 1.5rem);
+    }
+    
+    .subtitle {
+        font-size: clamp(0.6rem, 2vw, 0.75rem);
+    }
+    
+    .time-display {
+        font-size: 0.8rem;
+    }
+    
+    .date-day-info {
+        font-size: 0.6rem;
+    }
+    
+    .date-info {
+        font-size: 0.55rem;
+    }
+    
+    .mobile-menu-btn {
+        left: 10px;
+    }
+    
+    .time-info {
+        right: 10px;
+        min-width: 40px;
     }
 }
 
