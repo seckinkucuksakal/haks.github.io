@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>HAKS - Hesaplayıcı ve Açık Kaynak Sorgulayıcı</title>
+    <link rel="stylesheet" href="styles.css">
+    <meta name="description" content="HAKS - Hesaplayıcı ve Açık Kaynak Sorgulayıcısı">
+    <meta name="theme-color" content="#ffffff">
+</head>
+<body>
+    <div class="page-container">
+        <!-- Forward arrow overlay -->
+        <div class="forward-overlay" id="forwardOverlay">
+            <button id="forwardBtn" class="forward-btn">→</button>
+        </div>
+        
+        <header>
+            <div class="header-content">
+                <div class="globe-icon">
+                    <canvas id="globeCanvas" class="globe-canvas"></canvas>
+                </div>
+                <button id="mobileMenuBtn" class="mobile-menu-btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="title-section">
+                    <h1>HAKS</h1>
+                    <p class="subtitle">Hesaplayıcı ve Açık Kaynak Sorgulayıcısı</p>
+                </div>
+                <div class="time-info">
+                    <div class="time-display">00:00:00</div>
+                    <div class="date-day-info">04.09.2025 - Perşembe</div>
+                    <div class="date-info">
+                        <span class="week">36. Hafta</span> - 
+                        <span class="month">9. Ay</span> - 
+                        <span class="year">2025</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="main-content">
+            <div class="left-container" id="leftContainer">
+                <div class="back-section">
+                    <button id="backBtn" class="back-btn">←</button>
+                </div>
+                <div class="search-section">
+                    <div class="search-wrapper">
+                        <input type="text" id="searchInput" placeholder="Arama..." class="search-bar">
+                        <button id="searchBtn" class="search-icon-btn">Ara</button>
+                    </div>
+                </div>
+                <div class="tabs-section">
+                    <div class="tab-buttons">
+                        <button class="tab-btn active" data-tab="tab1">• Plaka Sorgulama</button>
+                        <button class="tab-btn" data-tab="tab2">• Türkiye Liman Sorgulama</button>
+                        <button class="tab-btn" data-tab="tab3">• Uluslararası Havalimanı Sorgulama</button>
+                        <button class="tab-btn" data-tab="tab4">• Telefon Alan Kodu Sorgulama</button>
+                        <button class="tab-btn" data-tab="tab5">• Iban Sorgulama</button>
+                        <button class="tab-btn" data-tab="tab6">• Tapu Harcı Hesaplama</button>
+                    </div>
+                </div>
+                <div class="left-content">
+                    <!-- Tab content now shows in right container -->
+                </div>
+            </div>
+            
+            <div class="resizer"></div>
+            
+            <div class="right-container">
+                <div class="right-content">
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <div class="footer-content">
+                <p>&copy; 2025 HAKS</p>
+            </div>
+        </footer>
+    </div>
+    
+    <script src="globe.js"></script>
+    <script src="time-clock.js"></script>
+    <script src="modules/il_sorgulama.js"></script>
+    <script src="modules/liman_sorgulama.js"></script>
+    <script src="modules/havalimani_sorgulama.js"></script>
+    <script src="modules/telefon_alan_sorgulama.js"></script>
+    <script src="modules/tapu_harci_hesaplama.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+
