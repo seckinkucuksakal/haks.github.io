@@ -3,66 +3,66 @@ class TapuHarciHesaplama {
         this.ilData = {
             "01": "ADANA",
             "02": "ADIYAMAN",
-            "03": "AFYONKARAHISAR",
+            "03": "AFYON",
             "04": "AĞRI",
             "05": "AMASYA",
             "06": "ANKARA",
             "07": "ANTALYA",
-            "08": "ARTVIN",
+            "08": "ARTVİN",
             "09": "AYDIN",
-            "10": "BALIKESIR",
-            "11": "BILECIK",
-            "12": "BINGÖL",
-            "13": "BITLIS",
+            "10": "BALIKESİR",
+            "11": "BİLECİK",
+            "12": "BİNGÖL",
+            "13": "BİTLİS",
             "14": "BOLU",
             "15": "BURDUR",
             "16": "BURSA",
             "17": "ÇANAKKALE",
             "18": "ÇANKIRI",
             "19": "ÇORUM",
-            "20": "DENIZLI",
-            "21": "DIYARBAKIR",
-            "22": "EDIRNE",
+            "20": "DENİZLİ",
+            "21": "DİYARBAKIR",
+            "22": "EDİRNE",
             "23": "ELAZIĞ",
-            "24": "ERZINCAN",
+            "24": "ERZİNCAN",
             "25": "ERZURUM",
-            "26": "ESKIŞEHIR",
-            "27": "GAZIANTEP",
-            "28": "GIRESUN",
+            "26": "ESKİŞEHİR",
+            "27": "GAZİANTEP",
+            "28": "GİRESUN",
             "29": "GÜMÜŞHANE",
-            "30": "HAKKARI",
+            "30": "HAKKARİ",
             "31": "HATAY",
             "32": "ISPARTA",
-            "33": "MERSIN",
+            "33": "MERSİN",
             "34": "İSTANBUL",
             "35": "İZMİR",
             "36": "KARS",
             "37": "KASTAMONU",
-            "38": "KAYSERI",
-            "39": "KIRKLARELI",
-            "40": "KIRŞEHIR",
-            "41": "KOCAELI",
+            "38": "KAYSERİ",
+            "39": "KIRKLARELİ",
+            "40": "KIRŞEHİR",
+            "41": "KOCAELİ",
             "42": "KONYA",
             "43": "KÜTAHYA",
             "44": "MALATYA",
-            "45": "MANISA",
-            "46": "KAHRAMANMARAŞ",
-            "47": "MARDIN",
+            "45": "MANİSA",
+            "46": "K.MARAŞ",
+            "47": "MARDİN",
             "48": "MUĞLA",
             "49": "MUŞ",
-            "50": "NEVŞEHIR",
-            "51": "NIĞDE",
+            "50": "NEVŞEHİR",
+            "51": "NİĞDE",
             "52": "ORDU",
-            "53": "RIZE",
+            "53": "RİZE",
             "54": "SAKARYA",
             "55": "SAMSUN",
-            "56": "SIIRT",
-            "57": "SINOP",
-            "58": "SIVAS",
-            "59": "TEKIRDAG",
+            "56": "SİİRT",
+            "57": "SİNOP",
+            "58": "SİVAS",
+            "59": "TEKİRDAĞ",
             "60": "TOKAT",
             "61": "TRABZON",
-            "62": "TUNCELI",
+            "62": "TUNCELİ",
             "63": "ŞANLIURFA",
             "64": "UŞAK",
             "65": "VAN",
@@ -79,93 +79,95 @@ class TapuHarciHesaplama {
             "76": "IĞDIR",
             "77": "YALOVA",
             "78": "KARABÜK",
-            "79": "KILIS",
-            "80": "OSMANIYE",
-            "81": "DÜZCE"
+            "79": "KİLİS",
+            "80": "OSMANİYE",
+            "81": "DÜZCE",
+            "82": "ALMANYA"
         };
         
         this.ilceData = {
-            "01": ["ALADAĞ", "CEYHAN", "ÇUKUROVA", "FEKE", "İMAMOĞLU", "KARAISALI", "KARATAŞ", "KOZAN", "POZANTI", "SAIMBEYLIŞ", "SARIÇAM", "SEYHAN", "TUFANBEYLIŞ", "YUMURTALIK", "YÜREĞİR"],
-            "02": ["ADIYAMAN MERKEZ", "BESNI", "ÇELIKHAN", "GERGER", "GÖLBAŞI", "KAHTA", "SAMSAT", "SINCIK", "TUT"],
-            "03": ["AFYONKARAHISAR MERKEZ", "BAŞMAKÇI", "BAYAT", "BOLVADIN", "ÇAY", "ÇOBANLAR", "DAZKIRI", "DINAR", "EMIRDAĞ", "EVCILER", "HOCALAR", "İHSANIYE", "İSCEHISAR", "KIZILÖREN", "SANDIKLI", "SINANPAŞA", "SULTANDAĞI", "ŞUHUT"],
-            "04": ["AĞRI MERKEZ", "DIYADIN", "DOĞUBAYAZIT", "ELEŞKİRT", "HAMUR", "PATNOS", "TAŞLIÇAY", "TUTAK"],
-            "05": ["AMASYA MERKEZ", "GÖYNÜCEK", "GÜMÜŞHACIKÖY", "HAMAMÖZÜ", "MERZIFON", "SULUOVA", "TAŞOVA"],
-            "06": ["ALTINDAĞ", "AYAŞ", "BALA", "BEYPAZARI", "ÇAMLIDERE", "ÇANKAYA", "ÇUBUK", "ELMADAĞ", "ETIMESGUT", "EVREN", "GÖLBAŞI", "GÜDÜL", "HAYMANA", "KALECIK", "KAZAN", "KEÇİÖREN", "KIZILCAHAMAM", "MAMAK", "NALLIHAN", "POLATLI", "PURSAKLAR", "SINCAN", "ŞEREFLİKOÇHİSAR", "YENIMAHALLE"],
-            "07": ["AKSU", "ALANYA", "DEMRE", "DÖŞEMEALTI", "ELMALI", "FINIKE", "GAZIPAŞA", "GÜNDOĞMUŞ", "İBRADI", "KAŞ", "KEMER", "KEPEZ", "KONYAALTI", "KORKUTELI", "KUMLUCA", "MANAVGAT", "MURATPAŞA", "SERIK"],
-            "08": ["ARDANUÇ", "ARHAVI", "ARTVIN MERKEZ", "BORÇKA", "HOPA", "MURGUL", "ŞAVŞAT", "YUSUFELI"],
-            "09": ["BOZDOĞAN", "BUHARKENT", "ÇİNE", "DİDİM", "EFELER", "GERMENCİK", "İNCİRLİOVA", "KARACASU", "KARPUZLU", "KOÇARLI", "KÖŞK", "KUŞADASI", "KUYUCAK", "NAZİLLİ", "SÖKE", "SULTANHISAR", "YENIPAZAR"],
-            "10": ["ALTIEYLÜL", "AYVALIK", "BALYA", "BANDIRMA", "BIGADIÇ", "BURHANIYE", "DURSUNBEY", "EDREMIT", "ERDEK", "GÖMEÇ", "GÖNEN", "HAVRAN", "İVRINDI", "KARESI", "KEPSUT", "MANYAS", "MARMARA", "SAVAŞTEPE", "SINDIRGI", "SUSURLUK"],
-            "11": ["BILECIK MERKEZ", "BOZÜYÜK", "GÖLPAZARI", "İNHISAR", "OSMANELI", "PAZARYERI", "SÖĞÜT", "YENIPAZAR"],
-            "12": ["ADAKLI", "BINGÖL MERKEZ", "GENÇ", "KARLIOVA", "KIĞI", "SOLHAN", "YAYLADERE", "YEDISU"],
-            "13": ["AHLAT", "ADILCEVAZ", "BITLIS MERKEZ", "GÜROYMAK", "HIZAN", "MUTKI", "TATVAN"],
-            "14": ["BOLU MERKEZ", "DÖRTDIVAN", "GEREDE", "GÖYNÜK", "KIBRISCIK", "MENGEN", "MUDURNU", "SEBEN", "YENIÇAĞA"],
-            "15": ["AĞLASUN", "ALTINYAYLA", "BUCAK", "BURDUR MERKEZ", "ÇAVDIR", "ÇELTİKÇİ", "GÖLHİSAR", "KARAMANLI", "KEMER", "TEFENNİ", "YEŞİLOVA"],
-            "16": ["BÜYÜKORHAN", "GEMLİK", "GÜRSU", "HARMANCIK", "İNEGÖL", "İZNİK", "KARACABEY", "KELES", "KESTEL", "MUDANYA", "MUSTAFAKEMALPAŞA", "NİLÜFER", "ORHANELİ", "ORHANGAZİ", "OSMANGAZİ", "YENİŞEHİR", "YILDIRIM"],
-            "17": ["AYVACIK", "BAYRAMİÇ", "BİGA", "BOZCAADA", "ÇAN", "ÇANAKKALE MERKEZ", "ECEABAT", "EZİNE", "GELİBOLU", "GÖKÇEADA", "LAPSEKİ", "YENİCE"],
-            "18": ["ATKARACALAR", "BAYRAMÖREN", "ÇANKIRI MERKEZ", "ÇERKEŞ", "ELDİVAN", "ILGAZ", "KIZILIRMAK", "KORGUN", "KURŞUNLU", "ORTA", "ŞABANÖZÜ", "YAPRAKLI"],
-            "19": ["ALACA", "BAYAT", "BOĞAZKALE", "ÇORUM MERKEZ", "DODURGA", "İSKİLİP", "KARGI", "LAÇİN", "MECİTÖZÜ", "OĞUZLAR", "ORTAKÖY", "OSMANCIK", "SUNGURLU", "UĞURLUDAĞ"],
-            "20": ["ACIPAYAM", "BABADAĞ", "BAKLAN", "BEKİLLİ", "BEYAĞAÇ", "BOZKURT", "BULDAN", "ÇAL", "ÇAMELİ", "ÇARDAK", "ÇİVRİL", "DENİZLİ MERKEZ", "GÜNEY", "HONAZ", "KALE", "MERKEZEFENDİ", "PAMUKKALE", "SARAYKÖY", "SERİNHİSAR", "TAVAS"],
-            "21": ["BAĞLAR", "BİSMİL", "ÇERMİK", "ÇINAR", "ÇÜNGÜŞ", "DİCLE", "DİYARBAKIR", "EĞİL", "ERGANİ", "HANİ", "HAZRO", "KAYAPINAR", "KOCAKÖY", "KULP", "LİCE", "SİLVAN", "SUR", "YENİŞEHİR"],
-            "22": ["EDİRNE MERKEZ", "ENEZ", "HAVSA", "İPSALA", "KEŞAN", "LALAPAŞA", "MERİÇ", "SÜLOĞLU", "UZUNKÖPRÜ"],
-            "23": ["AĞIN", "ALACAKAYA", "ARICAK", "BASKİL", "ELAZIĞ MERKEZ", "KARAKOÇAN", "KEBAN", "KOVANCILAR", "MADEN", "PALU", "SİVRİCE"],
-            "24": ["ÇAYIRLI", "ERZİNCAN MERKEZ", "İLİÇ", "KEMAH", "KEMALİYE", "OTLUKBELİ", "REFAHİYE", "TERCAN", "ÜZÜMLÜ"],
-            "25": ["AŞKALE", "AZİZİYE", "ÇAT", "HINIS", "HORASAN", "İSPİR", "KARAÇOBAN", "KARAYAZI", "KÖPRÜKÖY", "NARMAN", "OLTU", "OLUR", "PALANDÖKEN", "PASİNLER", "PAZARYOLU", "ŞENKAYA", "TEKMAN", "TORTUM", "UZUNDERE", "YAKUTİYE"],
-            "26": ["ALPU", "BEYLİKOVA", "ÇİFTELER", "ESKİŞEHİR MERKEZ", "GÜNYÜZÜ", "HAN", "İNÖNÜ", "MAHMUDİYE", "MİHALGAZİ", "MİHALIÇÇIK", "ODUNPAZARI", "SARICAKAYA", "SEYİTGAZİ", "SİVRİHİSAR", "TEPEBAŞI"],
-            "27": ["ARABAN", "İSLAHİYE", "KARKAMIŞ", "NİZİP", "NURDAĞI", "OĞUZELİ", "ŞAHİNBEY", "ŞEHİTKAMİL", "YAVUZELİ"],
-            "28": ["ALUCRA", "BULANCAK", "ÇAMOLUK", "ÇANAKÇI", "DERELİ", "DOĞANKENT", "ESPİYE", "EYNESİL", "GİRESUN MERKEZ", "GÖRELE", "GÜCE", "KEŞAP", "PİRAZİZ", "ŞEBİNKARAHİSAR", "TİREBOLU", "YAĞLIDERE"],
-            "29": ["GÜMÜŞHANE MERKEZ", "KELKİT", "KÖSE", "KÜRTÜN", "ŞİRAN", "TORUL"],
-            "30": ["ÇUKURCA", "HAKKARI MERKEZ", "ŞEMDİNLİ", "YÜKSEKOVA"],
-            "31": ["ALTINÖZÜ", "ANTAKYA", "ARSUZ", "BELEN", "DEFNE", "DÖRTYOL", "ERZİN", "HASSA", "İSKENDERUN", "KIRIKHAN", "KUMLU", "PAYAS", "REYHANLI", "SAMANDAĞI", "YAYLADAĞI"],
-            "32": ["AKSU", "ATABEY", "EĞİRDİR", "GELENDOST", "GÖNEN", "ISPARTA MERKEZ", "KEÇİBORLU", "SENİRKENT", "SÜTÇÜLER", "ŞARKİKARAAĞAÇ", "ULUBORLU", "YALVAÇ", "YENİŞARBADEMLİ"],
-            "33": ["ANAMUR", "AYDINCIK", "BOZYAZI", "ÇAMLIYAYLA", "ERDEMLİ", "GÜLNAR", "MERSİN MERKEZ", "MUT", "SİLİFKE", "TARSUS", "TOROSLAR", "YENİŞEHİR"],
-            "34": ["ADALAR", "ARNAVUTKÖY", "ATAŞEHİR", "AVCILAR", "BAĞCILAR", "BAHÇELİEVLER", "BAKIRKÖY", "BAŞAKŞEHİR", "BAYRAMPAŞA", "BEŞİKTAŞ", "BEYKOZ", "BEYLİKDÜZÜ", "BEYOĞLU", "BÜYÜKÇEKMECE", "ÇATALCA", "ÇEKMEKÖY", "ESENLER", "ESENYURT", "EYÜPSULTAN", "FATİH", "GAZİOSMANPAŞA", "GÜNGÖREN", "KADIKÖY", "KAĞITHANE", "KARTAL", "KÜÇÜKÇEKMECE", "MALTEPE", "PENDİK", "SANCAKTEPE", "SARIYER", "SİLİVRİ", "SULTANBEYLİ", "SULTANGAZİ", "ŞİLE", "ŞİŞLİ", "TUZLA", "ÜMRANİYE", "ÜSKÜDAR", "ZEYTİNBURNU"],
-            "35": ["ALİAĞA", "BALÇOVA", "BAYINDIR", "BAYRAKLI", "BERGAMA", "BEYDAĞ", "BORNOVA", "BUCA", "ÇEŞME", "ÇİĞLİ", "DİKİLİ", "FOÇA", "GAZİEMİR", "GÜZELBAHÇE", "KARABAĞLAR", "KARABURUN", "KARŞIYAKA", "KEMALPAŞA", "KINIK", "KİRAZ", "KONAK", "MENDERES", "MENEMEN", "NARLIDERE", "ÖDEMİŞ", "SEFERİHİSAR", "SELÇUK", "TİRE", "TORBALI", "URLA"],
-            "36": ["AKYAKA", "ARPAÇAY", "DİGOR", "KAĞIZMAN", "KARS MERKEZ", "SARIKAMIŞ", "SELİM", "SUSUZ"],
-            "37": ["ABANA", "AĞLI", "ARAÇ", "AZDAVAY", "BOZKURT", "CİDE", "ÇATALZEYTİN", "DADAY", "DEVREKANİ", "DOĞANYURT", "HANÖNÜ", "İHSANGAZİ", "İNEBOLU", "KASTAMONU MERKEZ", "KÜRE", "PINARBAŞI", "SEYDİLER", "ŞENPAZAR", "TAŞKÖPRÜ", "TOSYA"],
-            "38": ["AKKIŞLA", "BÜNYAN", "DEVELİ", "FELAHİYE", "HACILAR", "İNCESU", "KAYSERİ MERKEZ", "KOCASİNAN", "MELİKGAZİ", "ÖZVATAN", "PINARBAŞI", "SARIOĞLAN", "SARIZ", "TALAS", "TOMARZA", "YAHYALI", "YEŞİLHİSAR"],
-            "39": ["BABAESKİ", "DEMİRKÖY", "KIRKLARELİ MERKEZ", "KOFÇAZ", "LÜLEBURGAZ", "PEHLİVANKÖY", "PINARHİSAR", "VİZE"],
-            "40": ["AKÇAKENT", "AKPINAR", "BOZTEPE", "ÇİÇEKDAĞI", "KAMAN", "KIRŞEHİR MERKEZ", "MUCUR"],
-            "41": ["BAŞİSKELE", "ÇAYIROVA", "DARICA", "DERİNCE", "DİLOVASI", "GEBZE", "GÖLCÜK", "İZMİT", "KANDIRA", "KARAMÜRSEL", "KARTEPE", "KÖRFEZ"],
-            "42": ["AHIRLI", "AKÖREN", "AKŞEHİR", "ALTINEKİN", "BEYŞEHİR", "BOZKIR", "CİHANBEYLİ", "ÇELTİK", "ÇUMRA", "DERBENT", "DEREBUCAK", "DOĞANHİSAR", "EMİRGAZİ", "EREĞLİ", "GÜNEYSINIR", "HADİM", "HALKAPINAR", "HÜYÜK", "ILGIN", "KADINHANI", "KARAPINAR", "KARATAY", "KARAMAN", "KULU", "MERAM", "SARAYÖNÜ", "SELÇUKLU", "SEYDİŞEHİR", "TAŞKENT", "TUZLUKÇU", "YALIHÜYÜK", "YUNAK"],
-            "43": ["ALTINTAŞ", "ASLANAPA", "ÇAVDARHİSAR", "DOMANİÇ", "DUMLUPINAR", "EMET", "GEDİZ", "HİSARCIK", "KÜTAHYA MERKEZ", "PAZARLAR", "SİMAV", "ŞAPHANE", "TAVŞANLI"],
-            "44": ["AKÇADAĞ", "ARAPGİR", "ARGUVAN", "BATTALGAZİ", "DARENDE", "DOĞANŞEHİR", "DOĞANYOL", "HEKİMHAN", "KALE", "KULUNCAK", "MALATYA MERKEZ", "PÜTÜRGE", "YAZIHAN", "YEŞİLYURT"],
-            "45": ["AHMETLİ", "AKHİSAR", "ALAŞEHİR", "DEMİRCİ", "GÖLMARMARA", "GÖRDES", "KIRKAĞAÇ", "KÖPRÜBAŞI", "KULA", "MANİSA MERKEZ", "SALİHLİ", "SARIGÖL", "SARUHANLI", "SELENDİ", "SOMA", "ŞEHZADELER", "TURGUTLU", "YUNUSEMRE"],
-            "46": ["AFŞİN", "ANDIRIN", "ÇAĞLAYANCERİT", "DULKADİROĞLU", "EKİNÖZÜ", "ELBİSTAN", "GÖKSUN", "NURHAK", "ONİKİŞUBAT", "PAZARCIK", "TÜRKOĞLU"],
-            "47": ["ARTUKLU", "DARGEÇİT", "DERİK", "KIZILTEPE", "MARDİN MERKEZ", "MAZIDAĞI", "MİDYAT", "NUSAYBİN", "ÖMERLİ", "SAVUR", "YEŞİLLİ"],
-            "48": ["BODRUM", "DALAMAN", "DATÇA", "FETHİYE", "KAVAKLIDERE", "KÖYCEĞİZ", "MARMARİS", "MENTEŞE", "MİLAS", "MUĞLA MERKEZ", "ORTACA", "SEYDİKEMER", "ULA", "YATAĞAN"],
-            "49": ["BULANIK", "HASKÖY", "KORKUT", "MALAZGİRT", "MUŞ MERKEZ", "VARTO"],
-            "50": ["ACIGÖL", "AVANOS", "DERİNKUYU", "GÜLŞEHİR", "HACIBEKTAŞ", "KOZAKLI", "NEVŞEHİR MERKEZ", "ÜRGÜP"],
-            "51": ["ALTUNHİSAR", "BOR", "ÇAMARDI", "ÇİFTLİK", "NİĞDE MERKEZ", "ULUKIŞLA"],
-            "52": ["AKKUŞ", "ALTINORDU", "AYBASTİ", "ÇAMAŞ", "ÇATALPINAR", "ÇAYBAŞI", "FATSA", "GÖLKÖY", "GÜLYALI", "GÜRGENTEPE", "İKİZCE", "KABADÜZ", "KABATAŞ", "KORGAN", "KUMRU", "MESUDİYE", "ORDU MERKEZ", "PERŞEMBE", "ULUBEY", "ÜNYE"],
-            "53": ["ARDEŞEN", "ÇAMLIHEMŞİN", "ÇAYELİ", "DEREPAZARI", "FINDIKLI", "GÜNEYSU", "HEMŞİN", "İKİZDERE", "İYİDERE", "KALKANDERE", "PAZAR", "RİZE MERKEZ"],
-            "54": ["ADAPAZARI", "AKYAZI", "ARİFİYE", "ERENLER", "FERİZLİ", "GEYVE", "HENDEK", "KARAPÜRÇEK", "KARASU", "KAYNARCA", "KOCAALİ", "PAMUKOVA", "SAPANCA", "SERDİVAN", "SÖĞÜTLÜ", "TARAKLI"],
-            "55": ["19 MAYIS", "ALAÇAM", "ASARCIK", "ATAKUM", "AYVACIK", "BAFRA", "CANİK", "ÇARŞAMBA", "HAVZA", "İLKADIM", "KAVAK", "LADİK", "ONDOKUZMAYIS", "SALIPAZARI", "SAMSUN MERKEZ", "TEKKEKÖY", "TERME", "VEZİRKÖPRÜ", "YAKAKENT"],
-            "56": ["BAYKAN", "ERUH", "KURTALAN", "PERVARİ", "SİİRT MERKEZ", "ŞİRVAN", "TİLLO"],
-            "57": ["AYANCIK", "BOYABAT", "DİKMEN", "DURAĞAN", "ERFELEK", "GERZE", "SARAYDÜZÜ", "SİNOP MERKEZ", "TÜRKELİ"],
-            "58": ["AKINCILAR", "ALTINYAYLA", "DİVRİĞİ", "DOĞANŞAR", "GEMEREK", "GÖLOVA", "GÜRÜN", "HAFİK", "İMRANLI", "KANGAL", "KOYULHİSAR", "SİVAS MERKEZ", "SUŞEHRİ", "ŞARKIŞLA", "ULAŞ", "YILDIZELİ", "ZARA"],
-            "59": ["ÇERKEZKÖY", "ÇORLU", "ERGENE", "HAYRABOLU", "KAPAKLI", "MALKARA", "MARMARA EREĞLİSİ", "MURATLI", "SARAY", "SÜLEYMANPAŞA", "ŞARKÖY"],
-            "60": ["ALMUS", "ARTOVA", "BAŞÇİFTLİK", "ERBAA", "NİKSAR", "PAZAR", "REŞADİYE", "SULUSARAY", "TOKAT MERKEZ", "TURHAL", "YEŞİLYURT", "ZİLE"],
-            "61": ["AKÇAABAT", "ARAKLI", "ARSİN", "BEŞİKDÜZÜ", "ÇARŞIBAŞI", "ÇAYKARA", "DERNEKPAZARI", "DÜZKÖY", "HAYRAT", "KÖPRÜBAŞI", "MAÇKA", "OF", "ORTAHİSAR", "SÜRMENE", "ŞALPAZARI", "TONYA", "TRABZON MERKEZ", "VAKFIKEBİR", "YOMRA"],
-            "62": ["ÇEMİŞKEZEK", "HOZAT", "MAZGİRT", "NAZİMİYE", "OVACIK", "PERTEK", "PÜLÜMÜR", "TUNCELİ MERKEZ"],
-            "63": ["AKÇAKALE", "BİRECİK", "BOZOVA", "CEYLANPINAR", "EYYÜBİYE", "HALFETİ", "HALİLİYE", "HARRAN", "HİLVAN", "KARAKÖPRÜ", "SİVEREK", "SURUÇ", "VİRANŞEHİR"],
-            "64": ["BANAZ", "EŞME", "KARAHANLI", "SİVASLI", "ULUBEY", "UŞAK MERKEZ"],
-            "65": ["BAHÇESARAY", "BAŞKALE", "ÇALDIRAN", "ÇATAK", "EDREMİT", "ERCİŞ", "GEVAŞ", "GÜRPINAR", "İPEKYOLU", "MURADİYE", "ÖZALP", "SARAY", "TUŞBA", "VAN MERKEZ"],
-            "66": ["AKDAĞMADENİ", "AYDINCIK", "BOĞAZLIYAN", "ÇANDIR", "ÇAYIRALAN", "ÇEKEREK", "KADIŞEHRİ", "SARAYKENT", "SARIKAYA", "SORGUN", "ŞEFAATLİ", "YENİFAKILI", "YERKÖY", "YOZGAT MERKEZ"],
-            "67": ["ALAPLI", "ÇAYCUMA", "DEVREK", "GÖKÇEBEY", "KİLİMLİ", "KOZLU", "ZONGULDAK MERKEZ"],
-            "68": ["AĞAÇÖREN", "ESKİL", "GÜLAĞAÇ", "GÜZELYURT", "ORTAKÖY", "SARIYAHŞİ"],
-            "69": ["AYDINTEPE", "BAYBURT MERKEZ", "DEMİRÖZÜ"],
-            "70": ["AYRANCI", "BAŞYAYLA", "ERMENEK", "KARAMAN MERKEZ", "KAZIMKARABEKİR", "SARIVELİLER"],
-            "71": ["BAHŞİLİ", "BALIŞEYHş", "ÇELEBİ", "DELİCE", "KARAKEÇİLİ", "KESKİN", "KIRIKKALE MERKEZ", "SULAKYURT", "YAHŞİHAN"],
-            "72": ["BATMAN MERKEZ", "BEŞİRİ", "GERCÜŞ", "HASANKEYF", "KOZLUK", "SASON"],
-            "73": ["BEYTÜŞŞEBAP", "CİZRE", "GÜÇLÜKONAK", "İDİL", "SİLOPİ", "ŞIRNAK MERKEZ", "ULUDERE"],
-            "74": ["AMASRA", "BARTIN MERKEZ", "KURUCAŞİLE", "ULUS"],
-            "75": ["ARDAHAN MERKEZ", "ÇILDIR", "DAMAL", "GÖLE", "HANAK", "POSOF"],
-            "76": ["ARALIK", "IĞDIR MERKEZ", "KARAKOYUNLU", "TUZLUCA"],
-            "77": ["ALTINOVA", "ARMUTLU", "ÇINARCIK", "ÇİFTLİKKÖY", "TERMAL", "YALOVA MERKEZ"],
-            "78": ["EFLANİ", "ESKİPAZAR", "KARABÜK MERKEZ", "OVACIK", "SAFRANBOLU", "YENİCE"],
-            "79": ["ELBEYLİ", "KİLİS MERKEZ", "MUSABEYLİ", "POLATELİ"],
-            "80": ["BAHÇE", "DÜZİÇİ", "HASANBEYLİ", "KADİRLİ", "OSMANİYE MERKEZ", "SUMBAS", "TOPRAKKALE"],
-            "81": ["AKÇAKOCA", "CUMAYERİ", "ÇİLİMLİ", "DÜZCE MERKEZ", "GÖLYAKA", "GÜMÜŞOVA", "KAYNAŞLI", "YIĞILCA"]
+            "01": ["SEYHAN", "ÇUKUROVA", "CEYHAN", "YÜREĞİR", "SARIÇAM", "KARAİSALI", "KARATAŞ", "KOZAN", "POZANTI", "YUMURTALIK", "İMAMOĞLU", "TUFANBEYLİ", "FEKE", "SAİMBEYLİ", "ALADAĞ"],
+            "02": ["ADIYAMAN", "BESNİ", "GÖLBAŞI (ADIYAMAN)", "KAHTA", "TUT", "ÇELİKHAN", "GERGER", "SAMSAT", "SİNCİK"],
+            "03": ["AFYON", "BOLVADİN", "ÇAY", "DİNAR", "EMİRDAĞ", "SANDIKLI", "SULTANDAĞI", "ŞUHUT", "DAZKIRI", "İHSANİYE", "BAŞMAKÇI", "BAYAT (AFYON)", "İSCEHİSAR", "ÇOBANLAR", "EVCİLER", "SİNANPAŞA", "HOCALAR", "KIZILÖREN"],
+            "04": ["AĞRI", "DOĞUBEYAZIT", "ELEŞKİRT", "PATNOS", "DİYADİN", "HAMUR", "TAŞLIÇAY", "TUTAK"],
+            "05": ["AMASYA", "MERZİFON", "SULUOVA", "GÜMÜŞHACIKÖY", "TAŞOVA", "GÖYNÜCEK", "HAMAMÖZÜ"],
+            "06": ["ALTINDAĞ", "ÇANKAYA", "KEÇİÖREN", "PURSAKLAR", "MAMAK", "YENİMAHALLE", "GÖLBAŞI (ANKARA)", "SİNCAN", "ETİMESGUT", "ÇUBUK", "ELMADAĞ", "POLATLI", "KAZAN", "AKYURT", "KIZILCAHAMAM", "ŞEREFLİKOÇHİSAR", "AYAŞ", "BALA", "BEYPAZARI", "HAYMANA", "KALECİK", "NALLIHAN", "ÇAMLIDERE", "GÜDÜL", "EVREN"],
+            "07": ["KONYAALTI", "MURATPAŞA", "AKSU (ANTALYA)", "KEPEZ", "DÖŞEMEALTI", "ALANYA", "MANAVGAT", "SERİK", "KEMER (ANTALYA)", "FİNİKE", "GAZİPAŞA", "KAŞ", "KORKUTELİ", "KUMLUCA", "DEMRE (KALE-ANT.)", "ELMALI", "AKSEKİ", "GÜNDOĞMUŞ", "İBRADI"],
+            "08": ["ARTVİN", "ARHAVİ", "HOPA", "BORÇKA", "ARDANUÇ", "ŞAVŞAT", "YUSUFELİ", "MURGUL", "KEMALPAŞA"],
+            "09": ["EFELER", "KUŞADASI", "NAZİLLİ", "SÖKE", "YENİHİSAR", "BOZDOĞAN", "ÇİNE", "GERMENCİK", "KARACASU", "KOÇARLI", "KUYUCAK", "SULTANHİSAR", "İNCİRLİOVA", "YENİPAZAR (AYDIN)", "BUHARKENT", "KARPUZLU", "KÖŞK"],
+            "10": ["BANDIRMA", "KARESİ", "ALTIEYLÜL", "AYVALIK", "BURHANİYE", "EDREMİT(BALIKESİR)", "ERDEK", "GÖNEN(BALIKESİR)", "GÖMEÇ", "BİGADİÇ", "DURSUNBEY", "HAVRAN", "İVRİNDİ", "KEPSUT", "MANYAS", "SUSURLUK", "MARMARA", "BALYA", "SAVAŞTEPE", "SINDIRGI"],
+            "11": ["BİLECİK", "BOZÜYÜK", "GÖLPAZARI", "OSMANELİ", "PAZARYERİ", "SÖĞÜT", "İNHİSAR", "YENİPAZAR (BİLECİK)"],
+            "12": ["BİNGÖL", "KARLIOVA", "GENÇ", "KIĞI", "SOLHAN", "ADAKLI", "YAYLADERE", "YEDİSU"],
+            "13": ["BİTLİS", "TATVAN", "ADİLCEVAZ", "AHLAT", "GÜROYMAK", "HİZAN", "MUTKİ"],
+            "14": ["BOLU", "GEREDE", "MENGEN", "MUDURNU", "GÖYNÜK", "KIBRISCIK", "SEBEN", "DÖRTDİVAN", "YENİÇAĞA"],
+            "15": ["BURDUR", "BUCAK", "GÖLHİSAR", "AĞLASUN", "TEFENNİ", "YEŞİLOVA", "KARAMANLI", "KEMER (BURDUR)", "ALTINYAYLA (BURDUR)", "ÇAVDIR", "ÇELTİKÇİ"],
+            "16": ["OSMANGAZİ", "GEMLİK", "MUDANYA", "ORHANGAZİ", "NİLÜFER", "YILDIRIM", "İNEGÖL", "İZNİK", "KARACABEY", "MUSTAFAKEMALPAŞA", "YENİŞEHİR", "GÜRSU", "KESTEL", "KELES", "ORHANELİ", "BÜYÜKORHAN", "HARMANCIK"],
+            "17": ["ÇANAKKALE", "AYVACIK(ÇANAKKALE)", "BİGA", "BOZCAADA", "ECEBAT", "EZİNE", "GELİBOLU", "GÖKÇEADA", "LAPSEKİ", "ÇAN", "BAYRAMİÇ", "YENİCE(ÇANAKKALE)"],
+            "18": ["ÇANKIRI", "ÇERKEŞ", "ILGAZ", "ELDİVAN", "KURŞUNLU", "ORTA", "ŞABANÖZÜ", "YAPRAKLI", "ATKARACALAR", "KIZILIRMAK", "BAYRAMÖREN", "KORGUN"],
+            "19": ["ÇORUM", "ALACA", "İSKİLİP", "OSMANCIK", "SUNGURLU", "BAYAT(ÇORUM)", "KARGI", "MECİTÖZÜ", "ORTAKÖY(ÇORUM)", "BOĞAZKALE", "UĞURLUDAĞ", "DODURGA", "LAÇİN", "OĞUZLAR"],
+            "20": ["MERKEZEFENDİ", "ÇİVRİL", "TAVAS", "SARAYKÖY", "ACIPAYAM", "BULDAN", "ÇAL", "HONAZ", "SERİNHİSAR", "ÇAMELİ", "ÇARDAK", "GÜNEY", "KALE (DENİZLİ)", "BEKİLLİ", "PAMUKKALE", "BAKLAN", "BOZKURT(DENİZLİ)", "BABADAĞ", "BEYAĞAÇ"],
+            "21": ["YENİŞEHİR", "KARAPINAR", "BAĞLAR", "SUR", "BİSMİL", "ERGANİ", "SİLVAN", "ÇINAR", "ÇERMİK", "ÇÜNGÜŞ", "DİCLE", "HANİ", "HAZRO", "KULP", "LİCE", "EĞİL", "KOCAKÖY"],
+            "22": ["EDİRNE", "İPSALA", "KEŞAN", "UZUNKÖPRÜ", "ENEZ", "HAVSA", "LALAPAŞA", "MERİÇ", "SÜLOĞLU"],
+            "23": ["ELAZIĞ", "KOVANCILAR", "BASKİL", "KARAKOÇAN", "AĞIN", "KEBAN", "MADEN", "PALU", "SİVRİCE", "ARICAK", "ALACAKAYA"],
+            "24": ["ERZİNCAN", "İLİÇ", "TERCAN", "ÜZÜMLÜ", "ÇAYIRLI", "KEMAH", "KEMALİYE", "REFAHİYE", "OTLUKBELİ"],
+            "25": ["YAKUTİYE", "PALANDÖKEN", "AZİZİYE", "PASİNLER", "AŞKALE", "HORASAN", "OLTU", "NARMAN", "HINIS", "ÇAT", "İSPİR", "KARAYAZI", "OLUR", "ŞENKAYA", "TEKMAN", "TORTUM", "KARAÇOBAN", "UZUNDERE", "KÖPRÜKÖY", "PAZARYOLU"],
+            "26": ["ODUNPAZARI", "TEPEBAŞI", "SİVRİHİSAR", "ÇİFTELER", "MAHMUDİYE", "MİHALIÇCIK", "SARICAKAYA", "SEYİTGAZİ", "ALPU", "BEYLİKOVA", "İNÖNÜ", "GÜNYÜZÜ", "MİHALGAZİ", "HAN"],
+            "27": ["ŞEHİTKAMİL", "ŞAHİNBEY", "NİZİP", "OĞUZELİ", "İSLAHİYE", "NURDAĞI", "ARABAN", "YAVUZELİ", "KARKAMIŞ"],
+            "28": ["GİRESUN", "BULANCAK", "TİREBOLU", "ESPİYE", "EYNESİL", "GÖRELE", "KEŞAP", "ŞEBİNKARAHİSAR", "PİRAZİZ", "ALUCRA", "DERELİ", "YAĞLIDERE", "ÇANAKÇI", "GÜCE", "ÇAMOLUK", "DOĞANKENT"],
+            "29": ["GÜMÜŞHANE", "KELKİT", "ŞİRAN", "TORUL", "KÖSE", "KÜRTÜN"],
+            "30": ["HAKKARİ", "YÜKSEKOVA", "ÇUKURCA", "ŞEMDİNLİ", "DERECİK"],
+            "31": ["ANTAKYA", "DEFNE", "ARSUZ", "PAYAS", "İSKENDERUN", "DÖRTYOL", "KIRIKHAN", "REYHANLI", "SAMANDAĞI", "ERZİN", "BELEN", "ALTINÖZÜ", "HASSA", "YAYLADAĞI", "KUMLU"],
+            "32": ["ISPARTA", "EĞİRDİR", "YALVAÇ", "ATABEY", "GELENDOST", "KEÇİBORLU", "SENİRKENT", "SÜTÇÜLER", "ŞARKİKARAAĞAÇ", "ULUBORLU", "AKSU (ISPARTA)", "GÖNEN (ISPARTA)", "YENİŞARBADEMLİ"],
+            "33": ["YENİŞEHİR", "ANAMUR", "ERDEMLİ", "SİLİFKE", "TARSUS", "AYDINCIK (İÇEL)", "BOZYAZI", "MUT", "GÜLNAR", "ÇAMLIYAYLA", "AKDENİZ", "TOROSLAR", "MEZİTLİ"],
+            "34": ["ADALAR", "BAKIRKÖY", "BEŞİKTAŞ", "BEYKOZ", "BEYOĞLU", "EYÜP", "FATİH", "GAZİOSMANPAŞA", "ARNAVUTKÖY", "SULTANGAZİ", "KADIKÖY", "KARTAL", "SARIYER", "ŞİŞLİ", "ÜSKÜDAR", "ZEYTİNBURNU", "ÇATALCA", "SİLİVRİ", "ŞİLE", "BÜYÜKÇEKMECE", "BEYLİKDÜZÜ", "ESENYURT", "SANCAKTEPE", "ÇEKMEKÖY", "ATAŞEHİR", "BAŞAKŞEHİR", "BAYRAMPAŞA", "PENDİK", "KÜÇÜKÇEKMECE", "ÜMRANİYE", "KAĞITHANE", "AVCILAR", "BAĞCILAR", "BAHÇELİEVLER", "GÜNGÖREN", "MALTEPE", "SULTANBEYLİ", "TUZLA", "ESENLER"],
+            "35": ["BORNOVA", "KARŞIYAKA", "BAYRAKLI", "KARABAĞLAR", "ALİAĞA", "BERGAMA", "ÇEŞME", "DİKİLİ", "BUCA", "KONAK", "BALÇOVA", "ÇİĞLİ", "GAZİEMİR", "NARLIDERE", "GÜZELBAHÇE", "BAYINDIR", "FOÇA", "KEMALPAŞA", "MENEMEN", "ÖDEMİŞ", "SEFERİHİSAR", "SELÇUK", "TİRE", "TORBALI", "URLA", "MENDERES", "KARABURUN", "KINIK", "KİRAZ", "BEYDAĞ"],
+            "36": ["KARS", "ARPAÇAY", "DİGOR", "KAĞIZMAN", "SARIKAMIŞ", "SELİM", "SUSUZ", "AKYAKA"],
+            "37": ["KASTAMONU", "ARAÇ", "TAŞKÖPRÜ", "TOSYA", "ABANA", "BOZKURT(KASTAMONU)", "CİDE", "ÇATALZEYTİN", "DEVREKANİ", "İNEBOLU", "AZDAVAY", "DADAY", "KÜRE", "İHSANGAZİ", "PINARBAŞI (KASTAMONU)", "ŞENPAZAR", "AĞLI", "DOĞANYURT", "HANÖNÜ", "SEYDİLER"],
+            "38": ["TALAS", "KOCASİNAN", "MELİKGAZİ", "HACILAR", "BÜNYAN", "DEVELİ", "İNCESU", "PINARBAŞI (KAYSERİ)", "FELAHİYE", "SARIOĞLAN", "TOMARZA", "YAHYALI", "YEŞİLHİSAR", "SARIZ", "AKKIŞLA", "ÖZVATAN"],
+            "39": ["KIRKLARELİ", "LÜLEBURGAZ", "BABAESKİ", "VİZE", "PEHLİVANKÖY", "PINARHİSAR", "DEMİRKÖY", "KOFÇAZ"],
+            "40": ["KIRŞEHİR", "ÇİÇEKDAĞI", "KAMAN", "MUCUR", "AKPINAR", "BOZTEPE", "AKÇAKENT"],
+            "41": ["İZMİT", "KARTEPE", "BAŞİSKELE", "GEBZE", "DİLOVASI", "DARICA", "ÇAYIROVA", "GÖLCÜK", "DERİNCE", "KÖRFEZ", "KANDIRA", "KARAMÜRSEL"],
+            "42": ["KARATAY", "SELÇUKLU", "MERAM", "AKŞEHİR", "BEYŞEHİR", "CİHANBEYLİ", "ÇUMRA", "EREĞLİ(KONYA)", "ILGIN", "KADINHANI", "KULU", "SARAYÖNÜ", "YUNAK", "ALTINEKİN", "KARAPINAR", "SEYDİŞEHİR", "AKÖREN", "HÜYÜK", "BOZKIR", "DOĞANHİSAR", "HADIM", "ÇELTİK", "DERBENT", "EMİRGAZİ", "GÜNEYSINIR", "HALKPINAR", "TUZLUKÇU", "DEREBUCAK", "TAŞKENT", "AHIRLI", "YALIHÜYÜK"],
+            "43": ["KÜTAHYA", "GEDİZ", "SİMAV", "TAVŞANLI", "ALTINTAŞ", "EMET", "HİSARCIK", "ÇAVDARHİSAR", "DOMANİÇ", "ASLANAPA", "ŞAPHANE", "DUMLUPINAR", "PAZARLAR"],
+            "44": ["YEŞİLYURT (MALATYA)", "BATTALGAZİ", "DARENDE", "DOĞANŞEHİR", "AKÇADAĞ", "ARGUVAN", "HEKİMHAN", "YAZIHAN", "ARAPGİR", "PÖTÜRGE", "DOĞANYOL", "KALE (MALATYA)", "KULUNCAK"],
+            "45": ["ŞEHZADELER", "YUNUSEMRE", "AKHİSAR", "ALAŞEHİR", "SALİHLİ", "TURGUTLU", "KULA", "SARIGÖL", "SARUHANLI", "SOMA", "DEMİRCİ", "GÖRDES", "KIRKAĞAÇ", "SELENDİ", "AHMETLİ", "GÖLMARMARA", "KÖPRÜBAŞI(MANİSA)"],
+            "46": ["DULKADİROĞLU", "ONİKİŞUBAT", "ELBİSTAN", "AFŞİN", "GÖKSUN", "ANDIRIN", "PAZARCIK", "TÜRKOĞLU", "ÇAĞLIYANCERİT", "NURHAK", "EKİNÖZÜ"],
+            "47": ["ARTUKLU", "KIZILTEPE", "MİDYAT", "NUSAYBİN", "DERİK", "MAZIDAĞI", "DARGEÇİT", "ÖMERLİ", "SAVUR", "YEŞİLLİ"],
+            "48": ["MENTEŞE", "SEYDİKEMER", "BODRUM", "FETHİYE", "MARMARİS", "MİLAS", "DALAMAN", "DATÇA", "KÖYCEĞİZ", "ORTACA", "ULA", "YATAĞAN", "KAVAKLIDERE"],
+            "49": ["MUŞ", "BULANIK", "VARTO", "MALAZGİRT", "HASKÖY", "KORKUT"],
+            "50": ["NEVŞEHİR", "AVANOS", "ÜRGÜP", "GÜLŞEHİR", "DERİNKUYU", "HACIBEKTAŞ", "KOZAKLI", "ACIGÖL"],
+            "51": ["NİĞDE", "BOR", "ALTUNHİSAR", "ÇAMARDI", "ÇİFTLİK", "ULUKIŞLA"],
+            "52": ["ALTINORDU", "FATSA", "ÜNYE", "PERŞEMBE", "GÜLYALI", "AKKUŞ", "AYBASTI", "GÖLKÖY", "KORGAN", "KUMRU", "ULUBEY(ORDU)", "GÜRGENTEPE", "ÇAMAŞ", "ÇATALPINAR", "ÇAYBAŞI", "İKİZCE", "KARADÜZ", "KABATAŞ", "MESUDİYE"],
+            "53": ["RİZE", "ARDEŞEN", "ÇAYELİ", "FINDIKLI", "PAZAR (RİZE)", "ÇAMLIHEMŞİN", "İKİZDERE", "KALKANDERE", "GÜNEYSU", "DEREPAZARI", "HEMŞİN", "İYİDERE"],
+            "54": ["ADAPAZARI", "SERDİVAN", "ARİFİYE", "ERENLER", "AKYAZI", "GEYVE", "HENDEK", "KARASU", "KAYNARCA", "SAPANCA", "KOCAALİ", "PAMUKOVA", "TARAKLI", "KARAPÜRÇEK", "FERİZLİ", "SÖĞÜTLÜ"],
+            "55": ["İLKADIM", "CANİK", "ATAKUM", "BAFRA", "ÇARŞAMBA", "TEKKEKÖY", "HAVZA", "TERME", "VEZİRKÖPRÜ", "ONDOKUZ MAYIS", "ALAÇAM", "KAVAK", "LADİK", "YAKAKENT", "SALIPAZARI", "AYVACIK(SAMSUN)", "ASARCIK"],
+            "56": ["SİİRT", "KURTALAN", "BAYKAN", "ERUH", "PERVARİ", "ŞİRVAN", "AYDINLAR"],
+            "57": ["SİNOP", "BOYABAT", "GERZE", "AYANCIK", "TÜRKELİ", "DURAĞAN", "ERFELEK", "SARAYDÜZÜ", "DİKMEN"],
+            "58": ["SİVAS", "ŞARKIŞLA", "DİVRİĞİ", "GEMEREK", "GÜRÜN", "HAFİK", "İMRANLI", "KANGAL", "SUŞEHRİ", "YILDIZELİ", "ZARA", "ULAŞ", "KOYULHİSAR", "AKINCILAR", "ALTINYAYLA (SİVAS)", "DOĞANŞAR", "GÖLOVA"],
+            "59": ["SÜLEYMANPAŞA", "KAPAKLI", "ERGENE", "ÇERKEZKÖY", "ÇORLU", "HAYRABOLU", "MALKARA", "MURATLI", "SARAY (TEKİRDAĞ)", "MARMARA EREĞLİSİ", "ŞARKÖY"],
+            "60": ["TOKAT", "NİKSAR", "TURHAL", "ZİLE", "ERBAA", "ALMUS", "ARTOVA", "REŞADİYE", "PAZAR (TOKAT)", "YEŞİLYURT (TOKAT)", "BAŞÇİFTLİK", "SULUSARAY"],
+            "61": ["ORTAHİSAR", "AKÇAABAT", "ARAKLI", "ARSİN", "MAÇKA", "OF", "SÜRMENE", "VAKFIKEBİR", "YOMRA", "BEŞİKDÜZÜ", "ÇARŞIBAŞI", "ÇAYKARA", "TONYA", "ŞALPAZARI", "DERNEKPAZARI", "DÜZKÖY", "HAYRAT", "KÖPRÜBAŞI(TRABZON)"],
+            "62": ["TUNCELİ", "ÇEMİŞKEZEK", "HOZAT", "MAZGİRT", "NAZİMİYE", "OVACIK (TUNCELİ)", "PERTEK", "PÜLÜMÜR"],
+            "63": ["EYYUBİYE", "HALİLİYE", "KARAKÖPRÜ", "SİVEREK", "VİRANŞEHİR", "AKÇAKALE", "BİRECİK", "SURUÇ", "BOZOVA", "CEYLANPINAR", "HALFETİ", "HİLVAN", "HARRAN"],
+            "64": ["UŞAK", "BANAZ", "EŞME", "SİVASLI", "KARAHANLI", "ULUBEY (UŞAK)"],
+            "65": ["İPEKYOLU", "TUŞBA", "ERCİŞ", "EDREMİT (VAN)", "GEVAŞ", "MURADİYE", "ÖZALP", "BAŞKALE", "GÜRPINAR", "ÇATAK", "ÇALDIRAN", "BAHÇESARAY", "SARAY (VAN)"],
+            "66": ["YOZGAT", "SORGUN", "AKDAĞMADENİ", "BOĞAZLIYAN", "SARIKAYA", "YERKÖY", "ÇAYIRALAN", "ÇEKEREK", "ŞEFAATLİ", "AYDINCIK(YOZGAT)", "ÇANDIR", "KADIŞEHRİ", "SARAYKENT", "YENİFAKILI"],
+            "67": ["ZONGULDAK", "KOZLU", "KİLİMLİ", "ÇAYCUMA", "EREĞLİ (KDZ)", "DEVREK", "ALAPLI", "GÖKÇEBEY"],
+            "68": ["AKSARAY", "ORTAKÖY (AKSARAY)", "GÜZELYURT", "ESKİL", "GÜLAĞAÇ", "AĞAÇÖREN", "SARIYAHŞİ", "SULTANHANI"],
+            "69": ["BAYBURT", "AYDINTEPE", "DEMİRÖZÜ"],
+            "70": ["KARAMAN", "ERMENEK", "AYRANCI", "KAZIMKARABEKİR", "BAŞYAYLA", "SARIVELİLER"],
+            "71": ["KIRIKKALE", "KESKİN", "BAHŞİLİ", "BALIŞEYH", "YAHŞİHAN", "DELİCE", "SULAKYURT", "ÇELEBİ", "KARAKEÇİLİ"],
+            "72": ["BATMAN", "BEŞİRİ", "GERCÜŞ", "HASANKEYF", "KOZLUK", "SASON"],
+            "73": ["ŞIRNAK", "CİZRE", "İDİL", "SİLOPİ", "BEYTÜŞŞEBAP", "GÜÇLÜKONAK", "ULUDERE"],
+            "74": ["BARTIN", "AMASRA", "KURUCAŞİLE", "ULUS"],
+            "75": ["ARDAHAN", "ÇILDIR", "DAMAL", "GÖLE", "HANAK", "POSOF"],
+            "76": ["IĞDIR", "KARAKOYUNLU", "ARALIK", "TUZLUCA"],
+            "77": ["YALOVA", "ALTINOVA", "ARMUTLU", "ÇINARCIK", "ÇİFTLİKKÖY", "TERMAL"],
+            "78": ["KARABÜK", "SAFRANBOLU", "ESKİPAZAR", "YENİCE (KARABÜK)", "EFLANİ", "OVACIK (KARABÜK)"],
+            "79": ["KİLİS", "ELBEYLİ", "MUSABEYLİ", "POLATELİ"],
+            "80": ["OSMANİYE", "TOPRAKKALE", "KADİRLİ", "DÜZİÇİ", "BAHÇE", "SUMBAS", "HASANBEYLİ"],
+            "81": ["DÜZCE", "AKÇAKOCA", "KAYNAŞLI", "YIĞILCA", "CUMAYERİ", "GÖLYAKA", "ÇİLİMLİ", "GÜMÜŞOVA"],
+            "82": ["BERLİN"]
         };
         
         this.katsayiData = {};
@@ -242,6 +244,10 @@ class TapuHarciHesaplama {
     }
 
     getTabContent() {
+        // Sort provinces alphabetically by name
+        const sortedProvinces = Object.entries(this.ilData)
+            .sort(([, nameA], [, nameB]) => nameA.localeCompare(nameB, 'tr-TR'));
+            
         return `
             <h3>Tapu Harcı Hesaplama</h3>
             <div class="plaka-container">
@@ -249,7 +255,7 @@ class TapuHarciHesaplama {
                     <label for="ilSelect">İl Seçiniz:</label>
                     <select id="ilSelect" class="form-select">
                         <option value="">İl seçin...</option>
-                        ${Object.entries(this.ilData).map(([code, name]) => 
+                        ${sortedProvinces.map(([code, name]) => 
                             `<option value="${code}">${name}</option>`
                         ).join('')}
                     </select>
@@ -292,7 +298,10 @@ class TapuHarciHesaplama {
             
             if (selectedIl && this.ilceData[selectedIl]) {
                 ilceSelect.disabled = false;
-                this.ilceData[selectedIl].forEach(ilce => {
+                // Sort districts alphabetically before adding to dropdown
+                const sortedIlceler = [...this.ilceData[selectedIl]].sort((a, b) => a.localeCompare(b, 'tr-TR'));
+                
+                sortedIlceler.forEach(ilce => {
                     const option = document.createElement('option');
                     option.value = ilce;
                     option.textContent = ilce;
@@ -334,17 +343,15 @@ class TapuHarciHesaplama {
             
             // Satış bedelinin %4'ü
             const tapuHarciTemel = bedelNumber * 0.04; // %4
-            
+
+            const donerSermayeBase = 1346; // 2025 yılı Döner Sermaye bedeli
+
             // Döner Sermaye
-            const donerSermaye = 1346; // 2025 yılı Döner Sermaye bedeli
+            const donerSermayeToplam = donerSermayeBase * yoreselKatsayi; // 2025 yılı Döner Sermaye bedeli
             
-            // Toplam harç (temel harç + döner sermaye) × yöresel katsayı
-            const toplamHarc = (tapuHarciTemel + donerSermaye) * yoreselKatsayi;
-            
-            // Alıcı ve satıcı payları
-            const aliciPayi = toplamHarc / 2;
-            const saticiPayi = toplamHarc / 2;
-            
+            // Toplam harç (temel harç + döner sermaye)
+            const toplamHarc = tapuHarciTemel + donerSermayeToplam;
+
             tapuResult.innerHTML = `
                 <div class="tapu-hesaplama-sonuc">
                     <h4>Hesaplama Sonucu</h4>
@@ -371,7 +378,7 @@ class TapuHarciHesaplama {
                         </div>
                         <div class="sonuc-satir">
                             <span class="label">Döner Sermaye (2025):</span>
-                            <span class="value">${donerSermaye.toLocaleString('tr-TR')} TL</span>
+                            <span class="value">${donerSermayeToplam.toLocaleString('tr-TR')} TL</span>
                         </div>
                         <div class="sonuc-satir toplam">
                             <span class="label">Toplam Tapu Harç Miktarı:</span>
@@ -379,7 +386,7 @@ class TapuHarciHesaplama {
                         </div>
                     </div>
                     <div class="uyari">
-                        <p><strong>Not:</strong> Tapu harç miktarı yarısı alıcı, yarısı satıcı olmak üzere ödenebilir. Döner Sermaye bedeli 2025 yılı için 1.346 TL'dir.</p>
+                        <p><strong>Not:</strong> Tapu harcının %2'si alıcı, %2'sinin satıcı tarafından ödenmesi gerekirken, döner sermaye harcının alıcı tarafından ödenmesi gerekmektedir.</p>
                     </div>
                 </div>
             `;

@@ -118,13 +118,13 @@ class HavalimaniSorgulama {
     getTabContent() {
         return `
             <h3>Uluslararası Havalimanı Sorgulama 
-                <span class="info-button" title="IATA: Uluslararası Hava Taşımacılığı Birliği Kodu&#10;ICAO: Uluslararası Sivil Havacılık Örgütü Kodu">ℹ️</span>
             </h3>
             <div class="plaka-container">
                 <div class="plaka-search">
                     <input type="text" id="havalimaniInput" placeholder="Havalimanı adı, şehir, ülke veya kod girin (örn: İstanbul, LTBA, IST)" class="plaka-input">
                     <button id="havalimaniSearchBtn" class="plaka-search-btn">Ara</button>
                 </div>
+                <p style="color: black; font-size: 12px;"><strong>Not: IATA: Uluslararası Hava Taşımacılığı Birliği Kodu&#10;ICAO: Uluslararası Sivil Havacılık Örgütü Kodu</strong></p>
                 <div id="havalimaniResult" class="plaka-result"></div>
                 <div class="results-container">
                     <h4>Tüm Eşleşmeler:</h4>
@@ -255,9 +255,3 @@ class HavalimaniSorgulama {
 
 // Export for use in main script
 window.HavalimaniSorgulama = HavalimaniSorgulama;
-        havalimaniSearchBtn.addEventListener('click', performSearch);
-        havalimaniInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                performSearch();
-            }
-        });

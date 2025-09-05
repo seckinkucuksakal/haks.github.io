@@ -197,6 +197,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const limanSorgulamaModule = new LimanSorgulama();
     const havalimaniSorgulamaModule = new HavalimaniSorgulama();
     const telefonAlanSorgulamaModule = new TelefonAlanSorgulama();
+    const ibanSorgulamaModule = new IbanSorgulama();
     const tapuHarciHesaplamaModule = new TapuHarciHesaplama();
 
     // Tab functionality
@@ -229,6 +230,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     case 'tab4':
                         content = telefonAlanSorgulamaModule.getTabContent();
                         break;
+                    case 'tab5':
+                        content = ibanSorgulamaModule.getTabContent();
+                        break;
                     case 'tab6':
                         content = tapuHarciHesaplamaModule.getTabContent();
                         break;
@@ -247,6 +251,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     havalimaniSorgulamaModule.initialize();
                 } else if (targetTab === 'tab4') {
                     telefonAlanSorgulamaModule.initialize();
+                } else if (targetTab === 'tab5') {
+                    ibanSorgulamaModule.initialize();
                 } else if (targetTab === 'tab6') {
                     tapuHarciHesaplamaModule.initialize();
                 }
