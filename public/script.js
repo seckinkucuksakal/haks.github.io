@@ -145,7 +145,25 @@ document.addEventListener('DOMContentLoaded', function() {
             .replace(/ş/g, 's')
             .replace(/ı/g, 'i')
             .replace(/ö/g, 'o')
-            .replace(/ç/g, 'c');
+            .replace(/ç/g, 'c')
+            .replace(/İ/g, 'i')  // Büyük İ harfi
+            .replace(/Ğ/g, 'g')
+            .replace(/Ü/g, 'u')
+            .replace(/Ş/g, 's')
+            .replace(/Ö/g, 'o')
+            .replace(/Ç/g, 'c');
+    }
+
+    // Enhanced Turkish search function
+    function createSearchVariants(text) {
+        const normalized = normalizeTurkish(text);
+        const variants = [
+            text.toLowerCase(),
+            normalized,
+            text.toLowerCase().replace(/i/g, 'İ').toLowerCase(), // i -> İ -> i conversion
+            text.toLowerCase().replace(/i/g, 'ı'), // i -> ı conversion
+        ];
+        return [...new Set(variants)]; // Remove duplicates
     }
 
     // Search filter functions
@@ -155,14 +173,34 @@ document.addEventListener('DOMContentLoaded', function() {
         let foundMatch = false;
         let matchingContent = '';
         
-        // Normalize search term for Turkish characters
-        const normalizedSearchTerm = normalizeTurkish(searchTerm);
+        // Create search variants for comprehensive matching
+        const searchVariants = createSearchVariants(searchTerm);
         
         tabButtons.forEach(button => {
-            const tabText = button.textContent.toLowerCase();
-            const normalizedTabText = normalizeTurkish(tabText);
+            const tabText = button.textContent;
+            const tabVariants = createSearchVariants(tabText);
             
-            if (normalizedTabText.includes(normalizedSearchTerm) || tabText.includes(searchTerm.toLowerCase())) {
+            // Check if any search variant matches any tab text variant
+            let isMatch = false;
+            for (const searchVariant of searchVariants) {
+                for (const tabVariant of tabVariants) {
+                    if (tabVariant.includes(searchVariant) || searchVariant.includes(tabVariant)) {
+                        isMatch = true;
+                        break;
+                    }
+                }
+                if (isMatch) break;
+            }
+            
+            // Additional check for direct substring matching
+            if (!isMatch) {
+                const normalizedTabText = normalizeTurkish(tabText);
+                const normalizedSearchTerm = normalizeTurkish(searchTerm);
+                isMatch = normalizedTabText.includes(normalizedSearchTerm) || 
+                         tabText.toLowerCase().includes(searchTerm.toLowerCase());
+            }
+            
+            if (isMatch) {
                 button.style.display = 'block';
                 foundMatch = true;
                 

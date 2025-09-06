@@ -156,21 +156,30 @@ class YasHesaplama {
                             <span class="label">Yaşınız:</span>
                             <span class="value">${result.years} yıl ${result.months} ay ${result.days} gün</span>
                         </div>
-                        <div class="sonuc-satir">
-                            <span class="label">Toplam Gün:</span>
-                            <span class="value">${result.totalDays.toLocaleString('tr-TR')} gün</span>
+                        
+                        <div class="detail-toggle" id="ageDetailToggleBtn" style="cursor: pointer; padding: 10px; margin: 10px 0; background: rgba(106, 176, 251, 0.1); border-radius: 5px; text-align: center; border: 1px solid #6ab0fb;">
+                            <span id="ageDetailToggleText">🔽 Detaylı Bilgileri Göster</span>
                         </div>
-                        <div class="sonuc-satir">
-                            <span class="label">Toplam Hafta:</span>
-                            <span class="value">${result.totalWeeks.toLocaleString('tr-TR')} hafta ${result.remainingDays} gün</span>
-                        </div>
-                        <div class="sonuc-satir">
-                            <span class="label">Toplam Ay:</span>
-                            <span class="value">${result.totalMonths} ay</span>
-                        </div>
-                        <div class="sonuc-satir">
-                            <span class="label">Sonraki Doğum Günü:</span>
-                            <span class="value">${result.nextBirthday} (${result.daysToNextBirthday} gün sonra)</span>
+                        
+                        <div id="ageDetailedInfo" style="max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out;">
+                            <div style="padding-top: 10px;">
+                                <div class="sonuc-satir">
+                                    <span class="label">Toplam Gün:</span>
+                                    <span class="value">${result.totalDays.toLocaleString('tr-TR')} gün</span>
+                                </div>
+                                <div class="sonuc-satir">
+                                    <span class="label">Toplam Hafta:</span>
+                                    <span class="value">${result.totalWeeks.toLocaleString('tr-TR')} hafta ${result.remainingDays} gün</span>
+                                </div>
+                                <div class="sonuc-satir">
+                                    <span class="label">Toplam Ay:</span>
+                                    <span class="value">${result.totalMonths} ay</span>
+                                </div>
+                                <div class="sonuc-satir">
+                                    <span class="label">Sonraki Doğum Günü:</span>
+                                    <span class="value">${result.nextBirthday} (${result.daysToNextBirthday} gün sonra)</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="uyari">
@@ -191,9 +200,31 @@ class YasHesaplama {
                         .tapu-hesaplama-sonuc::-webkit-scrollbar-thumb:hover {
                             background: #0056b3;
                         }
+                        .detail-toggle:hover {
+                            background: rgba(106, 176, 251, 0.2) !important;
+                        }
                     </style>
                 </div>
             `;
+
+            // Add event listener for the toggle button after the HTML is inserted
+            setTimeout(() => {
+                const toggleBtn = document.getElementById('ageDetailToggleBtn');
+                if (toggleBtn) {
+                    toggleBtn.addEventListener('click', () => {
+                        const detailedInfo = document.getElementById('ageDetailedInfo');
+                        const toggleText = document.getElementById('ageDetailToggleText');
+                        
+                        if (detailedInfo.style.maxHeight === '0px' || detailedInfo.style.maxHeight === '') {
+                            detailedInfo.style.maxHeight = detailedInfo.scrollHeight + 'px';
+                            toggleText.innerHTML = '🔼 Detaylı Bilgileri Gizle';
+                        } else {
+                            detailedInfo.style.maxHeight = '0px';
+                            toggleText.innerHTML = '🔽 Detaylı Bilgileri Göster';
+                        }
+                    });
+                }
+            }, 100);
         });
 
         // Temizle butonu
