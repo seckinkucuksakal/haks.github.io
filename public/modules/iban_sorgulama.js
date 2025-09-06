@@ -193,12 +193,6 @@ class IbanSorgulama {
         return countries[countryCode] || countryCode;
     }
 
-    getAccountNumber(iban) {
-        const cleanIban = iban.replace(/\s/g, '');
-        // Extract account number from positions 15-26 (0-indexed)
-        return cleanIban.substring(15, 26);
-    }
-
     getTabContent() {
         return `
             <h3>IBAN Sorgulama</h3>
@@ -401,7 +395,6 @@ class IbanSorgulama {
                 } else {
                     // Normal handling for other banks
                     const branchName = this.getBranchName(iban);
-                    const accountNumber = this.getAccountNumber(iban);
                     
                     ibanResult.innerHTML = `
                         <div class="tapu-hesaplama-sonuc" style="max-height: 400px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #007bff #f0f0f0;">
@@ -424,10 +417,6 @@ class IbanSorgulama {
                                 <div class="sonuc-satir">
                                     <span class="label">Şube Adı:</span>
                                     <span class="value">${branchName}</span>
-                                </div>
-                                <div class="sonuc-satir">
-                                    <span class="label">Hesap No:</span>
-                                    <span class="value">${accountNumber}</span>
                                 </div>
                                 <div class="sonuc-satir">
                                     <span class="label">Ülke:</span>

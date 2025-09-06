@@ -199,6 +199,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const telefonAlanSorgulamaModule = new TelefonAlanSorgulama();
     const ibanSorgulamaModule = new IbanSorgulama();
     const tapuHarciHesaplamaModule = new TapuHarciHesaplama();
+    const yasHesaplamaModule = new YasHesaplama();
+    const ikiTarihArasiFarkModule = new IkiTarihArasiFark();
+    const mirasHesaplamaModule = new MirasHesaplama();
 
     // Tab functionality
     const tabButtons = document.querySelectorAll('.tab-btn');
@@ -219,22 +222,31 @@ document.addEventListener('DOMContentLoaded', function() {
                 let content = '';
                 switch(targetTab) {
                     case 'tab1':
-                        content = ilSorgulamaModule.getTabContent();
-                        break;
-                    case 'tab2':
-                        content = limanSorgulamaModule.getTabContent();
-                        break;
-                    case 'tab3':
-                        content = havalimaniSorgulamaModule.getTabContent();
-                        break;
-                    case 'tab4':
-                        content = telefonAlanSorgulamaModule.getTabContent();
-                        break;
-                    case 'tab5':
                         content = ibanSorgulamaModule.getTabContent();
                         break;
-                    case 'tab6':
+                    case 'tab2':
+                        content = ikiTarihArasiFarkModule.getTabContent();
+                        break;
+                    case 'tab3':
+                        content = mirasHesaplamaModule.getTabContent();
+                        break;
+                    case 'tab4':
+                        content = ilSorgulamaModule.getTabContent();
+                        break;
+                    case 'tab5':
                         content = tapuHarciHesaplamaModule.getTabContent();
+                        break;
+                    case 'tab6':
+                        content = telefonAlanSorgulamaModule.getTabContent();
+                        break;
+                    case 'tab7':
+                        content = limanSorgulamaModule.getTabContent();
+                        break;
+                    case 'tab8':
+                        content = havalimaniSorgulamaModule.getTabContent();
+                        break;
+                    case 'tab9':
+                        content = yasHesaplamaModule.getTabContent();
                         break;
                     default:
                         content = '<p>İçerik bulunamadı.</p>';
@@ -244,25 +256,31 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Initialize module functionality based on selected tab
                 if (targetTab === 'tab1') {
-                    ilSorgulamaModule.initialize();
-                } else if (targetTab === 'tab2') {
-                    limanSorgulamaModule.initialize();
-                } else if (targetTab === 'tab3') {
-                    havalimaniSorgulamaModule.initialize();
-                } else if (targetTab === 'tab4') {
-                    telefonAlanSorgulamaModule.initialize();
-                } else if (targetTab === 'tab5') {
                     ibanSorgulamaModule.initialize();
-                } else if (targetTab === 'tab6') {
+                } else if (targetTab === 'tab2') {
+                    ikiTarihArasiFarkModule.initialize();
+                } else if (targetTab === 'tab3') {
+                    mirasHesaplamaModule.initialize();
+                } else if (targetTab === 'tab4') {
+                    ilSorgulamaModule.initialize();
+                } else if (targetTab === 'tab5') {
                     tapuHarciHesaplamaModule.initialize();
+                } else if (targetTab === 'tab6') {
+                    telefonAlanSorgulamaModule.initialize();
+                } else if (targetTab === 'tab7') {
+                    limanSorgulamaModule.initialize();
+                } else if (targetTab === 'tab8') {
+                    havalimaniSorgulamaModule.initialize();
+                } else if (targetTab === 'tab9') {
+                    yasHesaplamaModule.initialize();
                 }
                 
                 console.log('Tab switched to:', targetTab);
             });
         });
         
-        // Initialize with first tab content (Plaka Sorgulama)
-        rightContent.innerHTML = ilSorgulamaModule.getTabContent();
-        ilSorgulamaModule.initialize();
+        // Initialize with first tab content (İban Sorgulama)
+        rightContent.innerHTML = ibanSorgulamaModule.getTabContent();
+        ibanSorgulamaModule.initialize();
     }
 });
