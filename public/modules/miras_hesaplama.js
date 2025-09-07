@@ -17,12 +17,18 @@ class MirasHesaplama {
             <h3>Miras Hesaplama</h3>
             <div class="plaka-container">
                 <div class="form-group">
-                    <label for="mirasVarligi">Tahmini Parasal Miras Malvarlığı (TL):</label>
+                    <label for="mirasVarligi">
+                        Mirasbırakanın Malvarlığının Tahmini Parasal Değeri (TL):
+                        <span class="info-icon" title="">ⓘ</span>
+                    </label>
+                    <div class="info-tooltip" id="mirasVarligiTooltip">
+                        <p>Hesaplamanın sağlıklı şekilde yapılması için döviz-hisse senedi-taşınır-taşınmaz malvarlıklarının tahmini güncel piyasa değerlerinin toplamının girilmesi gereklidir. Bunlar sadece hesaplamanın kolaylığı için gerekli olup, uygulamada nakide çevirme gibi bir zorunluluk bulunmamaktadır.</p>
+                    </div>
                     <input type="text" id="mirasVarligi" placeholder="1800000.25 TL" class="form-input">
                 </div>
                 
                 <div class="form-group">
-                    <label for="esSagMi">Muris Öldüğünde Eşi Sağ mıydı:</label>
+                    <label for="esSagMi">Mirasbırakan Öldüğünde Eşi Sağ mıydı:</label>
                     <select id="esSagMi" class="form-select">
                         <option value="">Seçiniz...</option>
                         <option value="evet">Evet</option>
@@ -31,7 +37,7 @@ class MirasHesaplama {
                 </div>
                 
                 <div class="form-group">
-                    <label for="cocukVarMi">Muris Öldüğünde Sağ Çocuğu Var mıydı:</label>
+                    <label for="cocukVarMi">Mirasbırakan Öldüğünde Sağ Çocuğu Var mıydı:</label>
                     <select id="cocukVarMi" class="form-select">
                         <option value="">Seçiniz...</option>
                         <option value="evet">Evet</option>
@@ -45,7 +51,7 @@ class MirasHesaplama {
                 </div>
                 
                 <div class="form-group">
-                    <label for="torunVarMi">Murisin Kendinden Önce Ölen Çocuklarından Torunu Olan Var mıydı:</label>
+                    <label for="torunVarMi">Mirasbırakanın Kendinden Önce Ölen Çocuklarından Torunu Olan Var mıydı:</label>
                     <select id="torunVarMi" class="form-select">
                         <option value="">Seçiniz...</option>
                         <option value="evet">Evet</option>
@@ -54,7 +60,7 @@ class MirasHesaplama {
                 </div>
                 
                 <div class="form-group" id="torunSayisiGroup" style="display: none;">
-                    <label for="torunSayisi">Murisin Kendinden Önce Ölen Çocuklarından Torunu Olan Kaç Çocuğu Vardı:</label>
+                    <label for="torunSayisi">Mirasbırakanın Kendinden Önce Ölen Çocuklarından Torunu Olan Kaç Çocuğu Vardı:</label>
                     <input type="number" id="torunSayisi" class="form-input" min="1" max="50" value="1">
                 </div>
                 
@@ -103,7 +109,7 @@ class MirasHesaplama {
                 
                 <div class="form-group" id="anaBabaGroup" style="display: none;">
                     <div class="form-group">
-                        <label for="anaBabaDurumu">Muris Öldüğünde Anne ve Baba Durumu:</label>
+                        <label for="anaBabaDurumu">Mirasbırakan Öldüğünde Anne ve Baba Durumu:</label>
                         <select id="anaBabaDurumu" class="form-select">
                             <option value="">Seçiniz...</option>
                             <option value="ikisi-sag">İkisi de Sağ</option>
@@ -158,7 +164,7 @@ class MirasHesaplama {
                         
                         <div class="form-group" id="buyukAnaBabaGroup" style="display: none;">
                             <div class="form-group">
-                                <label for="anneAnnesiBabasiVarMi">Murisin Annesinin Annesi ve Babası Sağ mı:</label>
+                                <label for="anneAnnesiBabasiVarMi">Mirasbırakanın Annesinin Annesi ve Babası Sağ mı:</label>
                                 <select id="anneAnnesiBabasiVarMi" class="form-select">
                                     <option value="">Seçiniz...</option>
                                     <option value="ikisi-sag">İkisi de Sağ</option>
@@ -171,7 +177,7 @@ class MirasHesaplama {
                             <!-- Anne tarafı büyük anne-baba öldüyse teyze/dayı soruları -->
                             <div id="anneTeyzeDayiGroup" style="display:none; margin-top: 12px; padding-top: 8px; border-top: 1px dashed #ccc;">
                                 <div class="form-group">
-                                    <label for="teyzeVarMi">Murisin Teyzesi (Annenin Kız Kardeşi) Var mı:</label>
+                                    <label for="teyzeVarMi">Mirasbırakanın Teyzesi (Annenin Kız Kardeşi) Var mı:</label>
                                     <select id="teyzeVarMi" class="form-select">
                                         <option value="">Seçiniz...</option>
                                         <option value="evet">Evet</option>
@@ -184,7 +190,7 @@ class MirasHesaplama {
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="dayiVarMi">Murisin Dayısı (Annenin Erkek Kardeşi) Var mı:</label>
+                                    <label for="dayiVarMi">Mirasbırakanın Dayısı (Annenin Erkek Kardeşi) Var mı:</label>
                                     <select id="dayiVarMi" class="form-select">
                                         <option value="">Seçiniz...</option>
                                         <option value="evet">Evet</option>
@@ -198,7 +204,7 @@ class MirasHesaplama {
                             </div>
                             
                             <div class="form-group">
-                                <label for="babaAnnesiBabasiVarMi">Murisin Babasının Annesi ve Babası Sağ mı:</label>
+                                <label for="babaAnnesiBabasiVarMi">Mirasbırakanın Babasının Annesi ve Babası Sağ mı:</label>
                                 <select id="babaAnnesiBabasiVarMi" class="form-select">
                                     <option value="">Seçiniz...</option>
                                     <option value="ikisi-sag">İkisi de Sağ</option>
@@ -211,7 +217,7 @@ class MirasHesaplama {
                             <!-- Baba tarafı büyük anne-baba öldüyse hala/amca soruları -->
                             <div id="babaHalaAmcaGroup" style="display:none; margin-top: 12px; padding-top: 8px; border-top: 1px dashed #ccc;">
                                 <div class="form-group">
-                                    <label for="halaVarMi">Murisin Halası (Babanın Kız Kardeşi) Var mı:</label>
+                                    <label for="halaVarMi">Mirasbırakanın Halası (Babanın Kız Kardeşi) Var mı:</label>
                                     <select id="halaVarMi" class="form-select">
                                         <option value="">Seçiniz...</option>
                                         <option value="evet">Evet</option>
@@ -224,7 +230,7 @@ class MirasHesaplama {
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="amcaVarMi">Murisin Amcası (Babanın Erkek Kardeşi) Var mı:</label>
+                                    <label for="amcaVarMi">Mirasbırakanın Amcası (Babanın Erkek Kardeşi) Var mı:</label>
                                     <select id="amcaVarMi" class="form-select">
                                         <option value="">Seçiniz...</option>
                                         <option value="evet">Evet</option>
@@ -247,6 +253,55 @@ class MirasHesaplama {
                 
                 <div id="mirasResult" class="tapu-result"></div>
             </div>
+            
+            <style>
+                .info-icon {
+                    color: #007bff;
+                    cursor: pointer;
+                    font-size: 16px;
+                    margin-left: 5px;
+                    position: relative;
+                    display: inline-block;
+                }
+                
+                .info-tooltip {
+                    display: none;
+                    position: absolute;
+                    background-color: #cbcacaff;
+                    color: black;
+                    padding: 10px;
+                    border-radius: 6px;
+                    font-size: 12px;
+                    line-height: 1.4;
+                    width: 280px;
+                    z-index: 1000;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+                    top: 25px;
+                    left: 50%;
+                    transform: translateX(29%);
+                }
+                
+                .info-tooltip::before {
+                    content: '';
+                    position: absolute;
+                    top: -8px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    border-left: 8px solid transparent;
+                    border-right: 8px solid transparent;
+                    border-bottom: 8px solid #333;
+                }
+                
+                .info-tooltip p {
+                    margin: 0;
+                    font-size: 12px;
+                    color: black;
+                }
+                
+                .form-group {
+                    position: relative;
+                }
+            </style>
         `;
     }
 
@@ -547,6 +602,112 @@ class MirasHesaplama {
             return toplamPay / 2; // İkisi sağ ise payı ikiye böl
         } else {
             return toplamPay; // Tek kişi sağ ise tamamını alır
+        }
+    }
+
+    // Ana-baba zümresi dağıtımı
+    distributeAnaBabaZumresi(toplamPay, anaBabaDurumu, ozKardesVar, ozKardesSayisi, anneUveyKardesVar, anneUveyKardesSayisi, babaUveyKardesVar, babaUveyKardesSayisi, anneAnnesiBabasiDurumu, babaAnnesiBabasiDurumu, teyzeVar, teyzeSayisi, dayiVar, dayiSayisi, halaVar, halaSayisi, amcaVar, amcaSayisi) {
+        // Başlangıç değerleri
+        this.annePay = 0;
+        this.babaPay = 0;
+        this.ozKardesPay = 0;
+        this.anneUveyKardesPay = 0;
+        this.babaUveyKardesPay = 0;
+        this.anneAnnesiBabasiPay = 0;
+        this.babaAnnesiBabasiPay = 0;
+        this.teyzePay = 0;
+        this.dayiPay = 0;
+        this.halaPay = 0;
+        this.amcaPay = 0;
+
+        // Anne ve baba durumunu çözümle
+        const anneSag = anaBabaDurumu === 'ikisi-sag' || anaBabaDurumu === 'anne-sag';
+        const babaSag = anaBabaDurumu === 'ikisi-sag' || anaBabaDurumu === 'baba-sag';
+
+        if (anneSag && babaSag) {
+            // Her ikisi de sağ - eşit paylaşım
+            this.annePay = toplamPay / 2;
+            this.babaPay = toplamPay / 2;
+        } else if (anneSag || babaSag) {
+            // Sadece birisi sağ
+            if (anneSag) {
+                // Anne sağ, baba ölü
+                if (ozKardesVar || anneUveyKardesVar || babaUveyKardesVar) {
+                    // Kardeşler varsa anne ile kardeşler arasında paylaşım
+                    this.annePay = toplamPay / 2;
+                    const kardesPay = toplamPay / 2;
+                    
+                    // Kardeşler arasında dağıtım
+                    this.distributeKardesPay(kardesPay, ozKardesVar, ozKardesSayisi, anneUveyKardesVar, anneUveyKardesSayisi, babaUveyKardesVar, babaUveyKardesSayisi);
+                } else {
+                    // Kardeş yoksa anne tamamını alır
+                    this.annePay = toplamPay;
+                }
+            } else {
+                // Baba sağ, anne ölü
+                if (ozKardesVar || anneUveyKardesVar || babaUveyKardesVar) {
+                    // Kardeşler varsa baba ile kardeşler arasında paylaşım
+                    this.babaPay = toplamPay / 2;
+                    const kardesPay = toplamPay / 2;
+                    
+                    // Kardeşler arasında dağıtım
+                    this.distributeKardesPay(kardesPay, ozKardesVar, ozKardesSayisi, anneUveyKardesVar, anneUveyKardesSayisi, babaUveyKardesVar, babaUveyKardesSayisi);
+                } else {
+                    // Kardeş yoksa baba tamamını alır
+                    this.babaPay = toplamPay;
+                }
+            }
+        } else {
+            // İkisi de ölü - kardeşler veya büyük anne-baba zümresine geçer
+            if (ozKardesVar || anneUveyKardesVar || babaUveyKardesVar) {
+                // Kardeşler varsa onlara dağıt
+                this.distributeKardesPay(toplamPay, ozKardesVar, ozKardesSayisi, anneUveyKardesVar, anneUveyKardesSayisi, babaUveyKardesVar, babaUveyKardesSayisi);
+            } else {
+                // Kardeş yoksa büyük anne-baba zümresine geçer
+                this.distributeBuyukAnaBabaPay(
+                    toplamPay,
+                    anneAnnesiBabasiDurumu,
+                    babaAnnesiBabasiDurumu,
+                    { teyzeAdet: teyzeSayisi, dayiAdet: dayiSayisi, halaAdet: halaSayisi, amcaAdet: amcaSayisi }
+                );
+            }
+        }
+    }
+
+    // Kardeş payları dağıtımı
+    distributeKardesPay(kardesPay, ozKardesVar, ozKardesSayisi, anneUveyKardesVar, anneUveyKardesSayisi, babaUveyKardesVar, babaUveyKardesSayisi) {
+        // TMK md. 497: Öz kardeşler tam pay, üvey kardeşler yarım pay alır
+        let toplamPay = 0;
+        
+        // Öz kardeşler tam pay
+        if (ozKardesVar) {
+            toplamPay += ozKardesSayisi * 1;
+        }
+        
+        // Anne üvey kardeşler yarım pay
+        if (anneUveyKardesVar) {
+            toplamPay += anneUveyKardesSayisi * 0.5;
+        }
+        
+        // Baba üvey kardeşler yarım pay
+        if (babaUveyKardesVar) {
+            toplamPay += babaUveyKardesSayisi * 0.5;
+        }
+        
+        if (toplamPay > 0) {
+            const birimPay = kardesPay / toplamPay;
+            
+            if (ozKardesVar) {
+                this.ozKardesPay = birimPay * ozKardesSayisi * 1;
+            }
+            
+            if (anneUveyKardesVar) {
+                this.anneUveyKardesPay = birimPay * anneUveyKardesSayisi * 0.5;
+            }
+            
+            if (babaUveyKardesVar) {
+                this.babaUveyKardesPay = birimPay * babaUveyKardesSayisi * 0.5;
+            }
         }
     }
 
@@ -958,7 +1119,7 @@ class MirasHesaplama {
                         <h4>Miras Hesaplama Sonucu</h4>
                         <div class="sonuc-detay">
                             <div class="sonuc-satir">
-                                <span class="label">Toplam Miras Varlığı:</span>
+                                <span class="label">Toplam Tereke:</span>
                                 <span class="value">${result.toplamVarlik.toLocaleString('tr-TR', {minimumFractionDigits: 2})} TL (%100)</span>
                             </div>
                             <div class="sonuc-satir toplam" style="background-color: #f8f9fa; border-left: 4px solid #dc3545;">
@@ -967,9 +1128,9 @@ class MirasHesaplama {
                             </div>
                         </div>
                         <div class="uyari" style="background-color: #fff3cd; border: 1px solid #ffeaa7; border-radius: 4px; padding: 15px; margin-top: 15px;">
-                            <h5 style="color: #856404; margin-bottom: 10px;">TMK Madde 501</h5>
-                            <p style="color: #856404; margin-bottom: 0;"><strong>Mirasçı bırakmaksızın ölen kimsenin mirası Devlete geçer.</strong></p>
-                            <p style="color: #856404; margin-top: 8px; font-size: 14px;">Bu durumda tüm miras varlığı hiçbir yasal mirasçı bulunmadığı için Türkiye Cumhuriyeti Devletine intikal eder.</p>
+                            <h5 style="color: #856404; margin-bottom: 10px;">TMK md. 501 - Devlet</h5>
+                            <p style="color: #856404; margin-bottom: 0;"><strong>"Mirasçı bırakmaksızın ölen kimsenin mirası Devlete geçer."</strong></p>
+                            <p style="color: #856404; margin-top: 8px; font-size: 14px;">Bu durumda tüm tereke, hiçbir yasal mirasçı bulunmadığı için Devlet Hazinesine intikal eder.</p>
                         </div>
                     </div>
                 `;
@@ -992,13 +1153,13 @@ class MirasHesaplama {
                         
                         ${result.annePay > 0 ? `
                         <div class="sonuc-satir toplam">
-                            <span class="label">Murisin Annesinin Miras Payı:</span>
+                            <span class="label">Mirasbırakanın Annesinin Miras Payı:</span>
                             <span class="value">${result.annePay.toLocaleString('tr-TR', {minimumFractionDigits: 2})} TL (%${result.anneOrani})</span>
                         </div>` : ''}
                         
                         ${result.babaPay > 0 ? `
                         <div class="sonuc-satir toplam">
-                            <span class="label">Murisin Babasının Miras Payı:</span>
+                            <span class="label">Mirasbırakanın Babasının Miras Payı:</span>
                             <span class="value">${result.babaPay.toLocaleString('tr-TR', {minimumFractionDigits: 2})} TL (%${result.babaOrani})</span>
                         </div>` : ''}
                         
@@ -1036,30 +1197,30 @@ class MirasHesaplama {
                         ${result.anneAnnesiBabasiPay > 0 ? `
                         ${result.anneAnnesiBabasiDurumu === 'ikisi-sag' ? `
                         <div class="sonuc-satir toplam">
-                            <span class="label">Murisin Annesinin Annesine (Büyükanne):</span>
+                            <span class="label">Mirasbırakanın Annesinin Annesine (Anneanne):</span>
                             <span class="value">${(result.anneAnnesiBabasiPay / 2).toLocaleString('tr-TR', {minimumFractionDigits: 2})} TL (%${(((result.anneAnnesiBabasiPay / 2) / result.toplamVarlik) * 100).toFixed(1)})</span>
                         </div>
                         <div class="sonuc-satir toplam">
-                            <span class="label">Murisin Annesinin Babasına (Büyükbaba):</span>
+                            <span class="label">Mirasbırakanın Annesinin Babasına (Dede):</span>
                             <span class="value">${(result.anneAnnesiBabasiPay / 2).toLocaleString('tr-TR', {minimumFractionDigits: 2})} TL (%${(((result.anneAnnesiBabasiPay / 2) / result.toplamVarlik) * 100).toFixed(1)})</span>
                         </div>` : `
                         <div class="sonuc-satir toplam">
-                            <span class="label">Murisin Annesinin ${result.anneAnnesiBabasiDurumu === 'annesi-sag' ? 'Annesine (Büyükanne)' : 'Babasına (Büyükbaba)'}:</span>
+                            <span class="label">Mirasbırakanın Annesinin ${result.anneAnnesiBabasiDurumu === 'annesi-sag' ? 'Annesine (Anneanne)' : 'Babasına (Dede)'}:</span>
                             <span class="value">${result.anneAnnesiBabasiPay.toLocaleString('tr-TR', {minimumFractionDigits: 2})} TL (%${((result.anneAnnesiBabasiPay / result.toplamVarlik) * 100).toFixed(1)})</span>
                         </div>`}` : ''}
                         
                         ${result.babaAnnesiBabasiPay > 0 ? `
                         ${result.babaAnnesiBabasiDurumu === 'ikisi-sag' ? `
                         <div class="sonuc-satir toplam">
-                            <span class="label">Murisin Babasının Annesine (Büyükanne):</span>
+                            <span class="label">Mirasbırakanın Babasının Annesine (Büyükanne):</span>
                             <span class="value">${(result.babaAnnesiBabasiPay / 2).toLocaleString('tr-TR', {minimumFractionDigits: 2})} TL (%${(((result.babaAnnesiBabasiPay / 2) / result.toplamVarlik) * 100).toFixed(1)})</span>
                         </div>
                         <div class="sonuc-satir toplam">
-                            <span class="label">Murisin Babasının Babasına (Büyükbaba):</span>
+                            <span class="label">Mirasbırakanın Babasının Babasına (Büyükbaba):</span>
                             <span class="value">${(result.babaAnnesiBabasiPay / 2).toLocaleString('tr-TR', {minimumFractionDigits: 2})} TL (%${(((result.babaAnnesiBabasiPay / 2) / result.toplamVarlik) * 100).toFixed(1)})</span>
                         </div>` : `
                         <div class="sonuc-satir toplam">
-                            <span class="label">Murisin Babasının ${result.babaAnnesiBabasiDurumu === 'annesi-sag' ? 'Annesine (Büyükanne)' : 'Babasına (Büyükbaba)'}:</span>
+                            <span class="label">Mirasbırakanın Babasının ${result.babaAnnesiBabasiDurumu === 'annesi-sag' ? 'Annesine (Büyükanne)' : 'Babasına (Büyükbaba)'}:</span>
                             <span class="value">${result.babaAnnesiBabasiPay.toLocaleString('tr-TR', {minimumFractionDigits: 2})} TL (%${((result.babaAnnesiBabasiPay / result.toplamVarlik) * 100).toFixed(1)})</span>
                         </div>`}` : ''}
                         
@@ -1088,7 +1249,7 @@ class MirasHesaplama {
                         </div>` : ''}
                     </div>
                     <div class="uyari">
-                        <p>Bu hesaplama TMK 4721 sayılı kanunun md. 495, 496, 497, 498 ve 499'a göre yapılmıştır.</p>
+                        <p>Bu hesaplama 4721 sayılı Türk Medeni Kanun'un 495 ve 513. maddeler arasındaki hükümlerine göre yapılmıştır.</p>
                     </div>
                     <style>
                         .tapu-hesaplama-sonuc::-webkit-scrollbar {
@@ -1163,6 +1324,20 @@ class MirasHesaplama {
             
             mirasResult.innerHTML = '';
         });
+
+        // Info tooltip functionality
+        const infoIcon = document.querySelector('.info-icon');
+        const tooltip = document.getElementById('mirasVarligiTooltip');
+        
+        if (infoIcon && tooltip) {
+            infoIcon.addEventListener('mouseenter', () => {
+                tooltip.style.display = 'block';
+            });
+            
+            infoIcon.addEventListener('mouseleave', () => {
+                tooltip.style.display = 'none';
+            });
+        }
 
         // Enter tuşu ile hesaplama
         mirasVarligiInput.addEventListener('keypress', (e) => {
