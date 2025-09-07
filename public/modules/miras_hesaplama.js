@@ -162,8 +162,8 @@ class MirasHesaplama {
                                 <select id="anneAnnesiBabasiVarMi" class="form-select">
                                     <option value="">Seçiniz...</option>
                                     <option value="ikisi-sag">İkisi de Sağ</option>
-                                    <option value="annesi-sag">Sadece Annesi Sağ</option>
-                                    <option value="babasi-sag">Sadece Babası Sağ</option>
+                                    <option value="annesi-sag">Sadece Annesi Sağ Baba Ölü</option>
+                                    <option value="babasi-sag">Sadece Babası Sağ Anne Ölü</option>
                                     <option value="ikisi-olu">İkisi de Öldü</option>
                                 </select>
                             </div>
@@ -171,7 +171,7 @@ class MirasHesaplama {
                             <!-- Anne tarafı büyük anne-baba öldüyse teyze/dayı soruları -->
                             <div id="anneTeyzeDayiGroup" style="display:none; margin-top: 12px; padding-top: 8px; border-top: 1px dashed #ccc;">
                                 <div class="form-group">
-                                    <label for="teyzeVarMi">Teyze (Annenin Kız Kardeşi) Var mı:</label>
+                                    <label for="teyzeVarMi">Murisin Teyzesi (Annenin Kız Kardeşi) Var mı:</label>
                                     <select id="teyzeVarMi" class="form-select">
                                         <option value="">Seçiniz...</option>
                                         <option value="evet">Evet</option>
@@ -184,7 +184,7 @@ class MirasHesaplama {
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="dayiVarMi">Dayı (Annenin Erkek Kardeşi) Var mı:</label>
+                                    <label for="dayiVarMi">Murisin Dayısı (Annenin Erkek Kardeşi) Var mı:</label>
                                     <select id="dayiVarMi" class="form-select">
                                         <option value="">Seçiniz...</option>
                                         <option value="evet">Evet</option>
@@ -202,8 +202,8 @@ class MirasHesaplama {
                                 <select id="babaAnnesiBabasiVarMi" class="form-select">
                                     <option value="">Seçiniz...</option>
                                     <option value="ikisi-sag">İkisi de Sağ</option>
-                                    <option value="annesi-sag">Sadece Annesi Sağ</option>
-                                    <option value="babasi-sag">Sadece Babası Sağ</option>
+                                    <option value="annesi-sag">Sadece Annesi Sağ Baba Ölü</option>
+                                    <option value="babasi-sag">Sadece Babası Sağ Anne Ölü</option>
                                     <option value="ikisi-olu">İkisi de Öldü</option>
                                 </select>
                             </div>
@@ -211,7 +211,7 @@ class MirasHesaplama {
                             <!-- Baba tarafı büyük anne-baba öldüyse hala/amca soruları -->
                             <div id="babaHalaAmcaGroup" style="display:none; margin-top: 12px; padding-top: 8px; border-top: 1px dashed #ccc;">
                                 <div class="form-group">
-                                    <label for="halaVarMi">Hala (Babanın Kız Kardeşi) Var mı:</label>
+                                    <label for="halaVarMi">Murisin Halası (Babanın Kız Kardeşi) Var mı:</label>
                                     <select id="halaVarMi" class="form-select">
                                         <option value="">Seçiniz...</option>
                                         <option value="evet">Evet</option>
@@ -224,7 +224,7 @@ class MirasHesaplama {
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="amcaVarMi">Amca (Babanın Erkek Kardeşi) Var mı:</label>
+                                    <label for="amcaVarMi">Murisin Amcası (Babanın Erkek Kardeşi) Var mı:</label>
                                     <select id="amcaVarMi" class="form-select">
                                         <option value="">Seçiniz...</option>
                                         <option value="evet">Evet</option>
@@ -377,6 +377,9 @@ class MirasHesaplama {
             dayiPay = this.dayiPay || 0;
             halaPay = this.halaPay || 0;
             amcaPay = this.amcaPay || 0;
+        } else {
+            // TMK md. 501: Mirasçı bırakmaksızın ölen kimsenin mirası Devlete geçer
+            // Hiç mirasçı yok - miras devlete geçer
         }
 
         // Çocuk ve torun payları hesaplama
@@ -448,134 +451,102 @@ class MirasHesaplama {
         this.babaAnnesiBabasiPay = 0;
         this.teyzePay = 0; this.dayiPay = 0; this.halaPay = 0; this.amcaPay = 0;
 
-        const herIkiTarafOluler = (anneAnnesiBabasiDurumu === 'ikisi-olu') && (babaAnnesiBabasiDurumu === 'ikisi-olu');
-        const toplamAltsoy = (altsoy.teyzeAdet || 0) + (altsoy.dayiAdet || 0) + (altsoy.halaAdet || 0) + (altsoy.amcaAdet || 0);
+        // Pay yarıya bölünür: anne tarafı ve baba tarafı
+        const anneTarafiPay = toplamPay / 2;
+        const babaTarafiPay = toplamPay / 2;
 
-        // Tüm büyük anne-babalar ölü ve altsoya var ise, altsoya eşit paylaştır
-        if (herIkiTarafOluler && toplamAltsoy > 0) {
-            const kisiBasina = toplamPay / toplamAltsoy;
-            this.teyzePay = kisiBasina * (altsoy.teyzeAdet || 0);
-            this.dayiPay  = kisiBasina * (altsoy.dayiAdet  || 0);
-            this.halaPay  = kisiBasina * (altsoy.halaAdet  || 0);
-            this.amcaPay  = kisiBasina * (altsoy.amcaAdet  || 0);
-            return;
-        }
+        // Anne tarafı dağıtımı
+        this.distributeAnneTarafiPay(anneTarafiPay, anneAnnesiBabasiDurumu, altsoy.teyzeAdet || 0, altsoy.dayiAdet || 0);
+        
+        // Baba tarafı dağıtımı
+        this.distributeBabaTarafiPay(babaTarafiPay, babaAnnesiBabasiDurumu, altsoy.halaAdet || 0, altsoy.amcaAdet || 0);
+    }
 
-        // Sağ olan büyük anne-babaları say
-        let toplamSagBuyukAnaBaba = 0;
-        if (anneAnnesiBabasiDurumu && anneAnnesiBabasiDurumu !== 'ikisi-olu') {
-            toplamSagBuyukAnaBaba += (anneAnnesiBabasiDurumu === 'ikisi-sag') ? 2 : 1;
-        }
-        if (babaAnnesiBabasiDurumu && babaAnnesiBabasiDurumu !== 'ikisi-olu') {
-            toplamSagBuyukAnaBaba += (babaAnnesiBabasiDurumu === 'ikisi-sag') ? 2 : 1;
-        }
-        if (toplamSagBuyukAnaBaba > 0) {
-            const kisiBasinaPay = toplamPay / toplamSagBuyukAnaBaba;
-            if (anneAnnesiBabasiDurumu && anneAnnesiBabasiDurumu !== 'ikisi-olu') {
-                this.anneAnnesiBabasiPay = (anneAnnesiBabasiDurumu === 'ikisi-sag') ? kisiBasinaPay * 2 : kisiBasinaPay;
+    // Anne tarafı pay dağıtımı
+    distributeAnneTarafiPay(anneTarafiPay, anneAnnesiBabasiDurumu, teyzeAdet, dayiAdet) {
+        if (anneAnnesiBabasiDurumu === 'ikisi-sag') {
+            // İkisi de sağ - eşit paylaşım
+            this.anneAnnesiBabasiPay = anneTarafiPay;
+        } else if (anneAnnesiBabasiDurumu === 'annesi-sag') {
+            // Sadece büyükanne sağ - büyükanne yarıyı alır, diğer yarısı teyze/dayılara
+            this.anneAnnesiBabasiPay = anneTarafiPay / 2;
+            const olunenPay = anneTarafiPay / 2;
+            
+            // Ölen büyükbabanın payı teyze/dayılara
+            const toplamTeyzeDay = teyzeAdet + dayiAdet;
+            if (toplamTeyzeDay > 0) {
+                const kisiBasinaPay = olunenPay / toplamTeyzeDay;
+                this.teyzePay = kisiBasinaPay * teyzeAdet;
+                this.dayiPay = kisiBasinaPay * dayiAdet;
             }
-            if (babaAnnesiBabasiDurumu && babaAnnesiBabasiDurumu !== 'ikisi-olu') {
-                this.babaAnnesiBabasiPay = (babaAnnesiBabasiDurumu === 'ikisi-sag') ? kisiBasinaPay * 2 : kisiBasinaPay;
+        } else if (anneAnnesiBabasiDurumu === 'babasi-sag') {
+            // Sadece büyükbaba sağ - büyükbaba yarıyı alır, diğer yarısı teyze/dayılara
+            this.anneAnnesiBabasiPay = anneTarafiPay / 2;
+            const olunenPay = anneTarafiPay / 2;
+            
+            // Ölen büyükannenin payı teyze/dayılara
+            const toplamTeyzeDay = teyzeAdet + dayiAdet;
+            if (toplamTeyzeDay > 0) {
+                const kisiBasinaPay = olunenPay / toplamTeyzeDay;
+                this.teyzePay = kisiBasinaPay * teyzeAdet;
+                this.dayiPay = kisiBasinaPay * dayiAdet;
+            }
+        } else if (anneAnnesiBabasiDurumu === 'ikisi-olu') {
+            // İkisi de ölü - tamamı teyze/dayılara
+            const toplamTeyzeDay = teyzeAdet + dayiAdet;
+            if (toplamTeyzeDay > 0) {
+                const kisiBasinaPay = anneTarafiPay / toplamTeyzeDay;
+                this.teyzePay = kisiBasinaPay * teyzeAdet;
+                this.dayiPay = kisiBasinaPay * dayiAdet;
             }
         }
     }
 
-    // Ana-baba zümresi dağıtımı
-    distributeAnaBabaZumresi(toplamPay, anaBabaDurumu, ozKardesVar, ozKardesSayisi, anneUveyKardesVar, anneUveyKardesSayisi, babaUveyKardesVar, babaUveyKardesSayisi, anneAnnesiBabasiDurumu, babaAnnesiBabasiDurumu, teyzeVar, teyzeSayisi, dayiVar, dayiSayisi, halaVar, halaSayisi, amcaVar, amcaSayisi) {
-        // Başlangıç değerleri
-        this.annePay = 0;
-        this.babaPay = 0;
-        this.ozKardesPay = 0;
-        this.anneUveyKardesPay = 0;
-        this.babaUveyKardesPay = 0;
-        this.anneAnnesiBabasiPay = 0;
-        this.babaAnnesiBabasiPay = 0;
-        this.teyzePay = 0;
-        this.dayiPay = 0;
-        this.halaPay = 0;
-        this.amcaPay = 0;
-
-        // Anne ve baba durumunu çözümle
-        const anneSag = anaBabaDurumu === 'ikisi-sag' || anaBabaDurumu === 'anne-sag';
-        const babaSag = anaBabaDurumu === 'ikisi-sag' || anaBabaDurumu === 'baba-sag';
-
-        if (anneSag && babaSag) {
-            // Her ikisi de sağ - eşit paylaşım
-            this.annePay = toplamPay / 2;
-            this.babaPay = toplamPay / 2;
-        } else if (anneSag || babaSag) {
-            // Sadece birisi sağ
-            if (anneSag) {
-                // Anne sağ, baba ölü
-                if (ozKardesVar || anneUveyKardesVar || babaUveyKardesVar) {
-                    // Kardeşler varsa anne ile kardeşler arasında paylaşım
-                    this.annePay = toplamPay / 2;
-                    const kardesPay = toplamPay / 2;
-                    
-                    // Kardeşler arasında dağıtım
-                    this.distributeKardesPay(kardesPay, ozKardesVar, ozKardesSayisi, anneUveyKardesVar, anneUveyKardesSayisi, babaUveyKardesVar, babaUveyKardesSayisi);
-                } else {
-                    // Kardeş yoksa anne tamamını alır
-                    this.annePay = toplamPay;
-                }
-            } else {
-                // Baba sağ, anne ölü
-                if (ozKardesVar || anneUveyKardesVar || babaUveyKardesVar) {
-                    // Kardeşler varsa baba ile kardeşler arasında paylaşım
-                    this.babaPay = toplamPay / 2;
-                    const kardesPay = toplamPay / 2;
-                    
-                    // Kardeşler arasında dağıtım
-                    this.distributeKardesPay(kardesPay, ozKardesVar, ozKardesSayisi, anneUveyKardesVar, anneUveyKardesSayisi, babaUveyKardesVar, babaUveyKardesSayisi);
-                } else {
-                    // Kardeş yoksa baba tamamını alır
-                    this.babaPay = toplamPay;
-                }
+    // Baba tarafı pay dağıtımı
+    distributeBabaTarafiPay(babaTarafiPay, babaAnnesiBabasiDurumu, halaAdet, amcaAdet) {
+        if (babaAnnesiBabasiDurumu === 'ikisi-sag') {
+            // İkisi de sağ - eşit paylaşım
+            this.babaAnnesiBabasiPay = babaTarafiPay;
+        } else if (babaAnnesiBabasiDurumu === 'annesi-sag') {
+            // Sadece büyükanne sağ - büyükanne yarıyı alır, diğer yarısı hala/amcalara
+            this.babaAnnesiBabasiPay = babaTarafiPay / 2;
+            const olunenPay = babaTarafiPay / 2;
+            
+            // Ölen büyükbabanın payı hala/amcalara
+            const toplamHalaAmca = halaAdet + amcaAdet;
+            if (toplamHalaAmca > 0) {
+                const kisiBasinaPay = olunenPay / toplamHalaAmca;
+                this.halaPay = kisiBasinaPay * halaAdet;
+                this.amcaPay = kisiBasinaPay * amcaAdet;
             }
+        } else if (babaAnnesiBabasiDurumu === 'babasi-sag') {
+            // Sadece büyükbaba sağ - büyükbaba yarıyı alır, diğer yarısı hala/amcalara
+            this.babaAnnesiBabasiPay = babaTarafiPay / 2;
+            const olunenPay = babaTarafiPay / 2;
+            
+            // Ölen büyükannenin payı hala/amcalara
+            const toplamHalaAmca = halaAdet + amcaAdet;
+            if (toplamHalaAmca > 0) {
+                const kisiBasinaPay = olunenPay / toplamHalaAmca;
+                this.halaPay = kisiBasinaPay * halaAdet;
+                this.amcaPay = kisiBasinaPay * amcaAdet;
+            }
+        } else if (babaAnnesiBabasiDurumu === 'ikisi-olu') {
+            // İkisi de ölü - tamamı hala/amcalara
+            const toplamHalaAmca = halaAdet + amcaAdet;
+            if (toplamHalaAmca > 0) {
+                const kisiBasinaPay = babaTarafiPay / toplamHalaAmca;
+                this.halaPay = kisiBasinaPay * halaAdet;
+                this.amcaPay = kisiBasinaPay * amcaAdet;
+            }
+        }
+    }
+
+    getBuyukAnaBabaIndividualPay(toplamPay, durum) {
+        if (durum === 'ikisi-sag') {
+            return toplamPay / 2; // İkisi sağ ise payı ikiye böl
         } else {
-            // İkisi de ölü - kardeşler veya büyük anne-baba zümresine geçer
-            if (ozKardesVar || anneUveyKardesVar || babaUveyKardesVar) {
-                // Kardeşler varsa onlara dağıt
-                this.distributeKardesPay(toplamPay, ozKardesVar, ozKardesSayisi, anneUveyKardesVar, anneUveyKardesSayisi, babaUveyKardesVar, babaUveyKardesSayisi);
-            } else {
-                // Kardeş yoksa büyük anne-baba zümresine geçer
-                this.distributeBuyukAnaBabaPay(
-                    toplamPay,
-                    anneAnnesiBabasiDurumu,
-                    babaAnnesiBabasiDurumu,
-                    { teyzeAdet: teyzeSayisi, dayiAdet: dayiSayisi, halaAdet: halaSayisi, amcaAdet: amcaSayisi }
-                );
-            }
-        }
-    }
-
-    // Kardeşler arası pay dağıtımı
-    distributeKardesPay(toplamPay, ozKardesVar, ozKardesSayisi, anneUveyKardesVar, anneUveyKardesSayisi, babaUveyKardesVar, babaUveyKardesSayisi) {
-        // Toplam kardeş sayısını hesapla
-        let toplamKardes = 0;
-        if (ozKardesVar) toplamKardes += ozKardesSayisi;
-        if (anneUveyKardesVar) toplamKardes += anneUveyKardesSayisi;
-        if (babaUveyKardesVar) toplamKardes += babaUveyKardesSayisi;
-
-        if (toplamKardes === 0) return;
-
-        // Öz kardeşler tam pay, üvey kardeşler yarım pay alır
-        let toplamPuvan = 0;
-        if (ozKardesVar) toplamPuvan += ozKardesSayisi * 2; // Öz kardeşler 2 puan
-        if (anneUveyKardesVar) toplamPuvan += anneUveyKardesSayisi * 1; // Üvey kardeşler 1 puan
-        if (babaUveyKardesVar) toplamPuvan += babaUveyKardesSayisi * 1; // Üvey kardeşler 1 puan
-
-        const puvanBasinaPay = toplamPay / toplamPuvan;
-
-        // Payları dağıt
-        if (ozKardesVar) {
-            this.ozKardesPay = puvanBasinaPay * ozKardesSayisi * 2;
-        }
-        if (anneUveyKardesVar) {
-            this.anneUveyKardesPay = puvanBasinaPay * anneUveyKardesSayisi * 1;
-        }
-        if (babaUveyKardesVar) {
-            this.babaUveyKardesPay = puvanBasinaPay * babaUveyKardesSayisi * 1;
+            return toplamPay; // Tek kişi sağ ise tamamını alır
         }
     }
 
@@ -645,10 +616,10 @@ class MirasHesaplama {
             bindToggle(halaVarMi, halaSayisiGroup, halaSayisi);
             bindToggle(amcaVarMi, amcaSayisiGroup, amcaSayisi);
 
-            // Anne tarafı büyük anne-baba öldüyse teyze/dayı soruları kontrol et
+            // Anne tarafı büyük anne-baba öldüyse veya sadece biri sağsa teyze/dayı soruları kontrol et
             const checkAnneTeyzeDayiVisibility = () => {
                 if (!anneTeyzeDayiGroup) return;
-                if (anneAnnesiBabasiVarMi.value === 'ikisi-olu') {
+                if (anneAnnesiBabasiVarMi.value === 'ikisi-olu' || anneAnnesiBabasiVarMi.value === 'babasi-sag' || anneAnnesiBabasiVarMi.value === 'annesi-sag') {
                     anneTeyzeDayiGroup.style.display = 'block';
                 } else {
                     anneTeyzeDayiGroup.style.display = 'none';
@@ -661,10 +632,10 @@ class MirasHesaplama {
                 }
             };
 
-            // Baba tarafı büyük anne-baba öldüyse hala/amca soruları kontrol et
+            // Baba tarafı büyük anne-baba öldüyse veya sadece biri sağsa hala/amca soruları kontrol et
             const checkBabaHalaAmcaVisibility = () => {
                 if (!babaHalaAmcaGroup) return;
-                if (babaAnnesiBabasiVarMi.value === 'ikisi-olu') {
+                if (babaAnnesiBabasiVarMi.value === 'ikisi-olu' || babaAnnesiBabasiVarMi.value === 'babasi-sag' || babaAnnesiBabasiVarMi.value === 'annesi-sag') {
                     babaHalaAmcaGroup.style.display = 'block';
                 } else {
                     babaHalaAmcaGroup.style.display = 'none';
@@ -901,25 +872,52 @@ class MirasHesaplama {
                         return;
                     }
                     
-                    // Büyük anne-baba zümresi kontrolünü güncelle - amca/teyze/dayı/hala da dahil
+                    // Büyük anne-baba zümresi kontrolü - sadece form alanları doldurulmamışsa hata ver
+                    // Eğer tüm alanlar "hayır" veya "ikisi de öldü" ise hesaplamaya devam et (Madde 501 için)
                     const buyukAnaBabaSag = (anneAnnesiBabasiVarMi.value !== 'ikisi-olu') || (babaAnnesiBabasiVarMi.value !== 'ikisi-olu');
                     const altsoyVar = teyzeVar || dayiVar || halaVar || amcaVar;
                     
-                    if (!buyukAnaBabaSag && !altsoyVar) {
-                        mirasResult.innerHTML = '<div class="result-box error">En az bir büyük anne-baba sağ olmalıdır veya amca/hala/teyze/dayı bulunmalıdır.</div>';
-                        return;
+                    // Sadece teyze/dayı/hala/amca soruları görünüyorsa ve cevaplanmamışsa hata ver
+                    const anneTeyzeDayiGroup = document.getElementById('anneTeyzeDayiGroup');
+                    const babaHalaAmcaGroup = document.getElementById('babaHalaAmcaGroup');
+                    
+                    if (anneTeyzeDayiGroup && anneTeyzeDayiGroup.style.display === 'block') {
+                        const teyzeVarMiSelect = document.getElementById('teyzeVarMi');
+                        const dayiVarMiSelect = document.getElementById('dayiVarMi');
+                        if (teyzeVarMiSelect && teyzeVarMiSelect.value === '') {
+                            mirasResult.innerHTML = '<div class="result-box error">Lütfen teyze durumunu seçiniz.</div>';
+                            return;
+                        }
+                        if (dayiVarMiSelect && dayiVarMiSelect.value === '') {
+                            mirasResult.innerHTML = '<div class="result-box error">Lütfen dayı durumunu seçiniz.</div>';
+                            return;
+                        }
+                    }
+                    
+                    if (babaHalaAmcaGroup && babaHalaAmcaGroup.style.display === 'block') {
+                        const halaVarMiSelect = document.getElementById('halaVarMi');
+                        const amcaVarMiSelect = document.getElementById('amcaVarMi');
+                        if (halaVarMiSelect && halaVarMiSelect.value === '') {
+                            mirasResult.innerHTML = '<div class="result-box error">Lütfen hala durumunu seçiniz.</div>';
+                            return;
+                        }
+                        if (amcaVarMiSelect && amcaVarMiSelect.value === '') {
+                            mirasResult.innerHTML = '<div class="result-box error">Lütfen amca durumunu seçiniz.</div>';
+                            return;
+                        }
                     }
                 }
                 
+                // Bu kontrolü kaldırıyoruz - hiç mirasçı yoksa TMK 501'e göre devlete geçmeli
                 // Sadece hiç mirasçı yoksa hata ver - büyük anne-baba zümresini de dahil et
-                const buyukAnaBabaZumresiVar = (anneAnnesiBabasiVarMi.value && anneAnnesiBabasiVarMi.value !== 'ikisi-olu') || 
-                                       (babaAnnesiBabasiVarMi.value && babaAnnesiBabasiVarMi.value !== 'ikisi-olu') ||
-                                       teyzeVar || dayiVar || halaVar || amcaVar;
+                // const buyukAnaBabaZumresiVar = (anneAnnesiBabasiVarMi.value && anneAnnesiBabasiVarMi.value !== 'ikisi-olu') || 
+                //                        (babaAnnesiBabasiVarMi.value && babaAnnesiBabasiVarMi.value !== 'ikisi-olu') ||
+                //                        teyzeVar || dayiVar || halaVar || amcaVar;
         
-                if (anaBabaDurumu.value === 'ikisi-olu' && !ozKardesVar && !anneUveyKardesVar && !babaUveyKardesVar && !buyukAnaBabaZumresiVar) {
-                    mirasResult.innerHTML = '<div class="result-box error">En az bir mirasçı grubu bulunmalıdır.</div>';
-                    return;
-                }
+                // if (anaBabaDurumu.value === 'ikisi-olu' && !ozKardesVar && !anneUveyKardesVar && !babaUveyKardesVar && !buyukAnaBabaZumresiVar) {
+                //     mirasResult.innerHTML = '<div class="result-box error">En az bir mirasçı grubu bulunmalıdır.</div>';
+                //     return;
+                // }
             }
 
             const result = this.calculateInheritance(
@@ -946,6 +944,36 @@ class MirasHesaplama {
                         </div>`;
                     }
                 }
+            }
+
+            // Hiç mirasçı yoksa devlet mirası alır kontrolü
+            const toplamMirasciPay = result.esPay + result.altsoyPay + result.annePay + result.babaPay + 
+                                   result.ozKardesPay + result.anneUveyKardesPay + result.babaUveyKardesPay +
+                                   result.anneAnnesiBabasiPay + result.babaAnnesiBabasiPay + result.teyzePay +
+                                   result.dayiPay + result.halaPay + result.amcaPay;
+
+            if (toplamMirasciPay === 0) {
+                mirasResult.innerHTML = `
+                    <div class="tapu-hesaplama-sonuc">
+                        <h4>Miras Hesaplama Sonucu</h4>
+                        <div class="sonuc-detay">
+                            <div class="sonuc-satir">
+                                <span class="label">Toplam Miras Varlığı:</span>
+                                <span class="value">${result.toplamVarlik.toLocaleString('tr-TR', {minimumFractionDigits: 2})} TL (%100)</span>
+                            </div>
+                            <div class="sonuc-satir toplam" style="background-color: #f8f9fa; border-left: 4px solid #dc3545;">
+                                <span class="label" style="font-weight: bold; color: #dc3545;">Devlete Geçen Miras:</span>
+                                <span class="value" style="font-weight: bold; color: #dc3545;">${result.toplamVarlik.toLocaleString('tr-TR', {minimumFractionDigits: 2})} TL (%100)</span>
+                            </div>
+                        </div>
+                        <div class="uyari" style="background-color: #fff3cd; border: 1px solid #ffeaa7; border-radius: 4px; padding: 15px; margin-top: 15px;">
+                            <h5 style="color: #856404; margin-bottom: 10px;">TMK Madde 501</h5>
+                            <p style="color: #856404; margin-bottom: 0;"><strong>Mirasçı bırakmaksızın ölen kimsenin mirası Devlete geçer.</strong></p>
+                            <p style="color: #856404; margin-top: 8px; font-size: 14px;">Bu durumda tüm miras varlığı hiçbir yasal mirasçı bulunmadığı için Türkiye Cumhuriyeti Devletine intikal eder.</p>
+                        </div>
+                    </div>
+                `;
+                return;
             }
 
             mirasResult.innerHTML = `
@@ -1034,6 +1062,30 @@ class MirasHesaplama {
                             <span class="label">Murisin Babasının ${result.babaAnnesiBabasiDurumu === 'annesi-sag' ? 'Annesine (Büyükanne)' : 'Babasına (Büyükbaba)'}:</span>
                             <span class="value">${result.babaAnnesiBabasiPay.toLocaleString('tr-TR', {minimumFractionDigits: 2})} TL (%${((result.babaAnnesiBabasiPay / result.toplamVarlik) * 100).toFixed(1)})</span>
                         </div>`}` : ''}
+                        
+                        ${result.teyzePay > 0 ? `
+                        <div class="sonuc-satir toplam">
+                            <span class="label">Her Bir Teyzeye (Annenin Kız Kardeşi):</span>
+                            <span class="value">${(result.teyzePay / result.teyzeSayisi).toLocaleString('tr-TR', {minimumFractionDigits: 2})} TL (%${(((result.teyzePay / result.teyzeSayisi) / result.toplamVarlik) * 100).toFixed(1)})</span>
+                        </div>` : ''}
+                        
+                        ${result.dayiPay > 0 ? `
+                        <div class="sonuc-satir toplam">
+                            <span class="label">Her Bir Dayıya (Annenin Erkek Kardeşi):</span>
+                            <span class="value">${(result.dayiPay / result.dayiSayisi).toLocaleString('tr-TR', {minimumFractionDigits: 2})} TL (%${(((result.dayiPay / result.dayiSayisi) / result.toplamVarlik) * 100).toFixed(1)})</span>
+                        </div>` : ''}
+                        
+                        ${result.halaPay > 0 ? `
+                        <div class="sonuc-satir toplam">
+                            <span class="label">Her Bir Halaya (Babanın Kız Kardeşi):</span>
+                            <span class="value">${(result.halaPay / result.halaSayisi).toLocaleString('tr-TR', {minimumFractionDigits: 2})} TL (%${(((result.halaPay / result.halaSayisi) / result.toplamVarlik) * 100).toFixed(1)})</span>
+                        </div>` : ''}
+                        
+                        ${result.amcaPay > 0 ? `
+                        <div class="sonuc-satir toplam">
+                            <span class="label">Her Bir Amcaya (Babanın Erkek Kardeşi):</span>
+                            <span class="value">${(result.amcaPay / result.amcaSayisi).toLocaleString('tr-TR', {minimumFractionDigits: 2})} TL (%${(((result.amcaPay / result.amcaSayisi) / result.toplamVarlik) * 100).toFixed(1)})</span>
+                        </div>` : ''}
                     </div>
                     <div class="uyari">
                         <p>Bu hesaplama TMK 4721 sayılı kanunun md. 495, 496, 497, 498 ve 499'a göre yapılmıştır.</p>
@@ -1073,7 +1125,7 @@ class MirasHesaplama {
             anaBabaGroup.style.display = 'none';
             kardesGroup.style.display = 'none';
             ozKardesVarMi.value = '';
-            anneUveyKardesVarMi.value = '';
+                       anneUveyKardesVarMi.value = '';
             babaUveyKardesVarMi.value = '';
             ozKardesSayisiGroup.style.display = 'none';
             anneUveyKardesSayisiGroup.style.display = 'none';
@@ -1186,14 +1238,6 @@ class MirasHesaplama {
                 anneAnnesiBabasiVarMi.value = '';
                 babaAnnesiBabasiVarMi.value = '';
             }
-        }
-    }
-
-    getBuyukAnaBabaIndividualPay(toplamPay, durum) {
-        if (durum === 'ikisi-sag') {
-            return toplamPay / 2; // İkisi sağ ise payı ikiye böl
-        } else {
-            return toplamPay; // Tek kişi sağ ise tamamını alır
         }
     }
 }
