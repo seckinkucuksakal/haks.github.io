@@ -240,6 +240,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const yasHesaplamaModule = new YasHesaplama();
     const ikiTarihArasiFarkModule = new IkiTarihArasiFark();
     const mirasHesaplamaModule = new MirasHesaplama();
+    const cezaeviSorgulamaModule = new CezaeviSorgulama();
+    const icraMudurluguSorgulamaModule = new IcraMudurluguSorgulama();
+    const polisMerkeziSorgulamaModule = new PolisMerkeziSorgulama();
+    const noterSorgulamaModule = new NoterSorgulama();
+    const vergiDairesiSorgulamaModule = new VergiDairesiSorgulama();
 
     // Tab functionality
     const tabButtons = document.querySelectorAll('.tab-btn');
@@ -260,30 +265,45 @@ document.addEventListener('DOMContentLoaded', function() {
                 let content = '';
                 switch(targetTab) {
                     case 'tab1':
-                        content = ibanSorgulamaModule.getTabContent();
+                        content = cezaeviSorgulamaModule.getTabContent();
                         break;
                     case 'tab2':
-                        content = ikiTarihArasiFarkModule.getTabContent();
+                        content = polisMerkeziSorgulamaModule.getTabContent();
                         break;
                     case 'tab3':
-                        content = mirasHesaplamaModule.getTabContent();
+                        content = ibanSorgulamaModule.getTabContent();
                         break;
                     case 'tab4':
-                        content = ilSorgulamaModule.getTabContent();
+                        content = icraMudurluguSorgulamaModule.getTabContent();
                         break;
                     case 'tab5':
-                        content = tapuHarciHesaplamaModule.getTabContent();
+                        content = ikiTarihArasiFarkModule.getTabContent();
                         break;
                     case 'tab6':
-                        content = telefonAlanSorgulamaModule.getTabContent();
+                        content = mirasHesaplamaModule.getTabContent();
                         break;
                     case 'tab7':
-                        content = limanSorgulamaModule.getTabContent();
+                        content = noterSorgulamaModule.getTabContent();
                         break;
                     case 'tab8':
-                        content = havalimaniSorgulamaModule.getTabContent();
+                        content = ilSorgulamaModule.getTabContent();
                         break;
                     case 'tab9':
+                        content = tapuHarciHesaplamaModule.getTabContent();
+                        break;
+                    case 'tab10':
+                        content = telefonAlanSorgulamaModule.getTabContent();
+                        break;
+                    case 'tab11':
+                        content = limanSorgulamaModule.getTabContent();
+                        break;
+                    case 'tab12':
+                        content = havalimaniSorgulamaModule.getTabContent();
+                        break;
+                    case 'tab13':
+                        content = vergiDairesiSorgulamaModule.getTabContent();
+                        break;
+                    case 'tab14':
                         content = yasHesaplamaModule.getTabContent();
                         break;
                     default:
@@ -294,22 +314,32 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Initialize module functionality based on selected tab
                 if (targetTab === 'tab1') {
-                    ibanSorgulamaModule.initialize();
+                    cezaeviSorgulamaModule.initialize();
                 } else if (targetTab === 'tab2') {
-                    ikiTarihArasiFarkModule.initialize();
+                    polisMerkeziSorgulamaModule.initialize();
                 } else if (targetTab === 'tab3') {
-                    mirasHesaplamaModule.initialize();
+                    ibanSorgulamaModule.initialize();
                 } else if (targetTab === 'tab4') {
-                    ilSorgulamaModule.initialize();
+                    icraMudurluguSorgulamaModule.initialize();
                 } else if (targetTab === 'tab5') {
-                    tapuHarciHesaplamaModule.initialize();
+                    ikiTarihArasiFarkModule.initialize();
                 } else if (targetTab === 'tab6') {
-                    telefonAlanSorgulamaModule.initialize();
+                    mirasHesaplamaModule.initialize();
                 } else if (targetTab === 'tab7') {
-                    limanSorgulamaModule.initialize();
+                    noterSorgulamaModule.initialize();
                 } else if (targetTab === 'tab8') {
-                    havalimaniSorgulamaModule.initialize();
+                    ilSorgulamaModule.initialize();
                 } else if (targetTab === 'tab9') {
+                    tapuHarciHesaplamaModule.initialize();
+                } else if (targetTab === 'tab10') {
+                    telefonAlanSorgulamaModule.initialize();
+                } else if (targetTab === 'tab11') {
+                    limanSorgulamaModule.initialize();
+                } else if (targetTab === 'tab12') {
+                    havalimaniSorgulamaModule.initialize();
+                } else if (targetTab === 'tab13') {
+                    vergiDairesiSorgulamaModule.initialize();
+                } else if (targetTab === 'tab14') {
                     yasHesaplamaModule.initialize();
                 }
                 
@@ -317,8 +347,8 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
         
-        // Initialize with first tab content (İban Sorgulama)
-        rightContent.innerHTML = ibanSorgulamaModule.getTabContent();
-        ibanSorgulamaModule.initialize();
+        // Initialize with first tab content (Cezaevi Sorgulama)
+        rightContent.innerHTML = cezaeviSorgulamaModule.getTabContent();
+        cezaeviSorgulamaModule.initialize();
     }
 });
