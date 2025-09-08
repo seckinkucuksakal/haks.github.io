@@ -144,7 +144,7 @@ class MirasHesaplama {
                         </div>
                         
                         <div class="form-group" id="anneUveyKardesSayisiGroup" style="display: none;">
-                            <label for="anneUveyKardesSayisi">Kaç Tane Annenin Diğer Evliliğinden Üvey Kardeş Vardı:</label>
+                            <label for="anneUveyKardesSayisi">Annenin Diğer Evliliğinden Kaç Tane Üvey Kardeş Vardı:</label>
                             <input type="number" id="anneUveyKardesSayisi" class="form-input" min="1" max="20" value="1">
                         </div>
                         
@@ -158,7 +158,7 @@ class MirasHesaplama {
                         </div>
                         
                         <div class="form-group" id="babaUveyKardesSayisiGroup" style="display: none;">
-                            <label for="babaUveyKardesSayisi">Kaç Tane Babanın Diğer Evliliğinden Üvey Kardeş Vardı:</label>
+                            <label for="babaUveyKardesSayisi">Babanın Diğer Evliliğinden Kaç Tane Üvey Kardeş Vardı:</label>
                             <input type="number" id="babaUveyKardesSayisi" class="form-input" min="1" max="20" value="1">
                         </div>
                         
@@ -209,7 +209,7 @@ class MirasHesaplama {
                                     <option value="">Seçiniz...</option>
                                     <option value="ikisi-sag">İkisi de Sağ</option>
                                     <option value="annesi-sag">Sadece Annesi Sağ Baba Ölü</option>
-                                    <option value="babasi-sag">Sadece Babası Sağ Anne Ölü</option>
+                                    <option value="babasi-sag">Sadece Babası Sağ Anne Öldü</option>
                                     <option value="ikisi-olu">İkisi de Öldü</option>
                                 </select>
                             </div>
@@ -300,6 +300,21 @@ class MirasHesaplama {
                 
                 .form-group {
                     position: relative;
+                }
+
+                /* 📱 Küçük ekranlar (520px ve altı) için sola kaydır */
+                @media (max-width: 520px) {
+                    .info-tooltip {
+                        left: auto;
+                        right: 0; /* ikona göre sağ kenara yapışır */
+                        transform: translateX(0); /* sola açılır */
+                    }
+
+                    .info-tooltip::before {
+                        left: auto;
+                        right: 10px; /* oku biraz sağa al */
+                        transform: none;
+                    }
                 }
             </style>
         `;
@@ -686,12 +701,12 @@ class MirasHesaplama {
         
         // Anne üvey kardeşler yarım pay
         if (anneUveyKardesVar) {
-            toplamPay += anneUveyKardesSayisi * 0.5;
+            toplamPay += anneUveyKardesSayisi * 1;
         }
         
         // Baba üvey kardeşler yarım pay
         if (babaUveyKardesVar) {
-            toplamPay += babaUveyKardesSayisi * 0.5;
+            toplamPay += babaUveyKardesSayisi * 1;
         }
         
         if (toplamPay > 0) {
@@ -702,11 +717,11 @@ class MirasHesaplama {
             }
             
             if (anneUveyKardesVar) {
-                this.anneUveyKardesPay = birimPay * anneUveyKardesSayisi * 0.5;
+                this.anneUveyKardesPay = birimPay * anneUveyKardesSayisi * 1;
             }
             
             if (babaUveyKardesVar) {
-                this.babaUveyKardesPay = birimPay * babaUveyKardesSayisi * 0.5;
+                this.babaUveyKardesPay = birimPay * babaUveyKardesSayisi * 1;
             }
         }
     }
@@ -1020,9 +1035,26 @@ class MirasHesaplama {
                 
                 // Kardeş soruları için validasyon
                 if (kardesGroup.style.display === 'block') {
-                    if (ozKardesVarMi.value === '' || anneUveyKardesVarMi.value === '' || babaUveyKardesVarMi.value === '') {
-                        mirasResult.innerHTML = '<div class="result-box error">Lütfen kardeş durumlarını seçiniz.</div>';
-                        return;
+                    const durum = anaBabaDurumu.value;
+                    
+                    if (durum === 'anne-sag') {
+                        // Anne sağ baba ölü: sadece öz kardeş ve baba üvey kardeş sorularını kontrol et
+                        if (ozKardesVarMi.value === '' || babaUveyKardesVarMi.value === '') {
+                            mirasResult.innerHTML = '<div class="result-box error">Lütfen kardeş durumlarını seçiniz.</div>';
+                            return;
+                        }
+                    } else if (durum === 'baba-sag') {
+                        // Baba sağ anne ölü: sadece öz kardeş ve anne üvey kardeş sorularını kontrol et
+                        if (ozKardesVarMi.value === '' || anneUveyKardesVarMi.value === '') {
+                            mirasResult.innerHTML = '<div class="result-box error">Lütfen kardeş durumlarını seçiniz.</div>';
+                            return;
+                        }
+                    } else {
+                        // İkisi de ölü: tüm kardeş sorularını kontrol et
+                        if (ozKardesVarMi.value === '' || anneUveyKardesVarMi.value === '' || babaUveyKardesVarMi.value === '') {
+                            mirasResult.innerHTML = '<div class="result-box error">Lütfen kardeş durumlarını seçiniz.</div>';
+                            return;
+                        }
                     }
                 }
                 
@@ -1352,6 +1384,26 @@ class MirasHesaplama {
             
             if (durum === 'anne-sag' || durum === 'baba-sag' || durum === 'ikisi-olu') {
                 kardesGroup.style.display = 'block';
+                
+                // Anne sağ baba ölü durumunda annenin diğer evliliğinden üvey kardeşler miras alamaz
+                if (durum === 'anne-sag') {
+                    anneUveyKardesVarMi.value = 'hayir';
+                    anneUveyKardesSayisiGroup.style.display = 'none';
+                    anneUveyKardesVarMi.style.display = 'none';
+                    anneUveyKardesVarMi.parentElement.style.display = 'none';
+                } else if (durum === 'baba-sag') {
+                    // Baba sağ anne ölü durumunda babanın diğer evliliğinden üvey kardeşler miras alamaz
+                    babaUveyKardesVarMi.value = 'hayir';
+                    babaUveyKardesSayisiGroup.style.display = 'none';
+                    babaUveyKardesVarMi.style.display = 'none';
+                    babaUveyKardesVarMi.parentElement.style.display = 'none';
+                } else {
+                    // İkisi de ölü durumunda tüm kardeş türleri görünür
+                    anneUveyKardesVarMi.style.display = 'block';
+                    anneUveyKardesVarMi.parentElement.style.display = 'block';
+                    babaUveyKardesVarMi.style.display = 'block';
+                    babaUveyKardesVarMi.parentElement.style.display = 'block';
+                }
             } else {
                 kardesGroup.style.display = 'none';
                 ozKardesVarMi.value = '';
@@ -1363,6 +1415,12 @@ class MirasHesaplama {
                 ozKardesSayisi.value = '1';
                 anneUveyKardesSayisi.value = '1';
                 babaUveyKardesSayisi.value = '1';
+                
+                // Tüm üvey kardeş sorularını görünür yap
+                anneUveyKardesVarMi.style.display = 'block';
+                anneUveyKardesVarMi.parentElement.style.display = 'block';
+                babaUveyKardesVarMi.style.display = 'block';
+                babaUveyKardesVarMi.parentElement.style.display = 'block';
             }
         });
 

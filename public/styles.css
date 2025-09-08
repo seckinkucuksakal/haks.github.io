@@ -1393,3 +1393,46 @@ footer {
 .uyari p{
     color: black;
 }
+
+/* Custom scrollbar for left container on small screens */
+@media (max-width: 520px) {
+    .left-container {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 300px;
+        height: 100vh;
+        background: white;
+        z-index: 1000;
+        transition: left 0.3s ease;
+        border-right: 1px solid #ddd;
+        overflow-y: auto;
+        overflow-x: hidden;
+        
+        /* Custom scrollbar for mobile */
+        scrollbar-width: thin;
+        scrollbar-color: #007bff #f0f0f0;
+    }
+    
+    .left-container::-webkit-scrollbar {
+        width: 8px;
+    }
+    
+    .left-container::-webkit-scrollbar-track {
+        background: #f0f0f0;
+        border-radius: 4px;
+    }
+    
+    .left-container::-webkit-scrollbar-thumb {
+        background: #007bff;
+        border-radius: 4px;
+    }
+    
+    .left-container::-webkit-scrollbar-thumb:hover {
+        background: #0056b3;
+    }
+    
+    .left-container.active {
+        left: 0;
+    }
+}
