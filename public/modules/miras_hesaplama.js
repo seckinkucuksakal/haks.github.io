@@ -169,7 +169,7 @@ class MirasHesaplama {
                                     <option value="">Seçiniz...</option>
                                     <option value="ikisi-sag">İkisi de Sağ</option>
                                     <option value="annesi-sag">Sadece Annesi Sağ Baba Ölü</option>
-                                    <option value="babasi-sag">Sadece Babası Sağ Anne Ölü</option>
+                                    <option value="babasi-sag">Sadece Babası Sağ Anne Öldü</option>
                                     <option value="ikisi-olu">İkisi de Öldü</option>
                                 </select>
                             </div>
@@ -302,18 +302,23 @@ class MirasHesaplama {
                     position: relative;
                 }
 
-                /* 📱 Küçük ekranlar (520px ve altı) için sola kaydır */
+                /* 📱 Küçük ekranlar (520px ve altı) için tıklamalı sistem */
                 @media (max-width: 520px) {
                     .info-tooltip {
                         left: auto;
-                        right: 0; /* ikona göre sağ kenara yapışır */
-                        transform: translateX(0); /* sola açılır */
+                        right: 0;
+                        transform: translateX(0);
                     }
 
                     .info-tooltip::before {
-                        left: auto;
-                        right: 10px; /* oku biraz sağa al */
-                        transform: none;
+                        display: none; /* Mobilde oku kaldır */
+                    }
+                }
+                
+                /* Desktop için ok göster */
+                @media (min-width: 521px) {
+                    .info-tooltip::before {
+                        display: block;
                     }
                 }
             </style>
@@ -1362,13 +1367,32 @@ class MirasHesaplama {
         const tooltip = document.getElementById('mirasVarligiTooltip');
         
         if (infoIcon && tooltip) {
-            infoIcon.addEventListener('mouseenter', () => {
-                tooltip.style.display = 'block';
-            });
+            // Mobil cihaz kontrolü
+            const isMobile = window.innerWidth <= 520;
             
-            infoIcon.addEventListener('mouseleave', () => {
-                tooltip.style.display = 'none';
-            });
+            if (isMobile) {
+                // Mobil için tıklama sistemi
+                infoIcon.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    tooltip.style.display = tooltip.style.display === 'block' ? 'none' : 'block';
+                });
+                
+                // Başka yere tıklayınca kapat
+                document.addEventListener('click', (e) => {
+                    if (!infoIcon.contains(e.target) && !tooltip.contains(e.target)) {
+                        tooltip.style.display = 'none';
+                    }
+                });
+            } else {
+                // Desktop için hover sistemi
+                infoIcon.addEventListener('mouseenter', () => {
+                    tooltip.style.display = 'block';
+                });
+                
+                infoIcon.addEventListener('mouseleave', () => {
+                    tooltip.style.display = 'none';
+                });
+            }
         }
 
         // Enter tuşu ile hesaplama
@@ -1398,7 +1422,7 @@ class MirasHesaplama {
                     babaUveyKardesVarMi.style.display = 'none';
                     babaUveyKardesVarMi.parentElement.style.display = 'none';
                 } else {
-                    // İkisi de ölü durumunda tüm kardeş türleri görünür
+                    // İkisi de ölü: tüm kardeş türleri görünür
                     anneUveyKardesVarMi.style.display = 'block';
                     anneUveyKardesVarMi.parentElement.style.display = 'block';
                     babaUveyKardesVarMi.style.display = 'block';
