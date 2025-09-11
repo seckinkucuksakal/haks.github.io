@@ -231,11 +231,13 @@ footer {
     display: flex;
     flex-direction: column;
     transition: transform 0.3s ease, opacity 0.3s ease;
+    height: 100vh; /* Container'a tam yükseklik ver */
 }
 
 .back-section {
     padding: 0.5rem 1rem;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    flex-shrink: 0; /* Bu bölümün küçülmesini engelle */
 }
 
 .back-btn {
@@ -258,6 +260,7 @@ footer {
     padding: 1rem;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     background: rgba(255, 255, 255, 0.2);
+    flex-shrink: 0; /* Bu bölümün küçülmesini engelle */
 }
 
 .search-wrapper {
@@ -317,6 +320,39 @@ footer {
     background: #0056b3;
 }
 
+/* Scrollable container for tabs and content */
+.scrollable-container {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.tab-buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+.tab-btn {
+    padding: 0.8rem 1rem;
+    border: none;
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.3s;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.tab-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.tab-btn.active {
+    background: rgba(0, 123, 255, 0.1);
+    color: #007bff;
+}
+
 .left-content {
     flex: 1;
     padding: 1rem;
@@ -324,7 +360,36 @@ footer {
     align-items: center;
     justify-content: center;
     text-align: center;
-    overflow-y: auto;
+}
+
+/* Custom Scrollbar Styles */
+.scrollable-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.scrollable-container::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+.scrollable-container::-webkit-scrollbar-thumb {
+    background: #007bff;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+.scrollable-container::-webkit-scrollbar-thumb:hover {
+    background: #007bff;
+}
+
+.scrollable-container::-webkit-scrollbar-thumb:active {
+    background: #007bff;
+}
+
+/* Firefox scrollbar */
+.scrollable-container {
+    scrollbar-width: thin;
+    scrollbar-color: #007bff rgba(0, 0, 0, 0.1);
 }
 
 .resizer {
