@@ -19,7 +19,7 @@ class IkiTarihArasiFark {
                 </div>
                 
                 <div class="form-actions">
-                    <button id="hesaplaFarkBtn" class="hesapla-btn">Fark Hesapla</button>
+                    <button id="hesaplaFarkBtn" class="hesapla-btn">Hesapla</button>
                     <button id="temizleFarkBtn" class="temizle-btn">Temizle</button>
                 </div>
                 
@@ -229,7 +229,7 @@ class IkiTarihArasiFark {
                         </div>
                     </div>
                     <div class="uyari">
-                        <p><strong>Not:</strong> Hesaplama hassas olarak yapılmış olup, artık yıllar ve farklı ay günleri dikkate alınmıştır. Çalışma günleri Pazartesi-Cuma arası günlerdir.</p>
+                        <p><strong>Not:</strong> Hesaplama hassas olarak yapılmış olup, artık yıllar ve farklı ay günleri dikkate alınmıştır. Çalışma günleri Pazartesi-Cuma arası günlerdir. Tüm tarihler dd/mm/yyyy formatında gösterilmektedir.</p>
                     </div>
                     <style>
                         .tapu-hesaplama-sonuc::-webkit-scrollbar {
@@ -253,14 +253,14 @@ class IkiTarihArasiFark {
                 </div>
             `;
 
-            // Add event listener for the toggle button after the HTML is inserted
+            // Detay toggle işlevselliği
             setTimeout(() => {
                 const toggleBtn = document.getElementById('detailToggleBtn');
-                if (toggleBtn) {
+                const detailedInfo = document.getElementById('detailedInfo');
+                const toggleText = document.getElementById('detailToggleText');
+                
+                if (toggleBtn && detailedInfo && toggleText) {
                     toggleBtn.addEventListener('click', () => {
-                        const detailedInfo = document.getElementById('detailedInfo');
-                        const toggleText = document.getElementById('detailToggleText');
-                        
                         if (detailedInfo.style.maxHeight === '0px' || detailedInfo.style.maxHeight === '') {
                             detailedInfo.style.maxHeight = detailedInfo.scrollHeight + 'px';
                             toggleText.innerHTML = '🔼 Detaylı Bilgileri Gizle';

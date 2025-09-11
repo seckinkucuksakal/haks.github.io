@@ -242,9 +242,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const mirasHesaplamaModule = new MirasHesaplama();
     const cezaeviSorgulamaModule = new CezaeviSorgulama();
     const icraMudurluguSorgulamaModule = new IcraMudurluguSorgulama();
-    const polisMerkeziSorgulamaModule = new PolisMerkeziSorgulama();
     const noterSorgulamaModule = new NoterSorgulama();
-    const vergiDairesiSorgulamaModule = new VergiDairesiSorgulama();
+    const yillikIzinHesaplamaModule = new YillikIzinHesaplama();
 
     // Tab functionality
     const tabButtons = document.querySelectorAll('.tab-btn');
@@ -268,43 +267,40 @@ document.addEventListener('DOMContentLoaded', function() {
                         content = cezaeviSorgulamaModule.getTabContent();
                         break;
                     case 'tab2':
-                        content = polisMerkeziSorgulamaModule.getTabContent();
-                        break;
-                    case 'tab3':
                         content = ibanSorgulamaModule.getTabContent();
                         break;
-                    case 'tab4':
+                    case 'tab3':
                         content = icraMudurluguSorgulamaModule.getTabContent();
                         break;
-                    case 'tab5':
+                    case 'tab4':
                         content = ikiTarihArasiFarkModule.getTabContent();
                         break;
-                    case 'tab6':
+                    case 'tab5':
                         content = mirasHesaplamaModule.getTabContent();
                         break;
-                    case 'tab7':
+                    case 'tab6':
                         content = noterSorgulamaModule.getTabContent();
                         break;
-                    case 'tab8':
+                    case 'tab7':
                         content = ilSorgulamaModule.getTabContent();
                         break;
-                    case 'tab9':
+                    case 'tab8':
                         content = tapuHarciHesaplamaModule.getTabContent();
                         break;
-                    case 'tab10':
+                    case 'tab9':
                         content = telefonAlanSorgulamaModule.getTabContent();
                         break;
-                    case 'tab11':
+                    case 'tab10':
                         content = limanSorgulamaModule.getTabContent();
                         break;
-                    case 'tab12':
+                    case 'tab11':
                         content = havalimaniSorgulamaModule.getTabContent();
                         break;
-                    case 'tab13':
-                        content = vergiDairesiSorgulamaModule.getTabContent();
-                        break;
-                    case 'tab14':
+                    case 'tab12':
                         content = yasHesaplamaModule.getTabContent();
+                        break;
+                    case 'tab13':
+                        content = yillikIzinHesaplamaModule.getTabContent();
                         break;
                     default:
                         content = '<p>İçerik bulunamadı.</p>';
@@ -316,31 +312,29 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (targetTab === 'tab1') {
                     cezaeviSorgulamaModule.initialize();
                 } else if (targetTab === 'tab2') {
-                    polisMerkeziSorgulamaModule.initialize();
-                } else if (targetTab === 'tab3') {
                     ibanSorgulamaModule.initialize();
-                } else if (targetTab === 'tab4') {
+                } else if (targetTab === 'tab3') {
                     icraMudurluguSorgulamaModule.initialize();
-                } else if (targetTab === 'tab5') {
+                } else if (targetTab === 'tab4') {
                     ikiTarihArasiFarkModule.initialize();
-                } else if (targetTab === 'tab6') {
+                } else if (targetTab === 'tab5') {
                     mirasHesaplamaModule.initialize();
-                } else if (targetTab === 'tab7') {
+                } else if (targetTab === 'tab6') {
                     noterSorgulamaModule.initialize();
-                } else if (targetTab === 'tab8') {
+                } else if (targetTab === 'tab7') {
                     ilSorgulamaModule.initialize();
-                } else if (targetTab === 'tab9') {
+                } else if (targetTab === 'tab8') {
                     tapuHarciHesaplamaModule.initialize();
-                } else if (targetTab === 'tab10') {
+                } else if (targetTab === 'tab9') {
                     telefonAlanSorgulamaModule.initialize();
-                } else if (targetTab === 'tab11') {
+                } else if (targetTab === 'tab10') {
                     limanSorgulamaModule.initialize();
-                } else if (targetTab === 'tab12') {
+                } else if (targetTab === 'tab11') {
                     havalimaniSorgulamaModule.initialize();
-                } else if (targetTab === 'tab13') {
-                    vergiDairesiSorgulamaModule.initialize();
-                } else if (targetTab === 'tab14') {
+                } else if (targetTab === 'tab12') {
                     yasHesaplamaModule.initialize();
+                } else if (targetTab === 'tab13') {
+                    yillikIzinHesaplamaModule.initialize();
                 }
                 
                 console.log('Tab switched to:', targetTab);

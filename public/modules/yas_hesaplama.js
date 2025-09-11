@@ -20,7 +20,7 @@ class YasHesaplama {
                 </div>
                 
                 <div class="form-actions">
-                    <button id="hesaplaYasBtn" class="hesapla-btn">Yaş Hesapla</button>
+                    <button id="hesaplaYasBtn" class="hesapla-btn">Hesapla</button>
                     <button id="temizleYasBtn" class="temizle-btn">Temizle</button>
                 </div>
                 
@@ -89,7 +89,7 @@ class YasHesaplama {
             remainingDays,
             totalMonths,
             daysToNextBirthday,
-            nextBirthday: nextBirthday.toLocaleDateString('tr-TR')
+            nextBirthday: this.formatDate(nextBirthday.toISOString().split('T')[0])
         };
     }
 
@@ -183,7 +183,7 @@ class YasHesaplama {
                         </div>
                     </div>
                     <div class="uyari">
-                        <p><strong>Not:</strong> Hesaplama 01.01.1900 tarihinden itibaren yapılabilir. Artık yıllar ve farklı ay günleri dikkate alınarak hassas hesaplama yapılmıştır.</p>
+                        <p><strong>Not:</strong> Hesaplama 01.01.1900 tarihinden itibaren yapılabilir. Artık yıllar ve farklı ay günleri dikkate alınarak hassas hesaplama yapılmıştır. Tüm tarihler dd/mm/yyyy formatında gösterilmektedir.</p>
                     </div>
                     <style>
                         .tapu-hesaplama-sonuc::-webkit-scrollbar {
@@ -207,14 +207,14 @@ class YasHesaplama {
                 </div>
             `;
 
-            // Add event listener for the toggle button after the HTML is inserted
+            // Detay toggle işlevselliği
             setTimeout(() => {
                 const toggleBtn = document.getElementById('ageDetailToggleBtn');
-                if (toggleBtn) {
+                const detailedInfo = document.getElementById('ageDetailedInfo');
+                const toggleText = document.getElementById('ageDetailToggleText');
+                
+                if (toggleBtn && detailedInfo && toggleText) {
                     toggleBtn.addEventListener('click', () => {
-                        const detailedInfo = document.getElementById('ageDetailedInfo');
-                        const toggleText = document.getElementById('ageDetailToggleText');
-                        
                         if (detailedInfo.style.maxHeight === '0px' || detailedInfo.style.maxHeight === '') {
                             detailedInfo.style.maxHeight = detailedInfo.scrollHeight + 'px';
                             toggleText.innerHTML = '🔼 Detaylı Bilgileri Gizle';
