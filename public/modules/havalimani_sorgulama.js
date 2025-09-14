@@ -124,14 +124,23 @@ class HavalimaniSorgulama {
                     <input type="text" id="havalimaniInput" placeholder="Havalimanı adı, şehir, ülke veya kod girin (örn: İstanbul, LTBA, IST)" class="plaka-input">
                     <button id="havalimaniSearchBtn" class="plaka-search-btn">Ara</button>
                 </div>
-                <p style="color: black; font-size: 12px;"><strong>Not: IATA: Uluslararası Hava Taşımacılığı Birliği Kodu&#10;ICAO: Uluslararası Sivil Havacılık Örgütü Kodu</strong></p>
                 <div id="havalimaniResult" class="plaka-result"></div>
                 <div class="results-container">
                     <h4>Tüm Eşleşmeler:</h4>
                     <div id="allHavalimaniResults" class="all-results-list">
-                        <p class="no-results">Arama yapın ve tüm eşleşmeler burada görünecek</p>
+                        <p class="no-results">Tüm Eşleşmeler Burada Görüntülenecek</p>
                     </div>
                 </div>
+                <div class="iata-icao">
+                    <p><strong>IATA:</strong> Uluslararası Hava Taşımacılığı Birliği Kodu  <strong>ICAO:</strong> Uluslararası Sivil Havacılık Örgütü Kodu</p>
+                </div>
+                <style>
+                    .iata-icao p {
+                        font-size: 14px;
+                        margin-top: 10px;
+                        color: black;
+                    }
+                </style>
             </div>
         `;
     }

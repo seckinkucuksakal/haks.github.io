@@ -7,6 +7,10 @@ class YillikIzinHesaplama {
     getTabContent() {
         return `
             <h3>Yıllık İzin Süresi ve Ücreti Hesaplama</h3>
+            <div style="display: flex; gap: 10px; margin-bottom: 18px; justify-content: center;">
+                <button id="brutModeBtn" class="mode-btn active" type="button">Brüt Maaştan Hesapla</button>
+                <button id="netModeBtn" class="mode-btn" type="button">Net Maaştan Hesapla</button>
+            </div>
             <div class="plaka-container">
                 <div class="form-group">
                     <label for="iseBaslamaTarihi">İşe Başlama Tarihi:</label>
@@ -29,7 +33,7 @@ class YillikIzinHesaplama {
                 </div>
                 
                 <div class="form-group">
-                    <label for="yerAltiIsi">Yer Altı İşinde Çalışıyor:</label>
+                    <label for="yerAltiIsi">Çalışılan İş Yeraltı İşi mi:</label>
                     <select id="yerAltiIsi" class="form-select">
                         <option value="">Seçiniz...</option>
                         <option value="hayir">Hayır</option>
@@ -248,6 +252,9 @@ class YillikIzinHesaplama {
             const izinHesaplaBtn = document.getElementById('izinHesaplaBtn');
             const izinTemizleBtn = document.getElementById('izinTemizleBtn');
             const izinResult = document.getElementById('izinResult');
+            const brutModeBtn = document.getElementById('brutModeBtn');
+            const netModeBtn = document.getElementById('netModeBtn');
+            let hesaplamaModu = 'brut'; // 'brut' veya 'net'
 
             if (!izinHesaplaBtn || !izinTemizleBtn || !izinResult) {
                 console.error('Yıllık izin hesaplama elementleri bulunamadı');
@@ -261,9 +268,21 @@ class YillikIzinHesaplama {
                 e.target.value = value;
             });
 
+            // Mod butonları
+            brutModeBtn?.addEventListener('click', () => {
+                hesaplamaModu = 'brut';
+                brutModeBtn.classList.add('active');
+                netModeBtn.classList.remove('active');
+            });
+            netModeBtn?.addEventListener('click', () => {
+                hesaplamaModu = 'net';
+                netModeBtn.classList.add('active');
+                brutModeBtn.classList.remove('active');
+            });
+
             // Hesapla butonu
             izinHesaplaBtn.addEventListener('click', () => {
-                this.hesapla();
+                this.hesapla(hesaplamaModu);
             });
 
             // Temizle butonu
@@ -283,7 +302,7 @@ class YillikIzinHesaplama {
         }, 100);
     }
 
-    hesapla() {
+    hesapla(hesaplamaModu = 'brut') {
         const iseBaslamaTarihi = document.getElementById('iseBaslamaTarihi').value;
         const hesaplamaTarihi = document.getElementById('hesaplamaTarihi').value;
         const dogumTarihi = document.getElementById('dogumTarihi').value;
@@ -305,6 +324,25 @@ class YillikIzinHesaplama {
 
         if (!dogumTarihi) {
             resultDiv.innerHTML = '<div class="result-box error">Lütfen doğum tarihini giriniz.</div>';
+            return;
+        }
+
+        // Doğum tarihi işe başlama tarihinden büyükse veya 15 yaşından küçükse
+        const dogum = this.parseDate(dogumTarihi);
+        const baslama = this.parseDate(iseBaslamaTarihi);
+        if (dogum > baslama) {
+            resultDiv.innerHTML = '<div class="result-box error">Doğum tarihi, işe başlama tarihinden sonra olamaz.</div>';
+            return;
+        }
+        // 15 yaş kontrolü
+        const minYasalYas = 15;
+        let yasalYas = baslama.getFullYear() - dogum.getFullYear();
+        let m = baslama.getMonth() - dogum.getMonth();
+        if (m < 0 || (m === 0 && baslama.getDate() < dogum.getDate())) {
+            yasalYas--;
+        }
+        if (yasalYas < minYasalYas) {
+            resultDiv.innerHTML = `<div class="result-box error">İşe başlama tarihinde en az 15 yaşını doldurmuş olmanız gerekmektedir.</div>`;
             return;
         }
 
@@ -356,23 +394,91 @@ class YillikIzinHesaplama {
         const izinGunleri = this.calculateIzinSuresi(kidemResult.totalYears, yasResult.years, yerAltiIsi);
         
         // İzin ücretini hesapla
-        const ucretResult = this.calculateIzinUcreti(brutMaas, izinGunleri);
+        let ucretResult;
+        if (hesaplamaModu === 'net') {
+            ucretResult = this.calculateNetIzinUcreti(brutMaas, izinGunleri);
+        } else {
+            ucretResult = this.calculateIzinUcreti(brutMaas, izinGunleri);
+        }
         if (ucretResult.error) {
             resultDiv.innerHTML = `<div class="result-box error">${ucretResult.error}</div>`;
             return;
         }
 
-        this.showSonuc(kidemResult, yasResult, izinGunleri, ucretResult, yerAltiIsi);
+        this.showSonuc(kidemResult, yasResult, izinGunleri, ucretResult, yerAltiIsi, hesaplamaModu);
     }
 
-    showSonuc(kidemResult, yasResult, izinGunleri, ucretResult, yerAltiIsi) {
+    calculateNetIzinUcreti(netMaas, izinGunleri) {
+        if (!netMaas || netMaas <= 0) {
+            return { error: "Geçerli bir net maaş giriniz!" };
+        }
+        const gunlukNetUcret = netMaas / 30;
+        const izinUcreti = gunlukNetUcret * izinGunleri;
+        return {
+            gunlukNetUcret,
+            izinUcreti,
+            netIzinUcreti: izinUcreti
+        };
+    }
+
+    showSonuc(kidemResult, yasResult, izinGunleri, ucretResult, yerAltiIsi, hesaplamaModu = 'brut') {
         const resultDiv = document.getElementById('izinResult');
-        
         let yasKriteriAciklama = '';
         if (yasResult.years <= 18) {
             yasKriteriAciklama = ' (18 yaş ve altı için minimum 20 gün)';
         } else if (yasResult.years >= 50) {
             yasKriteriAciklama = ' (50 yaş ve üstü için minimum 20 gün)';
+        }
+
+        let ucretHtml = '';
+        if (hesaplamaModu === 'net') {
+            ucretHtml = `
+                <div class="il-grup" style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+                    <h5 style="color: #007bff; margin-bottom: 15px; border-bottom: 2px solid #007bff; padding-bottom: 5px;">İzin Ücreti Hesaplama (Net)</h5>
+                    <div class="kurum-detay" style="margin-bottom: 15px; padding: 10px; background-color: #f8f9fa; border-radius: 4px;">
+                        <div class="sonuc-satir">
+                            <span class="label">Günlük Net Ücret:</span>
+                            <span class="value">${this.formatCurrency(ucretResult.gunlukNetUcret)}</span>
+                        </div>
+                        <div class="sonuc-satir">
+                            <span class="label">Net İzin Ücreti:</span>
+                            <span class="value" style="color: #28a745; font-size: 18px;">${this.formatCurrency(ucretResult.netIzinUcreti)}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else {
+            ucretHtml = `
+                <div class="il-grup" style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+                    <h5 style="color: #007bff; margin-bottom: 15px; border-bottom: 2px solid #007bff; padding-bottom: 5px;">İzin Ücreti Hesaplama</h5>
+                    <div class="kurum-detay" style="margin-bottom: 15px; padding: 10px; background-color: #f8f9fa; border-radius: 4px;">
+                        <div class="sonuc-satir">
+                            <span class="label">Günlük Brüt Ücret:</span>
+                            <span class="value">${this.formatCurrency(ucretResult.gunlukBrutUcret)}</span>
+                        </div>
+                        <div class="sonuc-satir">
+                            <span class="label">Brüt İzin Ücreti:</span>
+                            <span class="value">${this.formatCurrency(ucretResult.izinUcreti)}</span>
+                        </div>
+                        <div class="sonuc-satir">
+                            <span class="label">Gelir Vergisi (${ucretResult.gelirVergisiText}):</span>
+                            <span class="value">-${this.formatCurrency(ucretResult.gelirVergisi)}</span>
+                        </div>
+                        <div class="sonuc-satir">
+                            <span class="label">Damga Vergisi (%0.759):</span>
+                            <span class="value">-${this.formatCurrency(ucretResult.damgaVergisi)}</span>
+                        </div>
+                        <div class="sonuc-satir">
+                            <span class="label">SGK İşçi Payı (%15.75):</span>
+                            <span class="value">-${this.formatCurrency(ucretResult.sgkIsciPayi)}</span>
+                        </div>
+                        <div class="sonuc-satir" style="border-top: 2px solid #007bff; padding-top: 10px; margin-top: 10px; font-weight: bold;">
+                            <span class="label">Net İzin Ücreti:</span>
+                            <span class="value" style="color: #28a745; font-size: 18px;">${this.formatCurrency(ucretResult.netIzinUcreti)}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
         }
 
         const html = `
@@ -426,46 +532,16 @@ class YillikIzinHesaplama {
                     </div>
                 </div>
 
-                <!-- İzin Ücreti -->
-                <div class="il-grup" style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
-                    <h5 style="color: #007bff; margin-bottom: 15px; border-bottom: 2px solid #007bff; padding-bottom: 5px;">İzin Ücreti Hesaplama</h5>
-                    <div class="kurum-detay" style="margin-bottom: 15px; padding: 10px; background-color: #f8f9fa; border-radius: 4px;">
-                        <div class="sonuc-satir">
-                            <span class="label">Günlük Brüt Ücret:</span>
-                            <span class="value">${this.formatCurrency(ucretResult.gunlukBrutUcret)}</span>
-                        </div>
-                        <div class="sonuc-satir">
-                            <span class="label">Brüt İzin Ücreti:</span>
-                            <span class="value">${this.formatCurrency(ucretResult.izinUcreti)}</span>
-                        </div>
-                        <div class="sonuc-satir">
-                            <span class="label">Gelir Vergisi (${ucretResult.gelirVergisiText}):</span>
-                            <span class="value">-${this.formatCurrency(ucretResult.gelirVergisi)}</span>
-                        </div>
-                        <div class="sonuc-satir">
-                            <span class="label">Damga Vergisi (%0.759):</span>
-                            <span class="value">-${this.formatCurrency(ucretResult.damgaVergisi)}</span>
-                        </div>
-                        <div class="sonuc-satir">
-                            <span class="label">SGK İşçi Payı (%15.75):</span>
-                            <span class="value">-${this.formatCurrency(ucretResult.sgkIsciPayi)}</span>
-                        </div>
-                        <div class="sonuc-satir" style="border-top: 2px solid #007bff; padding-top: 10px; margin-top: 10px; font-weight: bold;">
-                            <span class="label">Net İzin Ücreti:</span>
-                            <span class="value" style="color: #28a745; font-size: 18px;">${this.formatCurrency(ucretResult.netIzinUcreti)}</span>
-                        </div>
-                    </div>
-                </div>
-
+                ${ucretHtml}
                 <div class="uyari">
-                    <p><strong>Önemli Notlar:</strong></p>
+                    <p style="text-align: center;"><strong>Önemli Hususlar:</strong></p>
                     <ul style="margin: 10px 0; padding-left: 20px;">
-                        <li>Yıllık izin ücreti, işçinin izine başlamadan önce peşin olarak ödenmelidir.</li>
-                        <li>Gelir vergisi 2025 yılı dilimli tarifesine göre hesaplanmıştır.</li>
-                        <li>SGK işçi payı %15.75 olarak hesaplanmıştır (2025).</li>
-                        <li>Yıllık izin hakkından vazgeçilemez (İş Kanunu md. 53/2).</li>
-                        <li>İş sözleşmesi sona erdiğinde kullanılmayan izin günlerinin ücreti ödenir.</li>
-                        <li>Hafta tatili, ulusal bayram ve genel tatil ücretleri ayrıca ödenir.</li>
+                        <li>Yıllık izin ücretinden düşülen vergi kalemleri güncel yıl oranları üzerinden hesaplanmıştır.</li>
+                        <li>İşveren, yıllık ücretli iznini kullanan her işçiye, yıllık izin dönemine ilişkin ücretini ilgili işçinin izine başlamasından önce peşin olarak ödemek veya avans olarak vermek zorundadır. <strong> (İş Kanunu madde 57/1) </strong></li>
+                        <li>Yıllık izin hakkından vazgeçilemez <strong> (İş Kanunu madde 53/2) </strong></li>
+                        <li>Madde 59 - İş sözleşmesinin, herhangi bir nedenle sona ermesi halinde işçinin hak kazanıp da kullanmadığı yıllık izin sürelerine ait ücreti, sözleşmenin sona erdiği tarihteki ücreti üzerinden kendisine veya hak sahiplerine ödenir. Bu ücrete ilişkin zamanaşımı iş sözleşmesinin sona erdiği tarihten itibaren başlar. <strong> (İş Kanunu madde 59/1) </strong> </li>
+                        <li>Yıllık ücretli izin süresine rastlayan hafta tatili, ulusal bayram ve genel tatil ücretleri ayrıca ödenir. <strong> (İş Kanunu madde 57/1) </strong></li>
+                        <li>Brüt maaş vergilendirilmemiş ücret iken, net maaş vergilerden arındırılmış ücrettir.</li>
                     </ul>
                 </div>
                 <style>

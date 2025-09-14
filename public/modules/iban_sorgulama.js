@@ -198,16 +198,16 @@ class IbanSorgulama {
             <h3>IBAN Sorgulama</h3>
             <div class="plaka-container">
                 <div class="form-group">
-                    <label for="ibanInput">IBAN Numarası:</label>
-                    <input type="text" id="ibanInput" placeholder="TR33 0006 1005 1978 6457 8413 26 - TR330006100519786457841326" class="form-input" maxlength="34">
+                    <label for="IBANInput">IBAN Numarası:</label>
+                    <input type="text" id="IBANInput" placeholder="TR33 0006 1005 1978 6457 8413 26 - TR330006100519786457841326" class="form-input" maxlength="34">
                 </div>
                 
                 <div class="form-actions">
-                    <button id="ibanSearchBtn" class="hesapla-btn">Sorgula</button>
-                    <button id="ibanClearBtn" class="temizle-btn">Temizle</button>
+                    <button id="IBANSearchBtn" class="hesapla-btn">Sorgula</button>
+                    <button id="IBANClearBtn" class="temizle-btn">Temizle</button>
                 </div>
                 
-                <div id="ibanResult" class="tapu-result"></div>
+                <div id="IBANResult" class="tapu-result"></div>
             </div>
         `;
     }
@@ -257,18 +257,18 @@ class IbanSorgulama {
     }
 
     initialize() {
-        const ibanInput = document.getElementById('ibanInput');
-        const ibanSearchBtn = document.getElementById('ibanSearchBtn');
-        const ibanClearBtn = document.getElementById('ibanClearBtn');
-        const ibanResult = document.getElementById('ibanResult');
+        const IBANInput = document.getElementById('IBANInput');
+        const IBANSearchBtn = document.getElementById('IBANSearchBtn');
+        const IBANClearBtn = document.getElementById('IBANClearBtn');
+        const IBANResult = document.getElementById('IBANResult');
         
-        if (!ibanInput || !ibanSearchBtn || !ibanClearBtn || !ibanResult) return;
+        if (!IBANInput || !IBANSearchBtn || !IBANClearBtn || !IBANResult) return;
         
         let lastValue = '';
         let isFormatting = false;
         
         // Format IBAN input as user types with better cursor handling
-        ibanInput.addEventListener('input', (e) => {
+        IBANInput.addEventListener('input', (e) => {
             if (isFormatting) return;
             
             isFormatting = true;
@@ -292,7 +292,7 @@ class IbanSorgulama {
         });
         
         // Handle backspace and delete keys properly
-        ibanInput.addEventListener('keydown', (e) => {
+        IBANInput.addEventListener('keydown', (e) => {
             if (e.key === 'Backspace' || e.key === 'Delete') {
                 const cursorPosition = e.target.selectionStart;
                 const selectionEnd = e.target.selectionEnd;
@@ -325,7 +325,7 @@ class IbanSorgulama {
         });
         
         // Allow undo functionality
-        ibanInput.addEventListener('keydown', (e) => {
+        IBANInput.addEventListener('keydown', (e) => {
             if (e.ctrlKey && e.key === 'z') {
                 // Let the browser handle undo naturally
                 setTimeout(() => {
@@ -338,8 +338,8 @@ class IbanSorgulama {
         });
 
         // Search button functionality - validates format and shows bank name
-        ibanSearchBtn.addEventListener('click', () => {
-            const iban = ibanInput.value;
+        IBANSearchBtn.addEventListener('click', () => {
+            const iban = IBANInput.value;
             const validation = this.validateIban(iban);
             
             if (validation.valid) {
@@ -351,7 +351,7 @@ class IbanSorgulama {
                 
                 // Special handling for bank code 0067
                 if (bankCode === '0067') {
-                    ibanResult.innerHTML = `
+                    IBANResult.innerHTML = `
                         <div class="tapu-hesaplama-sonuc" style="max-height: 400px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #007bff #f0f0f0;">
                             <h4>IBAN Sorgulama Sonucu</h4>
                             <div style="text-align: center; margin-bottom: 15px;">
@@ -396,7 +396,7 @@ class IbanSorgulama {
                     // Normal handling for other banks
                     const branchName = this.getBranchName(iban);
                     
-                    ibanResult.innerHTML = `
+                    IBANResult.innerHTML = `
                         <div class="tapu-hesaplama-sonuc" style="max-height: 400px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #007bff #f0f0f0;">
                             <h4>IBAN Sorgulama Sonucu</h4>
                             <div style="text-align: center; margin-bottom: 15px;">
@@ -443,20 +443,20 @@ class IbanSorgulama {
                     `;
                 }
             } else {
-                ibanResult.innerHTML = `<div class="result-box error">${validation.message}</div>`;
+                IBANResult.innerHTML = `<div class="result-box error">${validation.message}</div>`;
             }
         });
         
         // Clear button functionality
-        ibanClearBtn.addEventListener('click', () => {
-            ibanInput.value = '';
-            ibanResult.innerHTML = '';
+        IBANClearBtn.addEventListener('click', () => {
+            IBANInput.value = '';
+            IBANResult.innerHTML = '';
         });
         
         // Enter key functionality
-        ibanInput.addEventListener('keypress', (e) => {
+        IBANInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
-                ibanSearchBtn.click();
+                IBANSearchBtn.click();
             }
         });
     }

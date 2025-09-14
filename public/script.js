@@ -255,6 +255,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const gelirVergisiHesaplamaModule = new GelirVergisiHesaplama();
     const operatorSorgulamaModule = new OperatorSorgulama();
     const vekaletUcretiHesaplamaModule = new VekaletUcretiHesaplama();
+    const postaKoduSorgulamaModule = new PostaKoduSorgulama(); // EKLENDİ
 
     // Make cezaeviSorgulamaModule globally accessible for PDF download
     window.cezaeviSorgulamaModule = cezaeviSorgulamaModule;
@@ -263,6 +264,36 @@ document.addEventListener('DOMContentLoaded', function() {
     const tabButtons = document.querySelectorAll('.tab-btn');
     const rightContent = document.querySelector('.right-content');
     
+    // Tab içeriklerini yönetmek için tabId ve modül eşlemesi
+    // Alfabetik sıraya göre:
+    /*
+    1: Cezaevi Sorgulama
+    2: Damga Vergisi Hesaplama
+    3: Fazla Çalışma Mesai Ücreti Hesaplama
+    4: Gelir Vergisi Hesaplama
+    5: İban Sorgulama
+    6: İcra Müdürlüğü Sorgulama
+    7: İhbar Tazminatı Hesaplama
+    8: İki Tarih Arası Fark Hesaplama
+    9: Kıdem Tazminatı Hesaplama
+    10: Kira Artış Oranı Hesaplama
+    11: Miras Hesaplama
+    12: Noter Sorgulama
+    13: Operatör Sorgulama
+    14: Plaka Sorgulama
+    15: Posta Kodu Sorgulama
+    16: Tapu Harcı Hesaplama
+    17: Telefon Alan Kodu Sorgulama
+    18: Türkiye Liman Sorgulama
+    19: Uluslararası Havalimanı Sorgulama
+    20: Vadeli Mevduat Faizi Hesaplama
+    21: Vekalet Ücreti Hesaplama
+    22: Veraset ve İntikal Ücreti Hesaplama
+    23: Yaş Hesaplama
+    24: Yetkili Mahkeme Sorgulama
+    25: Yıllık İzin Hesaplama
+    */
+
     if (tabButtons.length > 0 && rightContent) {
         tabButtons.forEach(button => {
             button.addEventListener('click', function() {
@@ -320,33 +351,36 @@ document.addEventListener('DOMContentLoaded', function() {
                         content = ilSorgulamaModule.getTabContent();
                         break;
                     case 'tab15':
-                        content = tapuHarciHesaplamaModule.getTabContent();
+                        content = postaKoduSorgulamaModule.getTabContent();
                         break;
                     case 'tab16':
-                        content = telefonAlanSorgulamaModule.getTabContent();
+                        content = tapuHarciHesaplamaModule.getTabContent();
                         break;
                     case 'tab17':
-                        content = limanSorgulamaModule.getTabContent();
+                        content = telefonAlanSorgulamaModule.getTabContent();
                         break;
                     case 'tab18':
-                        content = havalimaniSorgulamaModule.getTabContent();
+                        content = limanSorgulamaModule.getTabContent();
                         break;
                     case 'tab19':
-                        content = adeliMevduatFaiziHesaplamaModule.getTabContent();
+                        content = havalimaniSorgulamaModule.getTabContent();
                         break;
                     case 'tab20':
-                        content = vekaletUcretiHesaplamaModule.getTabContent();
+                        content = adeliMevduatFaiziHesaplamaModule.getTabContent();
                         break;
                     case 'tab21':
-                        content = verasetIntikatUcretiHesaplamaModule.getTabContent();
+                        content = vekaletUcretiHesaplamaModule.getTabContent();
                         break;
                     case 'tab22':
-                        content = yasHesaplamaModule.getTabContent();
+                        content = verasetIntikatUcretiHesaplamaModule.getTabContent();
                         break;
                     case 'tab23':
-                        content = yetkiliMahkemeSorgulamaModule.getTabContent();
+                        content = yasHesaplamaModule.getTabContent();
                         break;
                     case 'tab24':
+                        content = yetkiliMahkemeSorgulamaModule.getTabContent();
+                        break;
+                    case 'tab25':
                         content = yillikIzinHesaplamaModule.getTabContent();
                         break;
                     default:
@@ -385,24 +419,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else if (targetTab === 'tab14') {
                     ilSorgulamaModule.initialize();
                 } else if (targetTab === 'tab15') {
-                    tapuHarciHesaplamaModule.initialize();
+                    postaKoduSorgulamaModule.initialize();
                 } else if (targetTab === 'tab16') {
-                    telefonAlanSorgulamaModule.initialize();
+                    tapuHarciHesaplamaModule.initialize();
                 } else if (targetTab === 'tab17') {
-                    limanSorgulamaModule.initialize();
+                    telefonAlanSorgulamaModule.initialize();
                 } else if (targetTab === 'tab18') {
-                    havalimaniSorgulamaModule.initialize();
+                    limanSorgulamaModule.initialize();
                 } else if (targetTab === 'tab19') {
-                    adeliMevduatFaiziHesaplamaModule.initialize();
+                    havalimaniSorgulamaModule.initialize();
                 } else if (targetTab === 'tab20') {
-                    vekaletUcretiHesaplamaModule.initialize();
+                    adeliMevduatFaiziHesaplamaModule.initialize();
                 } else if (targetTab === 'tab21') {
-                    verasetIntikatUcretiHesaplamaModule.initialize();
+                    vekaletUcretiHesaplamaModule.initialize();
                 } else if (targetTab === 'tab22') {
-                    yasHesaplamaModule.initialize();
+                    verasetIntikatUcretiHesaplamaModule.initialize();
                 } else if (targetTab === 'tab23') {
-                    yetkiliMahkemeSorgulamaModule.initialize();
+                    yasHesaplamaModule.initialize();
                 } else if (targetTab === 'tab24') {
+                    yetkiliMahkemeSorgulamaModule.initialize();
+                } else if (targetTab === 'tab25') {
                     yillikIzinHesaplamaModule.initialize();
                 }
                 

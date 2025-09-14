@@ -222,9 +222,13 @@ class NoterSorgulama {
         html += `
                 </div>
                 <div class="uyari">
-                    <p>Bu bilgiler 09.09.2025 tarihli Türkiye Noterler Birliği verilerine dayanmaktadır.</p>
+                    <p><strong>Not:</strong> Bu bilgiler 09.09.2025 tarihli Türkiye Noterler Birliği verilerine dayanmaktadır.</p>
                 </div>
                 <style>
+                    .uyari p {
+                        text-align: left;
+                        color: black;
+                    }
                     .noter-sonuc-container::-webkit-scrollbar {
                         width: 6px;
                     }

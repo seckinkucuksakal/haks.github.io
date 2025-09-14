@@ -1,35 +1,35 @@
-﻿il,kurum_adi,kurum_tipi,kapasitesi,adres,telefon
-Adana,Adana E Tipi Kapalı Ceza İnfaz Kurumu,E Tipi Kapalı,1200,Sarıçam/ADANA,0322 346 10 00
-Adana,Adana Açık Ceza İnfaz Kurumu,Açık,400,Sarıçam/ADANA,0322 346 15 00
-Ankara,Ankara 1 Nolu F Tipi Yüksek Güvenlikli Kapalı Ceza İnfaz Kurumu,F Tipi Yüksek Güvenlikli,920,Sincan/ANKARA,0312 278 50 00
-Ankara,Ankara 2 Nolu F Tipi Yüksek Güvenlikli Kapalı Ceza İnfaz Kurumu,F Tipi Yüksek Güvenlikli,1152,Sincan/ANKARA,0312 278 60 00
-Ankara,Ankara E Tipi Kapalı Ceza İnfaz Kurumu,E Tipi Kapalı,2400,Sincan/ANKARA,0312 278 70 00
-Ankara,Ankara Açık Ceza İnfaz Kurumu,Açık,800,Sincan/ANKARA,0312 278 80 00
-Ankara,Ankara Kadın Kapalı Ceza İnfaz Kurumu,Kadın Kapalı,600,Sincan/ANKARA,0312 278 90 00
-Antalya,Antalya E Tipi Kapalı Ceza İnfaz Kurumu,E Tipi Kapalı,1800,Döşemealtı/ANTALYA,0242 421 30 00
-Antalya,Antalya Açık Ceza İnfaz Kurumu,Açık,500,Döşemealtı/ANTALYA,0242 421 35 00
-Bursa,Bursa E Tipi Kapalı Ceza İnfaz Kurumu,E Tipi Kapalı,1600,Kestel/BURSA,0224 372 40 00
-Bursa,Bursa Açık Ceza İnfaz Kurumu,Açık,600,Kestel/BURSA,0224 372 45 00
-Diyarbakır,Diyarbakır D Tipi Kapalı Ceza İnfaz Kurumu,D Tipi Kapalı,1200,Kayapınar/DİYARBAKIR,0412 252 10 00
-Diyarbakır,Diyarbakır E Tipi Kapalı Ceza İnfaz Kurumu,E Tipi Kapalı,800,Kayapınar/DİYARBAKIR,0412 252 15 00
-Eskişehir,Eskişehir Açık Ceza İnfaz Kurumu,Açık,400,Tepebaşı/ESKİŞEHİR,0222 234 50 00
-Gaziantep,Gaziantep E Tipi Kapalı Ceza İnfaz Kurumu,E Tipi Kapalı,1400,Şahinbey/GAZİANTEP,0342 215 60 00
-İstanbul,Silivri 1 Nolu F Tipi Yüksek Güvenlikli Kapalı Ceza İnfaz Kurumu,F Tipi Yüksek Güvenlikli,1280,Silivri/İSTANBUL,0212 748 70 00
-İstanbul,Silivri 2 Nolu F Tipi Yüksek Güvenlikli Kapalı Ceza İnfaz Kurumu,F Tipi Yüksek Güvenlikli,1280,Silivri/İSTANBUL,0212 748 75 00
-İstanbul,Silivri 3 Nolu L Tipi Kapalı Ceza İnfaz Kurumu,L Tipi Kapalı,2400,Silivri/İSTANBUL,0212 748 80 00
-İstanbul,Silivri 4 Nolu L Tipi Kapalı Ceza İnfaz Kurumu,L Tipi Kapalı,2400,Silivri/İSTANBUL,0212 748 85 00
-İstanbul,Silivri 5 Nolu L Tipi Kapalı Ceza İnfaz Kurumu,L Tipi Kapalı,2400,Silivri/İSTANBUL,0212 748 90 00
-İstanbul,Silivri 6 Nolu L Tipi Kapalı Ceza İnfaz Kurumu,L Tipi Kapalı,2400,Silivri/İSTANBUL,0212 748 95 00
-İstanbul,Silivri 7 Nolu L Tipi Kapalı Ceza İnfaz Kurumu,L Tipi Kapalı,2400,Silivri/İSTANBUL,0212 749 00 00
-İstanbul,Silivri 8 Nolu L Tipi Kapalı Ceza İnfaz Kurumu,L Tipi Kapalı,2400,Silivri/İSTANBUL,0212 749 05 00
-İstanbul,Silivri 9 Nolu L Tipi Kapalı Ceza İnfaz Kurumu,L Tipi Kapalı,2400,Silivri/İSTANBUL,0212 749 10 00
-İstanbul,Silivri Kadın Kapalı Ceza İnfaz Kurumu,Kadın Kapalı,800,Silivri/İSTANBUL,0212 749 15 00
-İstanbul,Maltepe L Tipi Kapalı Ceza İnfaz Kurumu,L Tipi Kapalı,1200,Maltepe/İSTANBUL,0216 441 20 00
-İzmir,İzmir Aliağa E Tipi Kapalı Ceza İnfaz Kurumu,E Tipi Kapalı,1600,Aliağa/İZMİR,0232 616 30 00
-İzmir,İzmir Kiraz Kadın Kapalı Ceza İnfaz Kurumu,Kadın Kapalı,500,Kiraz/İZMİR,0232 743 40 00
-Konya,Konya E Tipi Kapalı Ceza İnfaz Kurumu,E Tipi Kapalı,1800,Selçuklu/KONYA,0332 245 50 00
-Samsun,Samsun E Tipi Kapalı Ceza İnfaz Kurumu,E Tipi Kapalı,1200,Bafra/SAMSUN,0362 542 60 00
-Trabzon,Trabzon E Tipi Kapalı Ceza İnfaz Kurumu,E Tipi Kapalı,800,Arsin/TRABZON,0462 751 70 00
+﻿İl,Kurum Adı,Telefon,Kurum Cep,e-Posta,Adres,Faks,Web 
+Adana,Adana 1 Nolu Açık Ceza İnfaz Kurumu,0322 385 3044 -,0506 600 6271,adana.acik@adalet.gov.tr,Yürekli Mahallesi 5595 sokak No:20/B1 Sarıçam/ADANA,0322 385 3047,https://adanaacik.adalet.gov.tr/
+Adana,Adana 1 Nolu T Tipi Kapalı Ceza İnfaz Kurumu,0322 385 3231 - 0322 385 3232,,adana1nttkcik@adalet.gov.tr,Yürekli Mahallesi 5595 Sokak No:2 Sarıçam/ADANA,0322 385 3230,https://adana1tcik.adalet.gov.tr/
+Adana,Adana 2 Nolu Açık Ceza İnfaz Kurumu,0322 429 6300 - 0322 429 2593,,adana.2nacik@adalet.gov.tr,Akkapı Mah. 12340 sokak no: 23  Seyhan / ADANA,0322 429 6362,
+Adana,Adana 2 Nolu T Tipi Kapalı Ceza İnfaz Kurumu,0322 385 2125 -,,,Yürekli mahallesi 5628. Sokak No.2 Daire:A Sarıçam/Adana,0322 385 2120,
+Adana,Adana Denetimli Serbestlik Müdürlüğü,0322 352 2320 - 0507 820 0001,,dsm.adana@adalet.gov.tr,Sakarya Mah. Turhan Cemal Beriker Blv. 160/A Seyhan/Adana,0322 352 2310,
+Adana,Adana E Tipi Kapalı Ceza İnfaz Kurumu,0322 385 3296 - 0322 385 3298,0506 600 6201,adanaetcik@adalet.gov.tr,Yürekli Mahallesi 5595 Sokak No 20/A Sarıçam/ADANA,0322 385 2598,https://adanaecik.adalet.gov.tr/
+Adana,Adana F Tipi Yüksek Güvenlikli Kapalı Ceza İnfaz Kurumu,0322 385 3331 - 0322 385 3332,0506 600 6101,adana.ftcik@adalet.gov.tr,Yürekli Mah.5595 Sok.No:20/B 01220 Sarıçam/ADANA,0322 385 3329,https://adanafcik.adalet.gov.tr/
+Adana,Adana/Suluca 1 Nolu Yüksek Güvenlikli Kapalı Ceza İnfaz Kurumu,0322 504 80 82 -,,adana.suluca.1noluygcik@adalet.gov.tr,Dağcı Mahallesi 5950. Sokak No: 20/F ADANA/SARIÇAM,0322 504 80 87,https://suluca1ygcik.adalet.gov.tr/
+Adana,Adana/Suluca 2 Nolu Yüksek Güvenlikli Kapalı Ceza İnfaz Kurumu,0322 504 50 70 - 0332 504 50 80,,adana.suluca.2nygcik@adalet.gov.tr,Dağcı Mahallesi 5950. Sokak No: 20/G Sarıçam/ADANA,0322 504 50 90,https://suluca2cik.adalet.gov.tr
+Adana,Adana/Suluca Açık Ceza İnfaz Kurumu,0322 504 5550  - 0322 504 5551,,suluca.acik@adalet.gov.tr,Dağcı mahallesi 5950 sokak No:1 Sarıçam/Adana,0322 504 5552,https://adanasulucaacik.adalet.gov.tr/
+Adana,Adana/Suluca L Tipi Kapalı Ceza İnfaz Kurumu,0322 504 7072 - 0322 504 7073,,suluca.ltkcik@adalet.gov.tr,Dağcı Mahallesi 5950 Sokak. No: 20 SARIÇAM/ADANA,0322 504 7077,https://sulucaltcik.adalet.gov.tr/
+Adana,Adana/Suluca Y Tipi Kapalı Ceza İnfaz Kurumu,-,,,,,
+Adana,Ceyhan Açık Ceza İnfaz Kurumu,0322 648 4215 -,0535 107 1286,ceyhan.tarimacik@adalet.gov.tr,Mercimek Kasabası 3. km Ceyhan/ADANA,0322 648 4251,https://ceyhanacik.adalet.gov.tr/
+Adana,Ceyhan Denetimli Serbestlik Müdürlüğü,0322 611 1851 - 0507 820 0100,,dsm.ceyhan@adalet.gov.tr,TÜRLÜBAŞ MAH. DR. MAHİR ALP BOYDAK BLV. ADALET SARAYI KAT 2 CEYHAN ADANA,0322 613 9934,
+Adana,Karaisalı K1 Tipi Kapalı Ceza İnfaz Kurumu,0322 551 2028 -,,karaisali.k1tcik@adalet.gov.tr,Karapınar Mah. Lale Sokak No:6 D:1 Karaisalı/ADANA,0322 551 2418,
+Adana,Karataş Kadın Açık Ceza İnfaz Kurumu,0322 681 3053 -,0506 331 0070,karatas.kadcik@adalet.gov.tr,Yenimah. Dsi yolu üzeri 71.Sokak No: 61 Karataş/ADANA,0322 681 4169,https://karataskkcik.adalet.gov.tr
+Adana,Kozan Açık Ceza İnfaz Kurumu (M Tipi),0322 515 8289 -,0506 600 6261,kozan.acik@adalet.gov.tr,Tavşantepe Mah. Islah Sk No:8/8 Kozan/ADANA,0322 515 8290,https://kozanmcik.adalet.gov.tr/
+Adana,Kozan Denetimli Serbestlik Müdürlüğü,0322 516 4943 -,0507 820 0186,dsm.kozan@adalet.gov.tr,Karacaoğlan Mahallesi Develi Bulvarı No:49 Adalet Sarayı Kat 1 Kozan / ADANA,0322 516 4944,https://cte-ds.adalet.gov.tr
+Adana,Kozan M Tipi Kapalı Ceza İnfaz Kurumu,0322 515 8289 - 0322 515 8291,0506 600 6261,kozanmcik@adalet.gov.tr,Tavşan Tepe Mah. Islah Sok. No:8 Kozan /ADANA,0322 515 8290,https://kozanmcik.adalet.gov.tr/
+Adıyaman,Adıyaman Açık Ceza İnfaz Kurumu (L Tipi),0416 202 2747 -,,,Hacı Halil Köyü Büyükkkavaklı Mah. 122. Sokak No:10 Merkez/Adıyaman,0416 202 9096,
+Adıyaman,Adıyaman Denetimli Serbestlik Müdürlüğü,0416 214 8191 - 0507 820 0002,,dsm.adiyaman@adalet.gov.tr,Bahçelievler Mahallesi Atatürk Bulvarı Yan Yolu No:356 Merkez / Adıyaman,0416 214 8486,https://adiyaman.adalet.gov.tr
+Adıyaman,Adıyaman L Tipi Kapalı Ceza İnfaz Kurumu Müdürlüğü,0416 202 2747  -,,adiyaman.ltacik@adalet.gov.tr,Hacı Halil Köyü Büyükkkavaklı Mah. 122. Sokak No:10 Merkez/Adıyaman,0416 202 9096,https://adiyamanlcik.adalet.gov.tr/
+Afyonkarahisar,Afyon Denetimli Serbestlik Müdürlüğü,0272 217 3577 -,0507 820 0003,dsm.afyon@adalet.gov.tr,Karaman Mah. Ordu Bulvarı No: 7 Eski Adliye Binası Merkez /Afyonkarahisar,0272 217 3507,https://afyonkarahisar.adalet.gov.tr
+Afyonkarahisar,Afyonkarahisar 1 Nolu T Kapalı Ceza İnfaz Kurumu,0272 248 3424 - 0272 248 3426,,afyonkarahisar.1nttkcik@adalet.gov.tr,Ali İhsan Paşa Mah. Sultan Divani Cd. No.8/1 Merkez /AFYONKARAHİSAR,0272 248 3425,
+Afyonkarahisar,Afyonkarahisar 2 Nolu T Kapalı Ceza İnfaz Kurumu,0272 248 3263 - 0272 248 3264,,afyonkarahisar.2nttkcik@adalet.gov.tr,Ali İhsan Paşa Mah. Sultan Divani Cd. No.8/1 Merkez /AFYONKARAHİSAR,0272 248 3266,https://afyon2tcik.adalet.gov.tr/
+Afyonkarahisar,Afyonkarahisar Açık Ceza İnfaz Kurumu,0272 216 3820 - 0272 216 3821,0506 600 6203,afyon.acik@adalet.gov.tr,Esentepe Mh. Adnan Menderes Bulvarı No:52/1 PK.03100 Merkez/Afyonkarahisar,0272 216 3822,https://afyonacik.adalet.gov.tr/
+Afyonkarahisar,Afyonkarahisar Açık Ceza İnfaz Kurumu (Kampüs),0272 248 30 11 -,,afyonkarahisar.kacik@adalet.gov.tr,Ali ihsan Paşa Mah. Sultan Divani Cad. Numara: 8/3 Merkez/Afyonkarahisar,0272 248 30 12,https://afyonkacik.adalet.gov.tr/
+Afyonkarahisar,Afyonkarahisar E Tipi Kapalı Ceza İnfaz Kurumu,0272 216 1179 - 0272 216 1178,0535 107 1260,abbafyonetczv@adalet.gov.tr,"Esentepe Mahallesi, Adnan Menderes Bulvarı, Konya Yolu Üzeri, No:52/2 03040 Merkez/AFYONKARAHİSAR",0272 216 4525,https://afyonecik.adalet.gov.tr/
+Afyonkarahisar,Afyonkarahisar Kadın Açık Ceza İnfaz Kurumu,0272 2172779 -,,,Sülün Mah.Afyonkarahisar-Konya Karayolu 5.km üzeri,0272 2172780,
+Afyonkarahisar,Afyonkarahisar Kampüs Açık Ceza İnfaz Kurumu,0272 248 3011 -,,,Ali İHsan Paşa Mah. Sultan Divani Cd. No.8/3 Merkez Afyonkarahisar,0272 248 3012,
+Afyonkarahisar,Bolvadin Açık Ceza İnfaz Kurumu (T Tipi),0272 502 5208 -,,,Şıhlar Mah. 9. Çiftlik Küme Evleri No:17 Bolvadin / AFYONKARAHİSAR,0272 502 5209,
 Afyonkarahisar,Bolvadin Denetimli Serbestlik Müdürlüğü,0272 612 8577 -,0507 820 0103,dsm.bolvadin@adalet.gov.tr,KONAK MAH. İSTASYON CAD. NO:125 BOLVADİN/AFYONKARAHİSAR,0272 612 8531,https://bolvadin.adalet.gov.tr/
 Afyonkarahisar,Bolvadin T Tipi Kapalı Ceza İnfaz Kurumu,0272 502 5211 -,,bolvadin.ttkcik@adalet.gov.tr,Şıhlar Mah. 9. Çiftlik Küme Evleri No:17 Bolvadin / AFYONKARAHİSAR,0272 502 5212,https://bolvadintcik.adalet.gov.tr/
 Afyonkarahisar,Dinar Açık Ceza İnfaz Kurumu (T Tipi),0272 365 4041 -,0535 107 1291,dinar.ttkacik@adalet.gov.tr,"Dikici Köyü, Mehmet Tuncay Mahallesi, Mehmet Tuncay Küme evler No:52/14 Dinar/AFYONKARAHİSAR",0272 365 40 55,https://dinartcik.adalet.gov.tr/

@@ -32,10 +32,11 @@ class CezaeviSorgulama {
 
     parseCezaeviData(csvText) {
         const lines = csvText.trim().split('\n');
-        
+        // Yeni başlık sırası: İl,Kurum Adı,Telefon,Kurum Cep,e-Posta,Adres,Faks,Web
+        // Başlıkları atla, 1. satırdan başla
         for (let i = 1; i < lines.length; i++) {
             const values = this.parseCSVLine(lines[i]);
-            if (values.length >= 3) {
+            if (values.length >= 8) {
                 this.cezaeviVerileri.push({
                     il: values[0].trim(),
                     kurumAdi: values[1].trim(),
@@ -379,7 +380,15 @@ class CezaeviSorgulama {
 
     showKurumDetay(kurum) {
         const cezaeviResult = document.getElementById('cezaeviResult');
-        
+        // Google Maps linki için adresi encode et
+        const mapsLink = kurum.adres
+            ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(kurum.adres + ', ' + kurum.il)}`
+            : '';
+        // E-posta linki
+        const mailLink = kurum.email
+            ? `<a href="mailto:${kurum.email}">${kurum.email}</a>`
+            : '';
+
         let html = `
             <div class="tapu-hesaplama-sonuc">
                 <h4>Ceza İnfaz Kurumu Detayları</h4>
@@ -403,11 +412,11 @@ class CezaeviSorgulama {
                             ${kurum.email ? `
                             <div class="sonuc-satir">
                                 <span class="label">E-Posta:</span>
-                                <span class="value">${kurum.email}</span>
+                                <span class="value">${mailLink}</span>
                             </div>` : ''}
                             <div class="sonuc-satir">
                                 <span class="label">Adres:</span>
-                                <span class="value">${kurum.adres}</span>
+                                <span class="value">${mapsLink ? `<a href="${mapsLink}" target="_blank">${kurum.adres}</a>` : kurum.adres}</span>
                             </div>
                             ${kurum.faks && kurum.faks !== '-' ? `
                             <div class="sonuc-satir">
@@ -432,6 +441,118 @@ class CezaeviSorgulama {
                     .value a {
                         color: #007bff;
                         text-decoration: none;
+                        word-break: break-all;
+                    }
+                    .value a:hover {
+                        text-decoration: underline;
+                    }
+                </style>
+            </div>
+        `;
+
+        cezaeviResult.innerHTML = html;
+    }
+
+    showSonuclar(sonuclar) {
+        const cezaeviResult = document.getElementById('cezaeviResult');
+        
+        // Sonuçları grupla
+        const ilGruplari = {};
+        sonuclar.forEach(cezaevi => {
+            if (!ilGruplari[cezaevi.il]) {
+                ilGruplari[cezaevi.il] = [];
+            }
+            ilGruplari[cezaevi.il].push(cezaevi);
+        });
+
+        let html = `
+            <div class="tapu-hesaplama-sonuc">
+                <h4>Ceza İnfaz Kurumları Sorgulama Sonucu</h4>
+                <div class="cezaevi-sonuc-container" style="max-height: 400px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #007bff #f0f0f0;">
+        `;
+
+        Object.keys(ilGruplari).forEach(il => {
+            const kurumlar = ilGruplari[il];
+            html += `
+                <div class="il-grup" style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+                    <h5 style="color: #007bff; margin-bottom: 15px; border-bottom: 2px solid #007bff; padding-bottom: 5px;">${il}</h5>
+            `;
+
+            kurumlar.forEach((kurum, index) => {
+                const mapsLink = kurum.adres
+                    ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(kurum.adres + ', ' + kurum.il)}`
+                    : '';
+                const mailLink = kurum.email
+                    ? `<a href="mailto:${kurum.email}">${kurum.email}</a>`
+                    : '';
+                html += `
+                    <div class="kurum-detay" style="margin-bottom: 15px; padding: 10px; background-color: #f8f9fa; border-radius: 4px;">
+                        <div class="sonuc-satir">
+                            <span class="label">Kurum Adı:</span>
+                            <span class="value">${kurum.kurumAdi}</span>
+                        </div>
+                        <div class="sonuc-satir">
+                            <span class="label">Telefon:</span>
+                            <span class="value">${kurum.telefon}</span>
+                        </div>
+                        ${kurum.kurumCep && kurum.kurumCep !== '-' ? `
+                        <div class="sonuc-satir">
+                            <span class="label">Kurum Cep:</span>
+                            <span class="value">${kurum.kurumCep}</span>
+                        </div>` : ''}
+                        ${kurum.email ? `
+                        <div class="sonuc-satir">
+                            <span class="label">E-Posta:</span>
+                            <span class="value">${mailLink}</span>
+                        </div>` : ''}
+                        <div class="sonuc-satir">
+                            <span class="label">Adres:</span>
+                            <span class="value">${mapsLink ? `<a href="${mapsLink}" target="_blank">${kurum.adres}</a>` : kurum.adres}</span>
+                        </div>
+                        ${kurum.faks && kurum.faks !== '-' ? `
+                        <div class="sonuc-satir">
+                            <span class="label">Faks:</span>
+                            <span class="value">${kurum.faks}</span>
+                        </div>` : ''}
+                        ${kurum.web ? `
+                        <div class="sonuc-satir">
+                            <span class="label">Web:</span>
+                            <span class="value"><a href="${kurum.web}" target="_blank">${kurum.web}</a></span>
+                        </div>` : ''}
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+        });
+
+        html += `
+                </div>
+                <div class="uyari">
+                    <p><strong>Not:</strong> Bu bilgiler 09.09.2025 tarihli Adalet Bakanlığı Ceza ve Tevkifevleri Genel Müdürlüğü verilerine dayanmaktadır.</p>
+                </div>
+                <style>
+                    .uyari {
+                        text-align: left;
+                    }
+                    .cezaevi-sonuc-container::-webkit-scrollbar {
+                        width: 6px;
+                    }
+                    .cezaevi-sonuc-container::-webkit-scrollbar-track {
+                        background: #f0f0f0;
+                        border-radius: 3px;
+                    }
+                    .cezaevi-sonuc-container::-webkit-scrollbar-thumb {
+                        background: #007bff;
+                        border-radius: 3px;
+                    }
+                    .cezaevi-sonuc-container::-webkit-scrollbar-thumb:hover {
+                        background: #0056b3;
+                    }
+                    .value a {
+                        color: #007bff;
+                        text-decoration: none;
+                        word-break: break-all;
                     }
                     .value a:hover {
                         text-decoration: underline;
@@ -615,6 +736,12 @@ class CezaeviSorgulama {
             `;
 
             kurumlar.forEach((kurum, index) => {
+                const mapsLink = kurum.adres
+                    ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(kurum.adres + ', ' + kurum.il)}`
+                    : '';
+                const mailLink = kurum.email
+                    ? `<a href="mailto:${kurum.email}">${kurum.email}</a>`
+                    : '';
                 html += `
                     <div class="kurum-detay" style="margin-bottom: 15px; padding: 10px; background-color: #f8f9fa; border-radius: 4px;">
                         <div class="sonuc-satir">
@@ -633,11 +760,11 @@ class CezaeviSorgulama {
                         ${kurum.email ? `
                         <div class="sonuc-satir">
                             <span class="label">E-Posta:</span>
-                            <span class="value">${kurum.email}</span>
+                            <span class="value">${mailLink}</span>
                         </div>` : ''}
                         <div class="sonuc-satir">
                             <span class="label">Adres:</span>
-                            <span class="value">${kurum.adres}</span>
+                            <span class="value">${mapsLink ? `<a href="${mapsLink}" target="_blank">${kurum.adres}</a>` : kurum.adres}</span>
                         </div>
                         ${kurum.faks && kurum.faks !== '-' ? `
                         <div class="sonuc-satir">
@@ -682,6 +809,7 @@ class CezaeviSorgulama {
                     .value a {
                         color: #007bff;
                         text-decoration: none;
+                        word-break: break-all;
                     }
                     .value a:hover {
                         text-decoration: underline;

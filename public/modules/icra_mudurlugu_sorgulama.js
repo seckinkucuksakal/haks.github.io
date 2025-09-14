@@ -354,7 +354,7 @@ class IcraMudurluguSorgulama {
         html += `
                 </div>
                 <div class="uyari">
-                    <p><strong>Not:</strong> Bu bilgiler, Adalet Bakanlığı İcra İşleri Daire Başkanlığının 09.09.2025 tarihli verilerine dayanmaktadır. Sitemiz IBAN adresleri konusunda sorumluluk kabul etmemektedir, söz konusu IBAN numaralarının düzenli güncellenme ihtimali olduğundan, teyide muhtaçtır.</p>
+                    <p><strong>Not:</strong> Bu bilgiler, Adalet Bakanlığı İcra İşleri Daire Başkanlığının 09.09.2025 tarihli verilerine dayanmaktadır. <strong> Sitemiz IBAN adresleri konusunda sorumluluk kabul etmemektedir </strong>, söz konusu IBAN numaralarının düzenli güncellenme ihtimali olduğundan, teyide muhtaçtır.</p>
                 </div>
                 <style>
                     .uyari {
