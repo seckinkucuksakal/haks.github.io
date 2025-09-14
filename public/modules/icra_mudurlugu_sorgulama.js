@@ -354,9 +354,12 @@ class IcraMudurluguSorgulama {
         html += `
                 </div>
                 <div class="uyari">
-                    <p>Bu bilgiler 09.09.2025 tarihli İcra ve İflas Hukuku Genel Müdürlüğü verilerine dayanmaktadır.</p>
+                    <p><strong>Not:</strong> Bu bilgiler, Adalet Bakanlığı İcra İşleri Daire Başkanlığının 09.09.2025 tarihli verilerine dayanmaktadır. Sitemiz IBAN adresleri konusunda sorumluluk kabul etmemektedir, söz konusu IBAN numaralarının düzenli güncellenme ihtimali olduğundan, teyide muhtaçtır.</p>
                 </div>
                 <style>
+                    .uyari {
+                        text-align: left;
+                    }
                     .icra-sonuc-container::-webkit-scrollbar {
                         width: 6px;
                     }

@@ -1285,15 +1285,15 @@ class MirasHesaplama {
                             <span class="value">${(result.amcaPay / result.amcaSayisi).toLocaleString('tr-TR', {minimumFractionDigits: 2})} TL (%${(((result.amcaPay / result.amcaSayisi) / result.toplamVarlik) * 100).toFixed(1)})</span>
                         </div>` : ''}
                     </div>
-                    <div class="uyari" style="text-align: left;">
-                        <p><strong>NOT:</strong> Bu hesaplama 4721 sayılı Türk Medeni Kanun'un 495 ve 513. maddeler arasındaki hükümlerine göre yapılmıştır.</p>
+                    <div class="uyari">
+                        <p><strong>Not:</strong> Bu hesaplama 4721 sayılı Türk Medeni Kanun'un 495 ve 513. maddeler arasındaki hükümlerine göre yapılmıştır.</p>
                     </div>
-                    <div class="notlar" style="text-align: left;">
-                        <p><strong>NOT:</strong> Miras'ın 3. zümreye kalması ve bu zümrede anneanne, dede, babaanne, büyükbaba, teyze, dayı, hala ve amca'ların da hayatta olmaması ihtimalinde, intikalin bunların altsoylarına, yani mirasbırakan'ın yeğenlerine geçeceği hususuna dikkat edilmelidir.</p>
+                    <div class="notlar">
+                        <p><strong>Not:</strong> Miras'ın 3. zümreye kalması ve bu zümrede anneanne, dede, babaanne, büyükbaba, teyze, dayı, hala ve amca'ların da hayatta olmaması ihtimalinde, intikalin bunların altsoylarına, yani mirasbırakan'ın yeğenlerine geçeceği hususuna dikkat edilmelidir.</p>
 
-                        <p><strong>NOT:</strong> TMK m. 528 ve devamında düzenlenen mirastan feragat sözleşmesi müessesi bakımından, madde 528/3 hükmü uyarınca, bir karşılık sağlanarak mirastan feragat, sözleşmede aksi öngörülmedikçe feragat edenin altsoyu için de sonuç doğurur. O halde bu kişi mirasçı olmayacak, payı altsoyuna geçmeyecektir. Bu ihtimalde kişinin mirasbırakandan önce ölmüş ve altsoyu yokmuş gibi işlem görmesi gerekir, yani bu kişi görmezden gelinip taksim buna göre yapılır.</p>
+                        <p><strong>Not:</strong> TMK m. 528 ve devamında düzenlenen mirastan feragat sözleşmesi müessesi bakımından, madde 528/3 hükmü uyarınca, bir karşılık sağlanarak mirastan feragat, sözleşmede aksi öngörülmedikçe feragat edenin altsoyu için de sonuç doğurur. O halde bu kişi mirasçı olmayacak, payı altsoyuna geçmeyecektir. Bu ihtimalde kişinin mirasbırakandan önce ölmüş ve altsoyu yokmuş gibi işlem görmesi gerekir, yani bu kişi görmezden gelinip taksim buna göre yapılır.</p>
 
-                        <p><strong>NOT:</strong> Saklı pay, miras payı içerisinden miras bırakanın tasarruf özgürlüğüne rağmen, kanunun koruma altına aldığı yasal mirasçıların asgari miras hakkıdır. Mirasbırakan söz konusu saklı pay üzerinde tasarruf yapamaz, vasiyetname ile bunları değiştirip yok sayamaz. Türk Medeni Kanunu'nun 506. maddesi hükmü gereğince saklı pay oranları hesaplayıcımızdaki miras payları üzerinden hesaplanmak üzere aşağıdaki şekildedir:</p>
+                        <p><strong>Not:</strong> Saklı pay, miras payı içerisinden miras bırakanın tasarruf özgürlüğüne rağmen, kanunun koruma altına aldığı yasal mirasçıların asgari miras hakkıdır. Mirasbırakan söz konusu saklı pay üzerinde tasarruf yapamaz, vasiyetname ile bunları değiştirip yok sayamaz. Türk Medeni Kanunu'nun 506. maddesi hükmü gereğince saklı pay oranları hesaplayıcımızdaki miras payları üzerinden hesaplanmak üzere aşağıdaki şekildedir:</p>
                         <ul>
                             <li>Altsoy için yasal miras payının yarısı,</li>
                             <li>Ana ve babadan her biri için yasal miras payının dörtte biri,</li>
@@ -1302,6 +1302,14 @@ class MirasHesaplama {
                         </ul>
                     </div>
                     <style>
+                        .uyari {
+                            color: black;
+                            text-align: left;
+                        }
+                        .notlar {
+                            color: black;
+                            text-align: left;
+                        }
                         .tapu-hesaplama-sonuc::-webkit-scrollbar {
                             width: 6px;
                         }

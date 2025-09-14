@@ -423,9 +423,12 @@ class CezaeviSorgulama {
                     </div>
                 </div>
                 <div class="uyari">
-                    <p>Bu bilgiler 09.09.2025 tarihli Adalet Bakanlığı Ceza ve Tevkifevleri Genel Müdürlüğü verilerine dayanmaktadır.</p>
+                    <p><strong>Not:</strong> Bu bilgiler 09.09.2025 tarihli Adalet Bakanlığı Ceza ve Tevkifevleri Genel Müdürlüğü verilerine dayanmaktadır.</p>
                 </div>
                 <style>
+                    .uyari {
+                        text-align: left;
+                    }
                     .value a {
                         color: #007bff;
                         text-decoration: none;
@@ -656,9 +659,12 @@ class CezaeviSorgulama {
         html += `
                 </div>
                 <div class="uyari">
-                    <p>Bu bilgiler 09.09.2025 tarihli Adalet Bakanlığı Ceza ve Tevkifevleri Genel Müdürlüğü verilerine dayanmaktadır.</p>
+                    <p><strong>Not:</strong> Bu bilgiler 09.09.2025 tarihli Adalet Bakanlığı Ceza ve Tevkifevleri Genel Müdürlüğü verilerine dayanmaktadır.</p>
                 </div>
                 <style>
+                    .uyari {
+                        text-align: left;
+                    }
                     .cezaevi-sonuc-container::-webkit-scrollbar {
                         width: 6px;
                     }

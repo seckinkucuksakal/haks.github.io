@@ -187,17 +187,23 @@ class YillikIzinHesaplama {
         // 2025 yılı gelir vergisi hesaplaması (yıllık tutar olarak hesaplanır)
         const yillikIzinUcreti = izinUcreti * 12; // Yıllık tutara çevir
         let gelirVergisi = 0;
+        let gelirVergisiText = '';
         
         if (yillikIzinUcreti <= 158000) {
             gelirVergisi = yillikIzinUcreti * 0.15;
+            gelirVergisiText = '15%';
         } else if (yillikIzinUcreti <= 330000) {
             gelirVergisi = 23700 + (yillikIzinUcreti - 158000) * 0.20;
+            gelirVergisiText = '20%';
         } else if (yillikIzinUcreti <= 800000) {
             gelirVergisi = 58100 + (yillikIzinUcreti - 330000) * 0.27;
+            gelirVergisiText = '27%';
         } else if (yillikIzinUcreti <= 4300000) {
             gelirVergisi = 185000 + (yillikIzinUcreti - 800000) * 0.35;
+            gelirVergisiText = '35%';
         } else {
-            gelirVergisi = 1410000 + (yillikIzinUcreti - 4300000) * 0.40;
+            gelirVergisi = 1410000 + (yillikIzinUcreti - 4300000) * 0.40;   
+            gelirVergisiText = '40%';
         }
         
         // Aylık gelir vergisine çevir
@@ -216,7 +222,8 @@ class YillikIzinHesaplama {
             damgaVergisi,
             sgkIsciPayi,
             toplamKesinti,
-            netIzinUcreti
+            netIzinUcreti,
+            gelirVergisiText
         };
     }
 
@@ -398,7 +405,7 @@ class YillikIzinHesaplama {
 
                 <!-- İzin Süresi -->
                 <div class="il-grup" style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
-                    <h5 style="color: #28a745; margin-bottom: 15px; border-bottom: 2px solid #28a745; padding-bottom: 5px;">İzin Süresi Hesaplama</h5>
+                    <h5 style="color: #007bff; margin-bottom: 15px; border-bottom: 2px solid #007bff; padding-bottom: 5px;">İzin Süresi Hesaplama</h5>
                     <div class="kurum-detay" style="margin-bottom: 15px; padding: 10px; background-color: #f8f9fa; border-radius: 4px;">
                         <div class="sonuc-satir">
                             <span class="label">Yıllık İzin Hakkı:</span>
@@ -421,7 +428,7 @@ class YillikIzinHesaplama {
 
                 <!-- İzin Ücreti -->
                 <div class="il-grup" style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
-                    <h5 style="color: #dc3545; margin-bottom: 15px; border-bottom: 2px solid #dc3545; padding-bottom: 5px;">İzin Ücreti Hesaplama</h5>
+                    <h5 style="color: #007bff; margin-bottom: 15px; border-bottom: 2px solid #007bff; padding-bottom: 5px;">İzin Ücreti Hesaplama</h5>
                     <div class="kurum-detay" style="margin-bottom: 15px; padding: 10px; background-color: #f8f9fa; border-radius: 4px;">
                         <div class="sonuc-satir">
                             <span class="label">Günlük Brüt Ücret:</span>
@@ -432,7 +439,7 @@ class YillikIzinHesaplama {
                             <span class="value">${this.formatCurrency(ucretResult.izinUcreti)}</span>
                         </div>
                         <div class="sonuc-satir">
-                            <span class="label">Gelir Vergisi (Dilimli):</span>
+                            <span class="label">Gelir Vergisi (${ucretResult.gelirVergisiText}):</span>
                             <span class="value">-${this.formatCurrency(ucretResult.gelirVergisi)}</span>
                         </div>
                         <div class="sonuc-satir">
@@ -461,6 +468,20 @@ class YillikIzinHesaplama {
                         <li>Hafta tatili, ulusal bayram ve genel tatil ücretleri ayrıca ödenir.</li>
                     </ul>
                 </div>
+                <style>
+                    .uyari {
+                        text-align: left;
+                        color: black;
+                    }
+                    .uyari ul {
+                        text-align: left;
+                        color: black;
+                    }
+                    .uyari li {
+                        text-align: left;
+                        color: black;
+                    }
+                </style>
             </div>
         `;
 

@@ -388,6 +388,11 @@ class TapuHarciHesaplama {
                     <div class="uyari">
                         <p><strong>Not:</strong> Tapu harcının %2'si alıcı, %2'sinin satıcı tarafından ödenmesi gerekirken, döner sermaye harcının alıcı tarafından ödenmesi gerekmektedir.</p>
                     </div>
+                    <style>
+                        .uyari {
+                            text-align: left;
+                        }
+                    </style>
                 </div>
             `;
         });

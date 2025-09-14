@@ -229,9 +229,12 @@ class IkiTarihArasiFark {
                         </div>
                     </div>
                     <div class="uyari">
-                        <p><strong>Not:</strong> Hesaplama hassas olarak yapılmış olup, artık yıllar ve farklı ay günleri dikkate alınmıştır. Çalışma günleri Pazartesi-Cuma arası günlerdir. Tüm tarihler dd/mm/yyyy formatında gösterilmektedir.</p>
+                        <p><strong>Not:</strong> Hesaplama hassas olarak yapılmış olup, artık yıllar ve farklı ay günleri dikkate alınmıştır. Çalışma günleri Pazartesi-Cuma arası günlerdir. Tüm tarihler Ay/Gün/Yıl formatında gösterilmektedir.</p>
                     </div>
                     <style>
+                        .uyari {
+                            text-align: left;
+                        }
                         .tapu-hesaplama-sonuc::-webkit-scrollbar {
                             width: 6px;
                         }

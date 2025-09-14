@@ -183,9 +183,12 @@ class YasHesaplama {
                         </div>
                     </div>
                     <div class="uyari">
-                        <p><strong>Not:</strong> Hesaplama 01.01.1900 tarihinden itibaren yapılabilir. Artık yıllar ve farklı ay günleri dikkate alınarak hassas hesaplama yapılmıştır. Tüm tarihler dd/mm/yyyy formatında gösterilmektedir.</p>
+                        <p><strong>Not:</strong> Hesaplama 01.01.1900 tarihinden itibaren yapılabilir. Artık yıllar ve farklı ay günleri dikkate alınarak hassas hesaplama yapılmıştır. Tüm tarihler Ay/Gün/Yıl formatında gösterilmektedir.</p>
                     </div>
                     <style>
+                        .uyari {
+                            text-align: left;
+                        }
                         .tapu-hesaplama-sonuc::-webkit-scrollbar {
                             width: 6px;
                         }
