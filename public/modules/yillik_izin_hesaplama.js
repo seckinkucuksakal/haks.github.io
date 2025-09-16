@@ -26,9 +26,9 @@ class YillikIzinHesaplama {
                     <label for="dogumTarihi">Doğum Tarihi:</label>
                     <input type="date" id="dogumTarihi" class="form-input">
                 </div>
-                
-                <div class="form-group">
-                    <label for="brutMaas">Brüt Aylık Maaş (TL):</label>
+
+                <div class="form-group" id="maasInputGroup">
+                    <label for="brutMaas" id="maasLabel">Brüt Aylık Maaş (TL):</label>
                     <input type="text" id="brutMaas" placeholder="15000.50" class="form-input">
                 </div>
                 
@@ -242,7 +242,6 @@ class YillikIzinHesaplama {
 
     initialize() {
         console.log('Yıllık İzin Hesaplama modülü başlatıldı');
-        
         setTimeout(() => {
             const iseBaslamaTarihiInput = document.getElementById('iseBaslamaTarihi');
             const hesaplamaTarihiInput = document.getElementById('hesaplamaTarihi');
@@ -254,6 +253,7 @@ class YillikIzinHesaplama {
             const izinResult = document.getElementById('izinResult');
             const brutModeBtn = document.getElementById('brutModeBtn');
             const netModeBtn = document.getElementById('netModeBtn');
+            const maasLabel = document.getElementById('maasLabel');
             let hesaplamaModu = 'brut'; // 'brut' veya 'net'
 
             if (!izinHesaplaBtn || !izinTemizleBtn || !izinResult) {
@@ -273,11 +273,15 @@ class YillikIzinHesaplama {
                 hesaplamaModu = 'brut';
                 brutModeBtn.classList.add('active');
                 netModeBtn.classList.remove('active');
+                if (maasLabel) maasLabel.textContent = 'Brüt Aylık Maaş (TL):';
+                if (brutMaasInput) brutMaasInput.placeholder = '15000.50';
             });
             netModeBtn?.addEventListener('click', () => {
                 hesaplamaModu = 'net';
                 netModeBtn.classList.add('active');
                 brutModeBtn.classList.remove('active');
+                if (maasLabel) maasLabel.textContent = 'Net Aylık Maaş (TL):';
+                if (brutMaasInput) brutMaasInput.placeholder = '15000.50';
             });
 
             // Hesapla butonu
@@ -440,7 +444,7 @@ class YillikIzinHesaplama {
                             <span class="label">Günlük Net Ücret:</span>
                             <span class="value">${this.formatCurrency(ucretResult.gunlukNetUcret)}</span>
                         </div>
-                        <div class="sonuc-satir">
+                        <div class="sonuc-satir toplam">
                             <span class="label">Net İzin Ücreti:</span>
                             <span class="value" style="color: #28a745; font-size: 18px;">${this.formatCurrency(ucretResult.netIzinUcreti)}</span>
                         </div>
@@ -472,7 +476,7 @@ class YillikIzinHesaplama {
                             <span class="label">SGK İşçi Payı (%15.75):</span>
                             <span class="value">-${this.formatCurrency(ucretResult.sgkIsciPayi)}</span>
                         </div>
-                        <div class="sonuc-satir" style="border-top: 2px solid #007bff; padding-top: 10px; margin-top: 10px; font-weight: bold;">
+                        <div class="sonuc-satir toplam" style="border-top: 2px solid #007bff; padding-top: 10px; margin-top: 10px; font-weight: bold;">
                             <span class="label">Net İzin Ücreti:</span>
                             <span class="value" style="color: #28a745; font-size: 18px;">${this.formatCurrency(ucretResult.netIzinUcreti)}</span>
                         </div>

@@ -1537,3 +1537,27 @@ footer {
     line-height: 1.7;
     color: black;
 }
+
+.exchange-marquee-container {
+    width: 100%;
+    overflow-x: auto;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e0e0e0;
+    white-space: nowrap;
+    cursor: grab;
+    user-select: none;
+}
+
+.exchange-marquee {
+    display: inline-block;
+    padding: 8px 0 8px 8px;
+    font-size: 16px;
+    color: black;
+    min-width: max-content;
+}
+
+.exchange-marquee span {
+    display: inline-block;
+    margin-right: 40px;
+    font-weight: bold;
+}

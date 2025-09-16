@@ -450,4 +450,128 @@ document.addEventListener('DOMContentLoaded', function() {
         rightContent.innerHTML = cezaeviSorgulamaModule.getTabContent();
         cezaeviSorgulamaModule.initialize();
     }
+    
+    const marquee = document.getElementById('exchangeMarquee');
+    const marqueeContainer = document.querySelector('.exchange-marquee-container');
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    if (marqueeContainer && marquee) {
+        // Double marquee content for seamless scroll (only if not already doubled)
+        if (!marquee.__doubled) {
+            marquee.innerHTML = marquee.innerHTML + marquee.innerHTML;
+            marquee.__doubled = true;
+        }
+
+        // Scrollbar'ı gizle
+        marqueeContainer.style.overflowX = 'auto';
+        marqueeContainer.style.scrollbarWidth = 'none'; // Firefox
+        marqueeContainer.style.msOverflowStyle = 'none'; // IE/Edge
+        
+        // Webkit için CSS ekle
+        const style = document.createElement('style');
+        style.innerHTML = `
+            .exchange-marquee-container::-webkit-scrollbar { 
+                display: none !important; 
+                width: 0 !important; 
+                height: 0 !important; 
+            }
+            .exchange-marquee-container {
+                cursor: grab;
+            }
+            .exchange-marquee-container.active {
+                cursor: grabbing;
+            }
+            .exchange-marquee-container * {
+                user-select: none;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Mouse olayları
+        marqueeContainer.addEventListener('mousedown', (e) => {
+            isDown = true;
+            marqueeContainer.classList.add('active');
+            startX = e.pageX - marqueeContainer.offsetLeft;
+            scrollLeft = marqueeContainer.scrollLeft;
+            e.preventDefault(); // Varsayılan davranışı engelle
+        });
+
+        marqueeContainer.addEventListener('mouseleave', () => {
+            isDown = false;
+            marqueeContainer.classList.remove('active');
+        });
+
+        marqueeContainer.addEventListener('mouseup', () => {
+            isDown = false;
+            marqueeContainer.classList.remove('active');
+        });
+
+        marqueeContainer.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - marqueeContainer.offsetLeft;
+            const walk = (x - startX) * 2; // Hızı artır (2 çarpanı)
+            marqueeContainer.scrollLeft = scrollLeft - walk; // Yön düzeltmesi
+        });
+
+        // Touch olayları (mobil destek)
+        marqueeContainer.addEventListener('touchstart', (e) => {
+            isDown = true;
+            startX = e.touches[0].pageX - marqueeContainer.offsetLeft;
+            scrollLeft = marqueeContainer.scrollLeft;
+        });
+
+        marqueeContainer.addEventListener('touchend', () => {
+            isDown = false;
+        });
+
+        marqueeContainer.addEventListener('touchmove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.touches[0].pageX - marqueeContainer.offsetLeft;
+            const walk = (x - startX) * 2;
+            marqueeContainer.scrollLeft = scrollLeft - walk;
+        });
+
+        // Scroll sınırlarını kontrol et
+        marqueeContainer.addEventListener('scroll', () => {
+            const maxScroll = marqueeContainer.scrollWidth - marqueeContainer.clientWidth;
+            
+            if (marqueeContainer.scrollLeft < 0) {
+                marqueeContainer.scrollLeft = 0;
+            }
+            if (marqueeContainer.scrollLeft > maxScroll) {
+                marqueeContainer.scrollLeft = maxScroll;
+            }
+        });
+
+        // Auto-scroll functionality (endless)
+        let marqueeAutoScroll;
+        function startMarqueeAutoScroll() {
+            stopMarqueeAutoScroll();
+            marqueeAutoScroll = setInterval(() => {
+                marqueeContainer.scrollLeft += 1;
+                // When scroll passes the original content, reset to start
+                if (marqueeContainer.scrollLeft >= marqueeContainer.scrollWidth / 2) {
+                    marqueeContainer.scrollLeft = 0;
+                }
+            }, 35); // Hızı azaltmak için 35ms yaptık
+        }
+        function stopMarqueeAutoScroll() {
+            if (marqueeAutoScroll) clearInterval(marqueeAutoScroll);
+        }
+
+        // Start auto-scroll on load
+        startMarqueeAutoScroll();
+
+        // Pause auto-scroll on mouse enter or drag, resume on leave
+        marqueeContainer.addEventListener('mouseenter', stopMarqueeAutoScroll);
+        marqueeContainer.addEventListener('mouseleave', startMarqueeAutoScroll);
+        marqueeContainer.addEventListener('mousedown', stopMarqueeAutoScroll);
+        marqueeContainer.addEventListener('mouseup', startMarqueeAutoScroll);
+        marqueeContainer.addEventListener('touchstart', stopMarqueeAutoScroll);
+        marqueeContainer.addEventListener('touchend', startMarqueeAutoScroll);
+    }
 });
