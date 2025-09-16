@@ -7,6 +7,7 @@
 body {
     font-family: 'Arial', sans-serif;
     background: linear-gradient(to bottom, #ffffff 0%, #a8a8a8 100%);
+    background-attachment: fixed;
     color: #333;
     min-height: 100vh;
     display: flex;
@@ -447,7 +448,7 @@ footer {
     left: 0;
     top: 0;
     width: 60px;
-    height: 100vh;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -457,11 +458,13 @@ footer {
     transition: all 0.3s ease;
     background: linear-gradient(to bottom, #ffffff 0%, #a8a8a8 100%);
     backdrop-filter: blur(5px);
+    pointer-events: none; /* Kapalıyken tıklanmasın */
 }
 
 .forward-overlay.show {
     opacity: 1;
     visibility: visible;
+    pointer-events: auto; /* Açıkken tıklanabilsin */
 }
 
 .forward-btn {
@@ -1163,6 +1166,7 @@ footer {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        transform: translateX(10px);
     }
     
     .subtitle {
@@ -1560,4 +1564,74 @@ footer {
     display: inline-block;
     margin-right: 40px;
     font-weight: bold;
+}
+
+.header-icons {
+    display: flex;
+    gap: 108px;
+    align-items: center;
+    position: absolute;
+    left: 55%; /* veya istediğiniz yüzde değeri */
+    transform: translateX(-50%) translateY(-5px);
+    z-index: 1001;
+}
+.header-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+}
+.header-btn:hover {
+    background: rgba(0, 0, 0, 0.1);
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.header-btn img {
+    display: block;
+}
+
+.header-icon-labels {
+    display: flex;
+    gap: 65px; /* İkonlarla aynı gap değeri */
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 55%; /* İkonlarla aynı left değeri */
+    top: calc(50% + 20px); /* İkonların daha altına */
+    transform: translateX(-48%); /* İkonlarla aynı merkezleme */
+    z-index: 1000;
+    font-size: 1rem;
+    color: black;
+    font-weight: 600;
+
+    
+}
+.header-icon-labels span {
+    min-width: 80px;
+    text-align: center;
+    opacity: 0.85;
+}
+
+/* Mobile görünümde de aynı hizada ve boyutta */
+@media screen and (max-width: 1024px) {
+    .header-icons {
+        left: 20px;
+        top: 50%;
+        transform: translateY(-62%) translateX(30px);
+        gap: 2px;
+    }
+    .header-btn {
+        width: 30px;
+        height: 30px;
+        padding: 5px;
+    }
+    .header-btn img {
+        width: 22px;
+        height: 2px;
+    }
+    .header-icon-labels {
+        display: none;
+    }
 }

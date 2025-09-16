@@ -11,6 +11,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const rightContainer = document.querySelector('.right-container');
     const searchBtn = document.getElementById('searchBtn');
     const searchInput = document.getElementById('searchInput');
+    const homeBtn = document.getElementById('homeBtn');
+    const infoBtn = document.getElementById('infoBtn');
+    const flagBtn = document.getElementById('flagBtn');
     
     // State variables
     let isMobileMenuOpen = false;
@@ -44,6 +47,13 @@ document.addEventListener('DOMContentLoaded', function() {
             rightContainer.style.flex = 'none';
             forwardOverlay.classList.add('show');
             isLeftContainerVisible = false;
+            document.querySelector('.left-content').style.pointerEvents = 'none';
+            document.querySelector('.left-content').style.opacity = '0.3';
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.style.pointerEvents = 'none';
+                btn.style.opacity = '0.3';
+            });
+            document.querySelector('.scrollable-container').style.overflowY = 'hidden';
         });
         
         forwardBtn.addEventListener('click', function() {
@@ -56,6 +66,13 @@ document.addEventListener('DOMContentLoaded', function() {
             rightContainer.style.flex = '1';
             forwardOverlay.classList.remove('show');
             isLeftContainerVisible = true;
+            document.querySelector('.left-content').style.pointerEvents = '';
+            document.querySelector('.left-content').style.opacity = '';
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.style.pointerEvents = '';
+                btn.style.opacity = '';
+            });
+            document.querySelector('.scrollable-container').style.overflowY = 'auto';
         });
     }
     
@@ -264,131 +281,81 @@ document.addEventListener('DOMContentLoaded', function() {
     const tabButtons = document.querySelectorAll('.tab-btn');
     const rightContent = document.querySelector('.right-content');
     
-    // Tab içeriklerini yönetmek için tabId ve modül eşlemesi
-    // Alfabetik sıraya göre:
-    /*
-    1: Cezaevi Sorgulama
-    2: Damga Vergisi Hesaplama
-    3: Fazla Çalışma Mesai Ücreti Hesaplama
-    4: Gelir Vergisi Hesaplama
-    5: İban Sorgulama
-    6: İcra Müdürlüğü Sorgulama
-    7: İhbar Tazminatı Hesaplama
-    8: İki Tarih Arası Fark Hesaplama
-    9: Kıdem Tazminatı Hesaplama
-    10: Kira Artış Oranı Hesaplama
-    11: Miras Hesaplama
-    12: Noter Sorgulama
-    13: Operatör Sorgulama
-    14: Plaka Sorgulama
-    15: Posta Kodu Sorgulama
-    16: Tapu Harcı Hesaplama
-    17: Telefon Alan Kodu Sorgulama
-    18: Türkiye Liman Sorgulama
-    19: Uluslararası Havalimanı Sorgulama
-    20: Vadeli Mevduat Faizi Hesaplama
-    21: Vekalet Ücreti Hesaplama
-    22: Veraset ve İntikal Ücreti Hesaplama
-    23: Yaş Hesaplama
-    24: Yetkili Mahkeme Sorgulama
-    25: Yıllık İzin Hesaplama
-    */
+    // Tab id ve route eşleşmesi
+    const tabRoutes = {
+        tab1: 'cezaevi-sorgulama',
+        tab2: 'damga-vergisi-hesaplama',
+        tab3: 'fazla-calisma-mesai-ucreti-hesaplama',
+        tab4: 'gelir-vergisi-hesaplama',
+        tab5: 'iban-sorgulama',
+        tab6: 'icra-mudurlugu-sorgulama',
+        tab7: 'ihbar-tazminati-hesaplama',
+        tab8: 'iki-tarih-arasi-fark-hesaplama',
+        tab9: 'kidem-tazminati-hesaplama',
+        tab10: 'kira-artis-orani-hesaplama',
+        tab11: 'miras-hesaplama',
+        tab12: 'noter-sorgulama',
+        tab13: 'operator-sorgulama',
+        tab14: 'plaka-sorgulama',
+        tab15: 'posta-kodu-sorgulama',
+        tab16: 'tapu-harci-hesaplama',
+        tab17: 'telefon-alan-kodu-sorgulama',
+        tab18: 'turkiye-liman-sorgulama',
+        tab19: 'uluslararasi-havalimani-sorgulama',
+        tab20: 'vadeli-mevduat-faizi-hesaplama',
+        tab21: 'vekalet-ucreti-hesaplama',
+        tab22: 'veraset-intikal-ucreti-hesaplama',
+        tab23: 'yas-hesaplama',
+        tab24: 'yetkili-mahkeme-sorgulama',
+        tab25: 'yillik-izin-hesaplama'
+    };
+
+    // Route -> tab id eşleşmesi
+    const routeTabs = {};
+    Object.entries(tabRoutes).forEach(([tab, route]) => {
+        routeTabs[route] = tab;
+    });
 
     if (tabButtons.length > 0 && rightContent) {
+        // Tab click handler
         tabButtons.forEach(button => {
             button.addEventListener('click', function() {
                 const targetTab = this.getAttribute('data-tab');
-                
                 // Remove active class from all buttons
                 tabButtons.forEach(btn => btn.classList.remove('active'));
-                
                 // Add active class to clicked button
                 this.classList.add('active');
-                
                 // Update right container content based on selected tab
                 let content = '';
                 switch(targetTab) {
-                    case 'tab1':
-                        content = cezaeviSorgulamaModule.getTabContent();
-                        break;
-                    case 'tab2':
-                        content = damgaVergisiHesaplamaModule.getTabContent();
-                        break;
-                    case 'tab3':
-                        content = fazlaCalismaMessaiUcretiHesaplamaModule.getTabContent();
-                        break;
-                    case 'tab4':
-                        content = gelirVergisiHesaplamaModule.getTabContent();
-                        break;
-                    case 'tab5':
-                        content = ibanSorgulamaModule.getTabContent();
-                        break;
-                    case 'tab6':
-                        content = icraMudurluguSorgulamaModule.getTabContent();
-                        break;
-                    case 'tab7':
-                        content = ihbarTazminatiHesaplamaModule.getTabContent();
-                        break;
-                    case 'tab8':
-                        content = ikiTarihArasiFarkModule.getTabContent();
-                        break;
-                    case 'tab9':
-                        content = kidemTazminatiHesaplamaModule.getTabContent();
-                        break;
-                    case 'tab10':
-                        content = kiraArtisOraniHesaplamaModule.getTabContent();
-                        break;
-                    case 'tab11':
-                        content = mirasHesaplamaModule.getTabContent();
-                        break;
-                    case 'tab12':
-                        content = noterSorgulamaModule.getTabContent();
-                        break;
-                    case 'tab13':
-                        content = operatorSorgulamaModule.getTabContent();
-                        break;
-                    case 'tab14':
-                        content = ilSorgulamaModule.getTabContent();
-                        break;
-                    case 'tab15':
-                        content = postaKoduSorgulamaModule.getTabContent();
-                        break;
-                    case 'tab16':
-                        content = tapuHarciHesaplamaModule.getTabContent();
-                        break;
-                    case 'tab17':
-                        content = telefonAlanSorgulamaModule.getTabContent();
-                        break;
-                    case 'tab18':
-                        content = limanSorgulamaModule.getTabContent();
-                        break;
-                    case 'tab19':
-                        content = havalimaniSorgulamaModule.getTabContent();
-                        break;
-                    case 'tab20':
-                        content = adeliMevduatFaiziHesaplamaModule.getTabContent();
-                        break;
-                    case 'tab21':
-                        content = vekaletUcretiHesaplamaModule.getTabContent();
-                        break;
-                    case 'tab22':
-                        content = verasetIntikatUcretiHesaplamaModule.getTabContent();
-                        break;
-                    case 'tab23':
-                        content = yasHesaplamaModule.getTabContent();
-                        break;
-                    case 'tab24':
-                        content = yetkiliMahkemeSorgulamaModule.getTabContent();
-                        break;
-                    case 'tab25':
-                        content = yillikIzinHesaplamaModule.getTabContent();
-                        break;
-                    default:
-                        content = '<p>İçerik bulunamadı.</p>';
+                    case 'tab1': content = cezaeviSorgulamaModule.getTabContent(); break;
+                    case 'tab2': content = damgaVergisiHesaplamaModule.getTabContent(); break;
+                    case 'tab3': content = fazlaCalismaMessaiUcretiHesaplamaModule.getTabContent(); break;
+                    case 'tab4': content = gelirVergisiHesaplamaModule.getTabContent(); break;
+                    case 'tab5': content = ibanSorgulamaModule.getTabContent(); break;
+                    case 'tab6': content = icraMudurluguSorgulamaModule.getTabContent(); break;
+                    case 'tab7': content = ihbarTazminatiHesaplamaModule.getTabContent(); break;
+                    case 'tab8': content = ikiTarihArasiFarkModule.getTabContent(); break;
+                    case 'tab9': content = kidemTazminatiHesaplamaModule.getTabContent(); break;
+                    case 'tab10': content = kiraArtisOraniHesaplamaModule.getTabContent(); break;
+                    case 'tab11': content = mirasHesaplamaModule.getTabContent(); break;
+                    case 'tab12': content = noterSorgulamaModule.getTabContent(); break;
+                    case 'tab13': content = operatorSorgulamaModule.getTabContent(); break;
+                    case 'tab14': content = ilSorgulamaModule.getTabContent(); break;
+                    case 'tab15': content = postaKoduSorgulamaModule.getTabContent(); break;
+                    case 'tab16': content = tapuHarciHesaplamaModule.getTabContent(); break;
+                    case 'tab17': content = telefonAlanSorgulamaModule.getTabContent(); break;
+                    case 'tab18': content = limanSorgulamaModule.getTabContent(); break;
+                    case 'tab19': content = havalimaniSorgulamaModule.getTabContent(); break;
+                    case 'tab20': content = adeliMevduatFaiziHesaplamaModule.getTabContent(); break;
+                    case 'tab21': content = vekaletUcretiHesaplamaModule.getTabContent(); break;
+                    case 'tab22': content = verasetIntikatUcretiHesaplamaModule.getTabContent(); break;
+                    case 'tab23': content = yasHesaplamaModule.getTabContent(); break;
+                    case 'tab24': content = yetkiliMahkemeSorgulamaModule.getTabContent(); break;
+                    case 'tab25': content = yillikIzinHesaplamaModule.getTabContent(); break;
+                    default: content = '<p>İçerik bulunamadı.</p>';
                 }
-                
                 rightContent.innerHTML = content;
-                
                 // Initialize module functionality based on selected tab
                 if (targetTab === 'tab1') {
                     cezaeviSorgulamaModule.initialize();
@@ -442,13 +409,30 @@ document.addEventListener('DOMContentLoaded', function() {
                     yillikIzinHesaplamaModule.initialize();
                 }
                 
-                console.log('Tab switched to:', targetTab);
+                // URL güncelle
+                const route = tabRoutes[targetTab];
+                if (route) {
+                    window.history.pushState({ tab: targetTab }, '', '/' + route);
+                }
             });
         });
         
-        // Initialize with first tab content (Cezaevi Sorgulama)
-        rightContent.innerHTML = cezaeviSorgulamaModule.getTabContent();
-        cezaeviSorgulamaModule.initialize();
+        // Sayfa ilk açıldığında veya yenilendiğinde route'a göre tab aç
+        function openTabFromRoute() {
+            const path = window.location.pathname.replace(/^\//, '');
+            const tabId = routeTabs[path];
+            if (tabId) {
+                const btn = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
+                if (btn) btn.click();
+            } else {
+                // Hiçbir tab seçili olmasın, sağ container boş kalsın
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                rightContent.innerHTML = '';
+            }
+        }
+
+        window.addEventListener('popstate', openTabFromRoute);
+        openTabFromRoute();
     }
     
     const marquee = document.getElementById('exchangeMarquee');
@@ -573,5 +557,51 @@ document.addEventListener('DOMContentLoaded', function() {
         marqueeContainer.addEventListener('mouseup', startMarqueeAutoScroll);
         marqueeContainer.addEventListener('touchstart', stopMarqueeAutoScroll);
         marqueeContainer.addEventListener('touchend', startMarqueeAutoScroll);
+    }
+
+    if (homeBtn && infoBtn && flagBtn && rightContent) {
+        homeBtn.addEventListener('click', function() {
+            window.history.pushState({}, '', '/home');
+            rightContent.innerHTML = `
+                <div style="padding:32px;text-align:center;">
+                    <img src="visuals/home.png" alt="Home" style="height:48px;margin-bottom:12px;">
+                    <h2>Ana Sayfa</h2>
+                    <p>Hoş geldiniz! Burada ana sayfa içeriği olacak.</p>
+                </div>
+            `;
+        });
+        infoBtn.addEventListener('click', function() {
+            window.history.pushState({}, '', '/info');
+            rightContent.innerHTML = `
+                <div style="padding:32px;text-align:center;">
+                    <img src="visuals/info.png" alt="Info" style="height:48px;margin-bottom:12px;">
+                    <h2>Bilgi</h2>
+                    <p>Bu sayfa hakkında bilgi metni burada yer alacak.</p>
+                </div>
+            `;
+        });
+        flagBtn.addEventListener('click', function() {
+            window.history.pushState({}, '', '/report');
+            rightContent.innerHTML = `
+                <div style="padding:32px;text-align:center;">
+                    <img src="visuals/flag.png" alt="Flag" style="height:48px;margin-bottom:12px;">
+                    <h2>Hata Bildir</h2>
+                    <p>Bir hata mı buldunuz? Lütfen aşağıdan bildiriniz.</p>
+                    <textarea style="width:80%;height:80px;margin-top:16px;"></textarea>
+                    <br>
+                    <button style="margin-top:12px;padding:8px 16px;">Gönder</button>
+                </div>
+            `;
+        });
+
+        // SPA: Sayfa yenilendiğinde route'a göre right-content'i göster
+        function showHeaderPageFromRoute() {
+            const path = window.location.pathname.replace(/^\//, '');
+            if (path === 'home') homeBtn.click();
+            else if (path === 'info') infoBtn.click();
+            else if (path === 'report') flagBtn.click();
+        }
+        window.addEventListener('popstate', showHeaderPageFromRoute);
+        showHeaderPageFromRoute();
     }
 });

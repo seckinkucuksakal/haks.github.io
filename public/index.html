@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>HAKS - Hesaplayıcı ve Açık Kaynak Sorgulayıcı</title>
+    <title>e-HAKS - Hesaplayıcı ve Açık Kaynak Sorgulayıcı</title>
     <link rel="stylesheet" href="styles.css">
-    <meta name="description" content="HAKS - Hesaplayıcı ve Açık Kaynak Sorgulayıcısı">
+    <meta name="description" content="e-HAKS - Hesaplayıcı ve Açık Kaynak Sorgulayıcısı">
     <meta name="theme-color" content="#ffffff">
 </head>
 <body>
@@ -18,7 +18,9 @@
         <header>
             <div class="header-content">
                 <div class="globe-icon">
-                    <canvas id="globeCanvas" class="globe-canvas"></canvas>
+                    <a href="/" style="display:block;">
+                        <canvas id="globeCanvas" class="globe-canvas"></canvas>
+                    </a>
                 </div>
                 <button id="mobileMenuBtn" class="mobile-menu-btn">
                     <span></span>
@@ -26,8 +28,8 @@
                     <span></span>
                 </button>
                 <div class="title-section">
-                    <h1>HAKS</h1>
-                    <p class="subtitle">Hesaplayıcı ve Açık Kaynak Sorgulayıcısı</p>
+                    <h1><a href="/" style="color:inherit;text-decoration:none;">e-HAKS</a></h1>
+                    <p class="subtitle">e-Hesaplayıcı ve Açık Kaynak Sorgulayıcısı</p>
                 </div>
                 <div class="time-info">
                     <div class="time-display">00:00:00</div>
@@ -37,6 +39,22 @@
                         <span class="month">9. Ay</span> - 
                         <span class="year">2025</span>
                     </div>
+                </div>
+                <div class="header-icons">
+                    <a href="/" class="header-btn" id="homeBtn" title="Ana Sayfa">
+                        <img src="visuals/home.png" alt="Ana Sayfa" style="height:24px;">
+                    </a>
+                    <a href="/hakkimizda" class="header-btn" id="hakkimizdaBtn" title="Hakkımızda">
+                        <img src="visuals/info.png" alt="Hakkımızda" style="height:24px;">
+                    </a>
+                    <a href="/bize-ulasin" class="header-btn" id="bizeUlasinBtn" title="Bize Ulaşın">
+                        <img src="visuals/flag.png" alt="Bize Ulaşın" style="height:24px;">
+                    </a>
+                </div>
+                <div class="header-icon-labels">
+                    <a href="/" style="color:inherit;text-decoration:none;"><span>Ana Sayfa</span></a>
+                    <a href="/hakkimizda" style="color:inherit;text-decoration:none;"><span>Hakkımızda</span></a>
+                    <a href="/bize-ulasin" style="color:inherit;text-decoration:none;"><span>Bize Ulaşın</span></a>
                 </div>
             </div>
         </header>
@@ -62,7 +80,7 @@
                 <div class="scrollable-container">
                     <div class="tabs-section">
                         <div class="tab-buttons">
-                            <button class="tab-btn active" data-tab="tab1">• Cezaevi Sorgulama</button>
+                            <button class="tab-btn" data-tab="tab1">• Cezaevi Sorgulama</button>
                             <button class="tab-btn" data-tab="tab2">• Damga Vergisi Hesaplama</button>
                             <button class="tab-btn" data-tab="tab3">• Fazla Çalışma Mesai Ücreti Hesaplama (Aylık)</button>
                             <button class="tab-btn" data-tab="tab4">• Gelir Vergisi Hesaplama</button>
@@ -138,14 +156,6 @@
     <script src="modules/vekalet_ucreti_hesaplama.js"></script>
     <script src="modules/posta_kodu_sorgulama.js"></script>
     <script src="marquee.js"></script>
-    <script src="script.js"></script>
-</body>
-</html>
-    <script src="modules/vadeli_mevduat_faizi_hesaplama.js"></script>
-    <script src="modules/gelir_vergisi_hesaplama.js"></script>
-    <script src="modules/operator_sorgulama.js"></script>
-    <script src="modules/vekalet_ucreti_hesaplama.js"></script>
-    <script src="modules/posta_kodu_sorgulama.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

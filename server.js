@@ -38,26 +38,43 @@ function getArrow(newVal, oldVal) {
     return '';
 }
 
+async function fetchWithRetry(url, options = {}, retries = 3) {
+    for (let i = 0; i < retries; i++) {
+        try {
+            const response = await fetch(url, { ...options, timeout: 10000 });
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const data = await response.json();
+            return data;
+        } catch (err) {
+            console.error(`TCMB fetch deneme ${i + 1} hata:`, err.message);
+            if (i === retries - 1) return null;
+        }
+    }
+    return null;
+}
+
 async function fetchFiyatlar() {
     try {
-        // 1️⃣ TCMB Döviz Kurları
-        const today = new Date();
-        const dd = String(today.getDate()).padStart(2, '0');
-        const mm = String(today.getMonth() + 1).padStart(2, '0');
-        const yyyy = today.getFullYear();
+        // TCMB Döviz Kurları için tarih hesaplama
+        const now = new Date();
+        let tcmbDate = new Date(now);
+        if (now.getHours() > 15 || (now.getHours() === 15 && now.getMinutes() >= 30)) {
+            tcmbDate.setDate(tcmbDate.getDate() + 1); // 15:30'dan sonra bir sonraki gün
+        }
+        const dd = String(tcmbDate.getDate()).padStart(2, '0');
+        const mm = String(tcmbDate.getMonth() + 1).padStart(2, '0');
+        const yyyy = tcmbDate.getFullYear();
         const dateStr = `${dd}-${mm}-${yyyy}`;
 
         const tcmbUrl = `https://evds2.tcmb.gov.tr/service/evds/series=TP.DK.USD.S.YTL-TP.DK.EUR.S.YTL-TP.DK.GBP.S.YTL&startDate=${dateStr}&endDate=${dateStr}&type=json&formulas=0-0-0&aggregationTypes=avg-avg-avg&frequency=1`;
 
-        const tcmbRes = await fetch(tcmbUrl, { headers: { key: TCMB_KEY } });
-        const tcmbData = await tcmbRes.json();
-
+        const tcmbData = await fetchWithRetry(tcmbUrl, { headers: { key: TCMB_KEY } }, 3);
         let dolar, euro, sterlin;
         if (tcmbData?.items?.length) {
-          const latest = tcmbData.items[tcmbData.items.length - 1];
-          dolar = latest.TP_DK_USD_S_YTL;
-          euro = latest.TP_DK_EUR_S_YTL;
-          sterlin = latest.TP_DK_GBP_S_YTL;
+            const latest = tcmbData.items[tcmbData.items.length - 1];
+            dolar = latest.TP_DK_USD_S_YTL;
+            euro = latest.TP_DK_EUR_S_YTL;
+            sterlin = latest.TP_DK_GBP_S_YTL;
         }
 
         // 2️⃣ İzmir Kuyumcular ONS / Gram Altın
@@ -131,9 +148,14 @@ async function fetchFiyatlar() {
         };
         lastFetchTime = Date.now();
     } catch (err) {
-        console.error('Fiyatlar fetch error:', err);
+        console.error('Fiyatlar fetch error:', err.message);
     }
 }
+
+// Server'ın kapanmasını önle
+process.on("unhandledRejection", (reason, promise) => {
+    console.error("Unhandled Rejection:", reason);
+});
 
 // Sunucu başlatıldığında hemen çek
 await fetchFiyatlar();
@@ -146,6 +168,11 @@ app.get('/api/fiyatlar', (req, res) => {
     } else {
         res.status(503).json({ error: 'Veri yok' });
     }
+});
+
+// SPA fallback: bilinmeyen tüm GET isteklerinde index.html gönder
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Sunucuyu başlat
