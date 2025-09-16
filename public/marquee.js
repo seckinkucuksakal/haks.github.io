@@ -14,32 +14,29 @@ const ICONS = {
 // Previous values for comparison
 let previousValues = {};
 
-function getArrow(newVal, oldVal) {
-    if (oldVal === undefined || newVal === '-' || oldVal === '-') return '';
-    if (parseFloat(newVal) > parseFloat(oldVal)) {
-        return '<img src="visuals/arrow_up.png" alt="▲" style="height:18px;vertical-align:-3px;margin-right:2px;">';
-    } else if (parseFloat(newVal) < parseFloat(oldVal)) {
-        return '<img src="visuals/arrow_down.png" alt="▼" style="height:18px;vertical-align:-3px;margin-right:2px;">';
-    }
-    return '';
-}
-
 async function updateMarquee() {
     try {
         const res = await fetch('/api/fiyatlar');
         const data = await res.json();
 
-        // Prepare values and compare with previous
+        // Prepare values (arrowlar artık data.arrows'tan geliyor)
         const values = {
             dolar: data.dolar ?? '-',
             euro: data.euro ?? '-',
             sterlin: data.sterlin ?? '-',
             gramAltinTL: data.gramAltinTL ?? '-',
-            ceyrekAltin: data.ceyrekAltinTL ?? '-', // Düzeltildi
-            yarimAltin: data.yarimAltinTL ?? '-',   // Düzeltildi
-            tamAltin: data.tamAltinTL ?? '-',       // Düzeltildi
+            ceyrekAltin: data.ceyrekAltinTL ?? '-',
+            yarimAltin: data.yarimAltinTL ?? '-',
+            tamAltin: data.tamAltinTL ?? '-',
             btcPrice: data.btcPrice ?? '-',
             ethPrice: data.ethPrice ?? '-'
+        };
+        const arrows = data.arrows || {};
+
+        const arrowIcon = (type) => {
+            if (arrows[type] === 'up') return '<img src="visuals/arrow_up.png" alt="▲" style="height:18px;vertical-align:-3px;margin-right:2px;">';
+            if (arrows[type] === 'down') return '<img src="visuals/arrow_down.png" alt="▼" style="height:18px;vertical-align:-3px;margin-right:2px;">';
+            return '';
         };
 
         const marquee = document.getElementById("exchangeMarquee");
@@ -48,102 +45,75 @@ async function updateMarquee() {
         marquee.innerHTML = `
             <span>
                 <img src="${ICONS.dolar}" alt="Dolar" style="height:18px;vertical-align:-3px;margin-right:2px;">
-                ${getArrow(values.dolar, previousValues.dolar)}
+                ${arrowIcon('dolar')}
                 Dolar: ${values.dolar}₺
             </span>
             <span>
                 <img src="${ICONS.euro}" alt="Euro" style="height:18px;vertical-align:-3px;margin-right:2px;">
-                ${getArrow(values.euro, previousValues.euro)}
+                ${arrowIcon('euro')}
                 Euro: ${values.euro}₺
             </span>
             <span>
                 <img src="${ICONS.sterlin}" alt="Sterlin" style="height:18px;vertical-align:-3px;margin-right:2px;">
-                ${getArrow(values.sterlin, previousValues.sterlin)}
+                ${arrowIcon('sterlin')}
                 Sterlin: ${values.sterlin}₺
             </span>
             <span>
                 <img src="${ICONS.gramAltinTL}" alt="Gram Altın" style="height:18px;vertical-align:-3px;margin-right:2px;">
-                ${getArrow(values.gramAltinTL, previousValues.gramAltinTL)}
+                ${arrowIcon('gramAltinTL')}
                 Gram Altın: ${values.gramAltinTL}₺
             </span>
             <span>
                 <img src="${ICONS.ceyrekAltin}" alt="Çeyrek Altın" style="height:18px;vertical-align:-3px;margin-right:2px;">
-                ${getArrow(values.ceyrekAltin, previousValues.ceyrekAltin)}
+                ${arrowIcon('ceyrekAltinTL')}
                 Çeyrek Altın: ${values.ceyrekAltin}₺
             </span>
-            <!--
-            <span>
-                <img src="${ICONS.yarimAltin}" alt="Yarım Altın" style="height:18px;vertical-align:-3px;margin-right:2px;">
-                ${getArrow(values.yarimAltin, previousValues.yarimAltin)}
-                Yarım Altın: ${values.yarimAltin}₺
-            </span>
-            <span>
-                <img src="${ICONS.tamAltin}" alt="Tam Altın" style="height:18px;vertical-align:-3px;margin-right:2px;">
-                ${getArrow(values.tamAltin, previousValues.tamAltin)}
-                Tam Altın: ${values.tamAltin}₺
-            </span>
-            -->
             <span>
                 <img src="${ICONS.btcPrice}" alt="BTC" style="height:18px;vertical-align:-3px;margin-right:2px;">
-                ${getArrow(values.btcPrice, previousValues.btcPrice)}
+                ${arrowIcon('btcPrice')}
                 BTC: ${values.btcPrice}₺
             </span>
             <span>
                 <img src="${ICONS.ethPrice}" alt="ETH" style="height:18px;vertical-align:-3px;margin-right:2px;">
-                ${getArrow(values.ethPrice, previousValues.ethPrice)}
+                ${arrowIcon('ethPrice')}
                 ETH: ${values.ethPrice}₺
             </span>
             <span>
                 <img src="${ICONS.dolar}" alt="Dolar" style="height:18px;vertical-align:-3px;margin-right:2px;">
-                ${getArrow(values.dolar, previousValues.dolar)}
+                ${arrowIcon('dolar')}
                 Dolar: ${values.dolar}₺
             </span>
             <span>
                 <img src="${ICONS.euro}" alt="Euro" style="height:18px;vertical-align:-3px;margin-right:2px;">
-                ${getArrow(values.euro, previousValues.euro)}
+                ${arrowIcon('euro')}
                 Euro: ${values.euro}₺
             </span>
             <span>
                 <img src="${ICONS.sterlin}" alt="Sterlin" style="height:18px;vertical-align:-3px;margin-right:2px;">
-                ${getArrow(values.sterlin, previousValues.sterlin)}
+                ${arrowIcon('sterlin')}
                 Sterlin: ${values.sterlin}₺
             </span>
             <span>
                 <img src="${ICONS.gramAltinTL}" alt="Gram Altın" style="height:18px;vertical-align:-3px;margin-right:2px;">
-                ${getArrow(values.gramAltinTL, previousValues.gramAltinTL)}
+                ${arrowIcon('gramAltinTL')}
                 Gram Altın: ${values.gramAltinTL}₺
             </span>
             <span>
                 <img src="${ICONS.ceyrekAltin}" alt="Çeyrek Altın" style="height:18px;vertical-align:-3px;margin-right:2px;">
-                ${getArrow(values.ceyrekAltin, previousValues.ceyrekAltin)}
+                ${arrowIcon('ceyrekAltinTL')}
                 Çeyrek Altın: ${values.ceyrekAltin}₺
             </span>
-            <!--
-            <span>
-                <img src="${ICONS.yarimAltin}" alt="Yarım Altın" style="height:18px;vertical-align:-3px;margin-right:2px;">
-                ${getArrow(values.yarimAltin, previousValues.yarimAltin)}
-                Yarım Altın: ${values.yarimAltin}₺
-            </span>
-            <span>
-                <img src="${ICONS.tamAltin}" alt="Tam Altın" style="height:18px;vertical-align:-3px;margin-right:2px;">
-                ${getArrow(values.tamAltin, previousValues.tamAltin)}
-                Tam Altın: ${values.tamAltin}₺
-            </span>
-            -->
             <span>
                 <img src="${ICONS.btcPrice}" alt="BTC" style="height:18px;vertical-align:-3px;margin-right:2px;">
-                ${getArrow(values.btcPrice, previousValues.btcPrice)}
+                ${arrowIcon('btcPrice')}
                 BTC: ${values.btcPrice}₺
             </span>
             <span>
                 <img src="${ICONS.ethPrice}" alt="ETH" style="height:18px;vertical-align:-3px;margin-right:2px;">
-                ${getArrow(values.ethPrice, previousValues.ethPrice)}
+                ${arrowIcon('ethPrice')}
                 ETH: ${values.ethPrice}₺
             </span>
         `;
-
-        // Update previous values
-        previousValues = { ...values };
     } catch (err) {
         const marquee = document.getElementById("exchangeMarquee");
         if (marquee) marquee.innerHTML = `<span>Veri alınamadı</span>`;
