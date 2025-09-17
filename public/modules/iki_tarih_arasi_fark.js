@@ -12,17 +12,17 @@ class IkiTarihArasiFark {
                     <label for="startDate">Başlangıç Tarihi:</label>
                     <input type="date" id="startDate" class="form-input" min="1900-01-01" max="2100-12-31">
                 </div>
-                
                 <div class="form-group">
                     <label for="endDate">Bitiş Tarihi:</label>
                     <input type="date" id="endDate" class="form-input" min="1900-01-01" max="2100-12-31" value="${this.getTodayString()}">
                 </div>
-                
                 <div class="form-actions">
                     <button id="hesaplaFarkBtn" class="hesapla-btn">Hesapla</button>
                     <button id="temizleFarkBtn" class="temizle-btn">Temizle</button>
                 </div>
-                
+                <div id="pdfCikarBtnContainer" style="margin-top:24px;display:flex;justify-content:center;display:none;">
+                    <button id="pdfCikarBtn" class="hesapla-btn" style="padding:10px 24px;font-size:1rem;">PDF Olarak Kaydet</button>
+                </div>
                 <div id="farkResult" class="tapu-result"></div>
             </div>
         `;
@@ -139,6 +139,8 @@ class IkiTarihArasiFark {
         const hesaplaFarkBtn = document.getElementById('hesaplaFarkBtn');
         const temizleFarkBtn = document.getElementById('temizleFarkBtn');
         const farkResult = document.getElementById('farkResult');
+        const pdfBtnContainer = document.getElementById('pdfCikarBtnContainer');
+        const pdfBtn = document.getElementById('pdfCikarBtn');
 
         if (!startDateInput || !endDateInput || !hesaplaFarkBtn || !temizleFarkBtn || !farkResult) {
             console.error('Required elements not found');
@@ -164,6 +166,7 @@ class IkiTarihArasiFark {
 
             if (result.error) {
                 farkResult.innerHTML = `<div class="result-box error">${result.error}</div>`;
+                if (pdfBtnContainer) pdfBtnContainer.style.display = 'none';
                 return;
             }
 
@@ -274,6 +277,8 @@ class IkiTarihArasiFark {
                     });
                 }
             }, 100);
+
+            if (pdfBtnContainer) pdfBtnContainer.style.display = 'flex';
         });
 
         // Temizle butonu
@@ -281,6 +286,7 @@ class IkiTarihArasiFark {
             startDateInput.value = '';
             endDateInput.value = this.getTodayString();
             farkResult.innerHTML = '';
+            if (pdfBtnContainer) pdfBtnContainer.style.display = 'none';
         });
 
         // Enter tuşu ile hesaplama
@@ -295,6 +301,15 @@ class IkiTarihArasiFark {
                 hesaplaFarkBtn.click();
             }
         });
+
+        if (pdfBtn) {
+            pdfBtn.onclick = () => {
+                const resultDiv = document.getElementById('farkResult');
+                const htmlContent = resultDiv ? resultDiv.innerHTML : '';
+                const tarih = new Date().toLocaleDateString('tr-TR');
+                PdfCikar.showPdfModal(htmlContent, tarih);
+            };
+        }
     }
 }
 

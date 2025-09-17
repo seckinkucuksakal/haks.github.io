@@ -11,12 +11,13 @@ class GelirVergisiHesaplama {
                     <label for="yillikGelir">Yıllık Brüt Gelir (TL):</label>
                     <input type="text" id="yillikGelir" placeholder="600000.00" class="form-input">
                 </div>
-                
                 <div class="form-actions">
                     <button id="gelirVergisiHesaplaBtn" class="hesapla-btn">Hesapla</button>
                     <button id="gelirVergisiTemizleBtn" class="temizle-btn">Temizle</button>
                 </div>
-                
+                <div id="pdfCikarBtnContainer" style="margin-top:24px;display:flex;justify-content:center;display:none;">
+                    <button id="pdfCikarBtn" class="hesapla-btn" style="padding:10px 24px;font-size:1rem;">PDF Olarak Kaydet</button>
+                </div>
                 <div id="gelirVergisiResult" class="tapu-result"></div>
             </div>
         `;
@@ -82,6 +83,8 @@ class GelirVergisiHesaplama {
         const hesaplaBtn = document.getElementById("gelirVergisiHesaplaBtn");
         const temizleBtn = document.getElementById("gelirVergisiTemizleBtn");
         const resultDiv = document.getElementById("gelirVergisiResult");
+        const pdfBtnContainer = document.getElementById('pdfCikarBtnContainer');
+        const pdfBtn = document.getElementById('pdfCikarBtn');
 
         hesaplaBtn.addEventListener("click", () => {
             let gelirRaw = document.getElementById("yillikGelir").value.trim();
@@ -140,12 +143,23 @@ class GelirVergisiHesaplama {
                     </style>
                 </div>
             `;
+            // PDF Olarak Kaydet butonunu göster
+            if (pdfBtnContainer) pdfBtnContainer.style.display = 'flex';
         });
 
         temizleBtn.addEventListener("click", () => {
             document.getElementById("yillikGelir").value = "";
             resultDiv.innerHTML = "";
+            if (pdfBtnContainer) pdfBtnContainer.style.display = 'none';
         });
+
+        if (pdfBtn) {
+            pdfBtn.onclick = () => {
+                const htmlContent = resultDiv ? resultDiv.innerHTML : '';
+                const tarih = new Date().toLocaleDateString('tr-TR');
+                PdfCikar.showPdfModal(htmlContent, tarih);
+            };
+        }
     }
 }
 

@@ -86,10 +86,11 @@ class NoterSorgulama {
                     <button id="noterSorgulaBtn" class="hesapla-btn">Sorgula</button>
                     <button id="noterTemizleBtn" class="temizle-btn">Temizle</button>
                 </div>
-                
+                <div id="pdfCikarBtnContainer" style="margin-top:24px;display:flex;justify-content:center;display:none;">
+                    <button id="pdfCikarBtn" class="hesapla-btn" style="padding:10px 24px;font-size:1rem;">PDF Olarak Kaydet</button>
+                </div>
                 <div id="noterResult" class="tapu-result"></div>
             </div>
-            
             <style>
                 .noter-select {
                     width: 100%;
@@ -101,13 +102,11 @@ class NoterSorgulama {
                     background-size: 16px;
                     padding-right: 40px;
                 }
-
                 .noter-select:disabled {
                     background-color: #f8f9fa;
                     color: #6c757d;
                     cursor: not-allowed;
                 }
-
                 @media (max-width: 768px) {
                     .noter-select {
                         min-width: 250px;
@@ -288,6 +287,8 @@ class NoterSorgulama {
             const noterSorgulaBtn = document.getElementById('noterSorgulaBtn');
             const noterTemizleBtn = document.getElementById('noterTemizleBtn');
             const noterResult = document.getElementById('noterResult');
+            const pdfBtnContainer = document.getElementById('pdfCikarBtnContainer');
+            const pdfBtn = document.getElementById('pdfCikarBtn');
 
             if (!noterSorgulaBtn || !noterTemizleBtn || !noterResult) {
                 console.error('Noter sorgulama elementleri bulunamadı');
@@ -303,13 +304,47 @@ class NoterSorgulama {
             // Sorgula butonu
             noterSorgulaBtn.addEventListener('click', () => {
                 this.sorgula();
+                // PDF Olarak Kaydet butonunu göster/gizle
+                if (pdfBtnContainer) {
+                    if (noterResult && noterResult.innerHTML.trim()) {
+                        pdfBtnContainer.style.display = 'flex';
+                    } else {
+                        pdfBtnContainer.style.display = 'none';
+                    }
+                }
             });
 
             // Temizle butonu
             noterTemizleBtn.addEventListener('click', () => {
                 this.temizle();
+                if (pdfBtnContainer) pdfBtnContainer.style.display = 'none';
             });
 
+            // PDF Olarak Kaydet butonu
+            if (pdfBtn) {
+                pdfBtn.onclick = () => {
+                    const resultDiv = document.getElementById('noterResult');
+                    let htmlContent = '';
+                    if (resultDiv) {
+                        // Tüm child'ları birleştir (scrollable container'ın içeriği)
+                        const container = resultDiv.querySelector('.noter-sonuc-container');
+                        if (container) {
+                            htmlContent = container.innerHTML;
+                            // Uyarı ve başlıkları da ekle
+                            const parent = resultDiv.querySelector('.tapu-hesaplama-sonuc');
+                            if (parent) {
+                                const title = parent.querySelector('h4') ? parent.querySelector('h4').outerHTML : '';
+                                const uyari = parent.querySelector('.uyari') ? parent.querySelector('.uyari').outerHTML : '';
+                                htmlContent = title + '<div class="noter-sonuc-container">' + htmlContent + '</div>' + uyari;
+                            }
+                        } else {
+                            htmlContent = resultDiv.innerHTML;
+                        }
+                    }
+                    const tarih = new Date().toLocaleDateString('tr-TR');
+                    PdfCikar.showPdfModal(htmlContent, tarih);
+                };
+            }
         }, 100);
     }
 

@@ -87,25 +87,24 @@ class CezaeviSorgulama {
                         <button type="button" class="mode-btn" id="kurumaModeBtn" data-mode="kurum">Kurum Adına Göre Sorgula</button>
                     </div>
                 </div>
-
                 <div class="form-group" id="ilSorgulamaGroup">
                     <label for="cezaeviIl">İl Seçiniz:</label>
                     <select id="cezaeviIl" class="form-select cezaevi-select">
                         <option value="">İl seçiniz...</option>
                     </select>
                 </div>
-
                 <div class="form-group" id="kurumSorgulamaGroup" style="display: none;">
                     <label for="kurumAdi">Kurum Adı:</label>
                     <input type="text" id="kurumAdi" placeholder="Kurum adını yazın... (Kurum adının baş harfini büyük yazınız)" class="form-input">
                     <div id="kurumOneri" class="kurum-oneri-container"></div>
                 </div>
-                
                 <div class="form-actions">
                     <button id="cezaeviSorgulaBtn" class="hesapla-btn">Sorgula</button>
                     <button id="cezaeviTemizleBtn" class="temizle-btn">Temizle</button>
                 </div>
-                
+                <div id="pdfCikarBtnContainer" style="margin-top:18px;display:flex;justify-content:center;display:none;">
+                    <button id="pdfCikarBtn" class="hesapla-btn" style="padding:10px 24px;font-size:1rem;">PDF Olarak Kaydet</button>
+                </div>
                 <div id="cezaeviResult" class="tapu-result"></div>
             </div>
             
@@ -562,6 +561,9 @@ class CezaeviSorgulama {
         `;
 
         cezaeviResult.innerHTML = html;
+        // PDF Olarak Kaydet butonunu göster
+        const pdfBtnContainer = document.getElementById('pdfCikarBtnContainer');
+        if (pdfBtnContainer) pdfBtnContainer.style.display = 'flex';
     }
 
     initialize() {
@@ -649,7 +651,20 @@ class CezaeviSorgulama {
             kurumAdiInput.value = '';
             oneriContainer.style.display = 'none';
             cezaeviResult.innerHTML = '';
+            const pdfBtnContainer = document.getElementById('pdfCikarBtnContainer');
+            if (pdfBtnContainer) pdfBtnContainer.style.display = 'none';
         });
+
+        // PDF Olarak Kaydet butonu eventini ekle
+        const pdfBtn = document.getElementById('pdfCikarBtn');
+        if (pdfBtn) {
+            pdfBtn.onclick = () => {
+                const cezaeviResult = document.getElementById('cezaeviResult');
+                const htmlContent = cezaeviResult ? cezaeviResult.innerHTML : '';
+                const tarih = new Date().toLocaleDateString('tr-TR');
+                PdfCikar.showPdfModal(htmlContent, tarih);
+            };
+        }
 
         console.log('Cezaevi Sorgulama modülü başlatıldı');
     }
@@ -819,6 +834,9 @@ class CezaeviSorgulama {
         `;
 
         cezaeviResult.innerHTML = html;
+        // PDF Olarak Kaydet butonunu göster
+        const pdfBtnContainer = document.getElementById('pdfCikarBtnContainer');
+        if (pdfBtnContainer) pdfBtnContainer.style.display = 'flex';
     }
 }
 

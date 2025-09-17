@@ -23,7 +23,9 @@ class YasHesaplama {
                     <button id="hesaplaYasBtn" class="hesapla-btn">Hesapla</button>
                     <button id="temizleYasBtn" class="temizle-btn">Temizle</button>
                 </div>
-                
+                <div id="pdfCikarBtnContainer" style="margin-top:24px;display:flex;justify-content:center;display:none;">
+                    <button id="pdfCikarBtn" class="hesapla-btn" style="padding:10px 24px;font-size:1rem;">PDF Olarak Kaydet</button>
+                </div>
                 <div id="yasResult" class="tapu-result"></div>
             </div>
         `;
@@ -114,6 +116,8 @@ class YasHesaplama {
         const hesaplaYasBtn = document.getElementById('hesaplaYasBtn');
         const temizleYasBtn = document.getElementById('temizleYasBtn');
         const yasResult = document.getElementById('yasResult');
+        const pdfBtnContainer = document.getElementById('pdfCikarBtnContainer');
+        const pdfBtn = document.getElementById('pdfCikarBtn');
 
         if (!birthDateInput || !calculationDateInput || !hesaplaYasBtn || !temizleYasBtn || !yasResult) {
             console.error('Required elements not found');
@@ -134,6 +138,7 @@ class YasHesaplama {
 
             if (result.error) {
                 yasResult.innerHTML = `<div class="result-box error">${result.error}</div>`;
+                if (pdfBtnContainer) pdfBtnContainer.style.display = 'none';
                 return;
             }
 
@@ -210,6 +215,9 @@ class YasHesaplama {
                 </div>
             `;
 
+            // PDF butonunu göster
+            if (pdfBtnContainer) pdfBtnContainer.style.display = 'flex';
+
             // Detay toggle işlevselliği
             setTimeout(() => {
                 const toggleBtn = document.getElementById('ageDetailToggleBtn');
@@ -235,7 +243,17 @@ class YasHesaplama {
             birthDateInput.value = '';
             calculationDateInput.value = this.getTodayString();
             yasResult.innerHTML = '';
+            if (pdfBtnContainer) pdfBtnContainer.style.display = 'none';
         });
+
+        if (pdfBtn) {
+            pdfBtn.onclick = () => {
+                const resultDiv = document.getElementById('yasResult');
+                const htmlContent = resultDiv ? resultDiv.innerHTML : '';
+                const tarih = new Date().toLocaleDateString('tr-TR');
+                PdfCikar.showPdfModal(htmlContent, tarih);
+            };
+        }
 
         // Enter tuşu ile hesaplama
         birthDateInput.addEventListener('keypress', (e) => {

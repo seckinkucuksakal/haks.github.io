@@ -66,6 +66,9 @@ class DamgaVergisiHesaplama {
                     <button type="button" id="damgaHesaplaBtn" class="hesapla-btn">Hesapla</button>
                     <button type="button" id="damgaTemizleBtn" class="temizle-btn">Temizle</button>
                 </div>
+                <div id="pdfCikarBtnContainer" style="margin-bottom:24px;display:flex;justify-content:center;display:none;">
+                    <button id="pdfCikarBtn" class="hesapla-btn" style="padding:10px 24px;font-size:1rem;">PDF Olarak Kaydet</button>
+                </div>
                 <div id="damgaResult"></div>
                 <div id="damgaUyariContainer"></div>
             </div>
@@ -127,6 +130,8 @@ class DamgaVergisiHesaplama {
             const temizleBtn = document.getElementById('damgaTemizleBtn');
             const resultDiv = document.getElementById('damgaResult');
             const uyariDiv = document.getElementById('damgaUyariContainer');
+            const pdfBtnContainer = document.getElementById('pdfCikarBtnContainer');
+            const pdfBtn = document.getElementById('pdfCikarBtn');
 
             if (!kagitTuruSelect || !matrahGroup || !matrahInput || !hesaplaBtn || !temizleBtn || !resultDiv) return;
 
@@ -199,6 +204,8 @@ class DamgaVergisiHesaplama {
                         </style>
                     `;
                 }
+                // PDF Olarak Kaydet butonunu göster
+                if (pdfBtnContainer) pdfBtnContainer.style.display = 'flex';
             };
 
             temizleBtn.onclick = function() {
@@ -207,7 +214,17 @@ class DamgaVergisiHesaplama {
                 resultDiv.innerHTML = '';
                 uyariDiv.innerHTML = '';
                 matrahGroup.style.display = '';
+                if (pdfBtnContainer) pdfBtnContainer.style.display = 'none';
             };
+
+            if (pdfBtn) {
+                pdfBtn.onclick = () => {
+                    const resultDiv = document.getElementById('damgaResult');
+                    const htmlContent = resultDiv ? resultDiv.innerHTML : '';
+                    const tarih = new Date().toLocaleDateString('tr-TR');
+                    PdfCikar.showPdfModal(htmlContent, tarih);
+                };
+            }
         }, 0);
     }
 }

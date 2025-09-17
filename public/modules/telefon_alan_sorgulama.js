@@ -85,6 +85,11 @@ class TelefonAlanSorgulama {
                     <input type="text" id="telefonInput" placeholder="Alan kodunu girin (örn: +90, +49)" class="plaka-input">
                     <button id="telefonSearchBtn" class="plaka-search-btn">Ara</button>
                 </div>
+                <div class="form-actions">
+                </div>
+                <div id="pdfCikarBtnContainer" style="margin-top:24px;display:flex;justify-content:center;display:none;">
+                    <button id="pdfCikarBtn" class="hesapla-btn" style="padding:10px 24px;font-size:1rem;">PDF Olarak Kaydet</button>
+                </div>
                 <div id="telefonResult" class="plaka-result"></div>
             </div>
         `;
@@ -96,6 +101,8 @@ class TelefonAlanSorgulama {
         const telefonInput = document.getElementById('telefonInput');
         const telefonSearchBtn = document.getElementById('telefonSearchBtn');
         const telefonResult = document.getElementById('telefonResult');
+        const pdfBtnContainer = document.getElementById('pdfCikarBtnContainer');
+        const pdfBtn = document.getElementById('pdfCikarBtn');
         
         let currentMode = 'kod';
         
@@ -131,6 +138,7 @@ class TelefonAlanSorgulama {
                 return;
             }
             
+            let found = false;
             if (currentMode === 'kod') {
                 // Search by area code
                 let searchCode = searchTerm;
@@ -143,6 +151,7 @@ class TelefonAlanSorgulama {
                 
                 if (this.countryData[searchCode]) {
                     telefonResult.innerHTML = `<div class="result-box"><strong>${searchCode}</strong> alan kodu: <span style="color: #007bff; font-weight: bold;">${this.countryData[searchCode]}</span></div>`;
+                    found = true;
                 } else {
                     telefonResult.innerHTML = '<div class="result-box error">Bu alan kodu bulunamadı.</div>';
                 }
@@ -192,10 +201,13 @@ class TelefonAlanSorgulama {
                 
                 if (foundCode) {
                     telefonResult.innerHTML = `<div class="result-box"><strong>${this.countryData[foundCode]}</strong> ülkesinin alan kodu: <span style="color: #007bff; font-weight: bold;">${foundCode}</span></div>`;
+                    found = true;
                 } else {
                     telefonResult.innerHTML = '<div class="result-box error">Bu ülke adı bulunamadı.</div>';
                 }
             }
+            // PDF butonunu göster/gizle
+            if (pdfBtnContainer) pdfBtnContainer.style.display = found ? 'flex' : 'none';
         };
         
         telefonSearchBtn.addEventListener('click', performSearch);
@@ -204,6 +216,15 @@ class TelefonAlanSorgulama {
                 performSearch();
             }
         });
+
+        if (pdfBtn) {
+            pdfBtn.onclick = () => {
+                const resultDiv = document.getElementById('telefonResult');
+                const htmlContent = resultDiv ? resultDiv.innerHTML : '';
+                const tarih = new Date().toLocaleDateString('tr-TR');
+                PdfCikar.showPdfModal(htmlContent, tarih);
+            };
+        }
     }
 }
 

@@ -201,12 +201,13 @@ class IbanSorgulama {
                     <label for="IBANInput">IBAN Numarası:</label>
                     <input type="text" id="IBANInput" placeholder="TR33 0006 1005 1978 6457 8413 26 - TR330006100519786457841326" class="form-input" maxlength="34">
                 </div>
-                
                 <div class="form-actions">
                     <button id="IBANSearchBtn" class="hesapla-btn">Sorgula</button>
                     <button id="IBANClearBtn" class="temizle-btn">Temizle</button>
                 </div>
-                
+                <div id="pdfCikarBtnContainer" style="margin-top:24px;display:flex;justify-content:center;display:none;">
+                    <button id="pdfCikarBtn" class="hesapla-btn" style="padding:10px 24px;font-size:1rem;">PDF Olarak Kaydet</button>
+                </div>
                 <div id="IBANResult" class="tapu-result"></div>
             </div>
         `;
@@ -261,6 +262,8 @@ class IbanSorgulama {
         const IBANSearchBtn = document.getElementById('IBANSearchBtn');
         const IBANClearBtn = document.getElementById('IBANClearBtn');
         const IBANResult = document.getElementById('IBANResult');
+        const pdfBtnContainer = document.getElementById('pdfCikarBtnContainer');
+        const pdfBtn = document.getElementById('pdfCikarBtn');
         
         if (!IBANInput || !IBANSearchBtn || !IBANClearBtn || !IBANResult) return;
         
@@ -442,8 +445,10 @@ class IbanSorgulama {
                         </div>
                     `;
                 }
+                if (pdfBtnContainer) pdfBtnContainer.style.display = 'flex';
             } else {
                 IBANResult.innerHTML = `<div class="result-box error">${validation.message}</div>`;
+                if (pdfBtnContainer) pdfBtnContainer.style.display = 'none';
             }
         });
         
@@ -451,6 +456,7 @@ class IbanSorgulama {
         IBANClearBtn.addEventListener('click', () => {
             IBANInput.value = '';
             IBANResult.innerHTML = '';
+            if (pdfBtnContainer) pdfBtnContainer.style.display = 'none';
         });
         
         // Enter key functionality
@@ -459,6 +465,15 @@ class IbanSorgulama {
                 IBANSearchBtn.click();
             }
         });
+        
+        if (pdfBtn) {
+            pdfBtn.onclick = () => {
+                const resultDiv = document.getElementById('IBANResult');
+                const htmlContent = resultDiv ? resultDiv.innerHTML : '';
+                const tarih = new Date().toLocaleDateString('tr-TR');
+                PdfCikar.showPdfModal(htmlContent, tarih);
+            };
+        }
     }
 }
 

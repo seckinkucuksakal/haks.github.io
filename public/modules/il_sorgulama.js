@@ -72,6 +72,9 @@ class IlSorgulama {
                     <input type="text" id="plakaInput" placeholder="Plaka kodunu girin (örn: 34, 06)" class="plaka-input">
                     <button id="plakaSearchBtn" class="plaka-search-btn">Ara</button>
                 </div>
+                <div id="pdfCikarBtnContainer" style="margin-top:24px;display:flex;justify-content:center;display:none;">
+                    <button id="pdfCikarBtn" class="hesapla-btn" style="padding:10px 24px;font-size:1rem;">PDF Olarak Kaydet</button>
+                </div>
                 <div id="plakaResult" class="plaka-result"></div>
             </div>
         `;
@@ -83,6 +86,8 @@ class IlSorgulama {
         const plakaInput = document.getElementById('plakaInput');
         const plakaSearchBtn = document.getElementById('plakaSearchBtn');
         const plakaResult = document.getElementById('plakaResult');
+        const pdfBtnContainer = document.getElementById('pdfCikarBtnContainer');
+        const pdfBtn = document.getElementById('pdfCikarBtn');
         
         let currentMode = 'plaka';
         
@@ -108,21 +113,23 @@ class IlSorgulama {
             // Wait for data to be loaded
             if (!this.dataLoaded) {
                 plakaResult.innerHTML = '<p style="color: black;">Veriler yükleniyor, lütfen bekleyin...</p>';
+                if (pdfBtnContainer) pdfBtnContainer.style.display = 'none';
                 setTimeout(() => performSearch(), 500);
                 return;
             }
-
             const searchTerm = plakaInput.value.trim();
             if (!searchTerm) {
                 plakaResult.innerHTML = '<p style="color: black;">Lütfen bir değer girin.</p>';
+                if (pdfBtnContainer) pdfBtnContainer.style.display = 'none';
                 return;
             }
-            
+            let found = false;
             if (currentMode === 'plaka') {
                 // Search by plate code
                 const paddedCode = searchTerm.padStart(2, '0');
                 if (this.cityData[paddedCode]) {
                     plakaResult.innerHTML = `<div class="result-box"><strong>${paddedCode}</strong> plaka kodu: <span style="color: #007bff; font-weight: bold;">${this.cityData[paddedCode]}</span></div>`;
+                    found = true;
                 } else {
                     plakaResult.innerHTML = '<div class="result-box error">Bu plaka kodu bulunamadı.</div>';
                 }
@@ -158,10 +165,13 @@ class IlSorgulama {
                 
                 if (foundCode) {
                     plakaResult.innerHTML = `<div class="result-box"><strong>${this.cityData[foundCode]}</strong> ili plaka kodu: <span style="color: #007bff; font-weight: bold;">${foundCode}</span></div>`;
+                    found = true;
                 } else {
                     plakaResult.innerHTML = '<div class="result-box error">Bu il adı bulunamadı. Türkçe karakterlerle tam il adını yazın (örn: İzmir, Ankara).</div>';
                 }
             }
+            // PDF butonunu göster/gizle
+            if (pdfBtnContainer) pdfBtnContainer.style.display = found ? 'flex' : 'none';
         };
         
         plakaSearchBtn.addEventListener('click', performSearch);
@@ -170,6 +180,15 @@ class IlSorgulama {
                 performSearch();
             }
         });
+
+        if (pdfBtn) {
+            pdfBtn.onclick = () => {
+                const resultDiv = document.getElementById('plakaResult');
+                const htmlContent = resultDiv ? resultDiv.innerHTML : '';
+                const tarih = new Date().toLocaleDateString('tr-TR');
+                PdfCikar.showPdfModal(htmlContent, tarih);
+            };
+        }
     }
 }
 // Export for use in main script

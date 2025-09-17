@@ -59,8 +59,8 @@ class YetkiliMahkemeSorgulama {
     }
 
     getTabContent() {
-        // Henüz CSV yüklenmediyse boş select göster
-        const ilList = Object.keys(this.ilData).sort((a, b) => a.localeCompare(b, 'tr-TR'));
+        // Dinamik il listesi için
+        const ilList = Object.keys(this.ilData || {}).sort((a, b) => a.localeCompare(b, 'tr-TR'));
         return `
             <h3>Yetkili Mahkeme Sorgulama</h3>
             <div class="plaka-container">
@@ -81,6 +81,9 @@ class YetkiliMahkemeSorgulama {
                     <button id="mahkemeSorgulaBtn" class="hesapla-btn">Sorgula</button>
                     <button id="mahkemeTemizleBtn" class="temizle-btn">Temizle</button>
                 </div>
+                <div id="pdfCikarBtnContainer" style="margin-top:24px;display:flex;justify-content:center;display:none;">
+                    <button id="pdfCikarBtn" class="hesapla-btn" style="padding:10px 24px;font-size:1rem;">PDF Olarak Kaydet</button>
+                </div>
                 <div id="mahkemeResult" class="tapu-result"></div>
             </div>
         `;
@@ -97,6 +100,8 @@ class YetkiliMahkemeSorgulama {
         const sorgulaBtn = document.getElementById('mahkemeSorgulaBtn');
         const temizleBtn = document.getElementById('mahkemeTemizleBtn');
         const resultDiv = document.getElementById('mahkemeResult');
+        const pdfBtnContainer = document.getElementById('pdfCikarBtnContainer');
+        const pdfBtn = document.getElementById('pdfCikarBtn');
 
         // İl select'i doldur (tekrar doldurmayı önlemek için önce temizle)
         ilSelect.innerHTML = '<option value="">İl seçin...</option>' +
@@ -122,6 +127,7 @@ class YetkiliMahkemeSorgulama {
                 ilceSelect.disabled = true;
             }
             resultDiv.innerHTML = '';
+            if (pdfBtnContainer) pdfBtnContainer.style.display = 'none';
         });
 
         sorgulaBtn.addEventListener('click', () => {
@@ -148,10 +154,12 @@ class YetkiliMahkemeSorgulama {
             const ilceName = (ilceSelect.value || '').trim();
             if (!ilName) {
                 resultDiv.innerHTML = '<div class="result-box error">Lütfen il seçiniz.</div>';
+                if (pdfBtnContainer) pdfBtnContainer.style.display = 'none';
                 return;
             }
             if (!ilceName) {
                 resultDiv.innerHTML = '<div class="result-box error">Lütfen ilçe seçiniz.</div>';
+                if (pdfBtnContainer) pdfBtnContainer.style.display = 'none';
                 return;
             }
             const normIl = normalizeTurkish(ilName);
@@ -164,6 +172,7 @@ class YetkiliMahkemeSorgulama {
             );
             if (!sonuc) {
                 resultDiv.innerHTML = `<div class="result-box">Bilgi bulunamadı.</div>`;
+                if (pdfBtnContainer) pdfBtnContainer.style.display = 'none';
                 return;
             }
             resultDiv.innerHTML = `
@@ -193,6 +202,8 @@ class YetkiliMahkemeSorgulama {
                     </style>
                 </div>
             `;
+            // PDF butonunu göster
+            if (pdfBtnContainer) pdfBtnContainer.style.display = 'flex';
         });
 
         temizleBtn.addEventListener('click', () => {
@@ -200,7 +211,27 @@ class YetkiliMahkemeSorgulama {
             ilceSelect.innerHTML = '<option value="">Önce il seçin...</option>';
             ilceSelect.disabled = true;
             resultDiv.innerHTML = '';
+            if (pdfBtnContainer) pdfBtnContainer.style.display = 'none';
         });
+
+        // PDF butonuna tıklanıldığında sonucu PDF'e aktar
+        if (pdfBtn) {
+            pdfBtn.onclick = () => {
+                const resultDiv = document.getElementById('mahkemeResult');
+                let htmlContent = '';
+                if (resultDiv) {
+                    // Tüm child'ları birleştir (scrollable container'ın içeriği)
+                    const parent = resultDiv.querySelector('.tapu-hesaplama-sonuc');
+                    if (parent) {
+                        htmlContent = parent.innerHTML;
+                    } else {
+                        htmlContent = resultDiv.innerHTML;
+                    }
+                }
+                const tarih = new Date().toLocaleDateString('tr-TR');
+                PdfCikar.showPdfModal(htmlContent, tarih);
+            };
+        }
     }
 }
 

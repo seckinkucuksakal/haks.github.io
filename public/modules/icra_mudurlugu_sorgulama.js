@@ -91,22 +91,21 @@ class IcraMudurluguSorgulama {
                         <option value="">İl seçiniz...</option>
                     </select>
                 </div>
-
                 <div class="form-group">
                     <label for="icraIlce">İlçe Seçiniz:</label>
                     <select id="icraIlce" class="form-select icra-select" disabled>
                         <option value="">Önce il seçiniz...</option>
                     </select>
                 </div>
-                
                 <div class="form-actions">
                     <button id="icraSorgulaBtn" class="hesapla-btn">Sorgula</button>
                     <button id="icraTemizleBtn" class="temizle-btn">Temizle</button>
                 </div>
-                
+                <div id="pdfCikarBtnContainer" style="margin-top:24px;display:flex;justify-content:center;display:none;">
+                    <button id="pdfCikarBtn" class="hesapla-btn" style="padding:10px 24px;font-size:1rem;">PDF Olarak Kaydet</button>
+                </div>
                 <div id="icraResult" class="tapu-result"></div>
             </div>
-            
             <style>
                 .icra-select {
                     position: relative;
@@ -244,6 +243,8 @@ class IcraMudurluguSorgulama {
         const ilceSelect = document.getElementById('icraIlce');
         const sorgulaBtn = document.getElementById('icraSorgulaBtn');
         const temizleBtn = document.getElementById('icraTemizleBtn');
+        const pdfBtnContainer = document.getElementById('pdfCikarBtnContainer');
+        const pdfBtn = document.getElementById('pdfCikarBtn');
 
         // İl seçimi değiştiğinde
         if (ilSelect) {
@@ -251,19 +252,50 @@ class IcraMudurluguSorgulama {
                 this.populateIlceSelect(e.target.value);
             });
         }
-
-        // Sorgula butonu
         if (sorgulaBtn) {
             sorgulaBtn.addEventListener('click', () => {
                 this.sorgula();
+                // PDF Olarak Kaydet butonunu göster (sonuç varsa)
+                const resultDiv = document.getElementById('icraResult');
+                if (resultDiv && resultDiv.innerHTML.trim()) {
+                    if (pdfBtnContainer) pdfBtnContainer.style.display = 'flex';
+                } else {
+                    if (pdfBtnContainer) pdfBtnContainer.style.display = 'none';
+                }
             });
         }
-
-        // Temizle butonu
         if (temizleBtn) {
             temizleBtn.addEventListener('click', () => {
                 this.temizle();
+                if (pdfBtnContainer) pdfBtnContainer.style.display = 'none';
             });
+        }
+        if (pdfBtn) {
+            pdfBtn.onclick = () => {
+                // Tüm sonuçları PDF'ye eksiksiz aktar
+                const resultDiv = document.getElementById('icraResult');
+                // Sonuçlar bir container içinde, onun içeriğini al
+                let htmlContent = '';
+                if (resultDiv) {
+                    // Tüm child'ları birleştir (scrollable container'ın içeriği)
+                    const container = resultDiv.querySelector('.icra-sonuc-container');
+                    if (container) {
+                        htmlContent = container.innerHTML;
+                        // Uyarı ve başlıkları da ekle
+                        const parent = resultDiv.querySelector('.tapu-hesaplama-sonuc');
+                        if (parent) {
+                            // Sadece başlık ve uyarı kısmını ekle
+                            const title = parent.querySelector('h4') ? parent.querySelector('h4').outerHTML : '';
+                            const uyari = parent.querySelector('.uyari') ? parent.querySelector('.uyari').outerHTML : '';
+                            htmlContent = title + '<div class="icra-sonuc-container">' + htmlContent + '</div>' + uyari;
+                        }
+                    } else {
+                        htmlContent = resultDiv.innerHTML;
+                    }
+                }
+                const tarih = new Date().toLocaleDateString('tr-TR');
+                PdfCikar.showPdfModal(htmlContent, tarih);
+            };
         }
     }
 
@@ -404,4 +436,3 @@ class IcraMudurluguSorgulama {
 
 // Export for use in main script
 window.IcraMudurluguSorgulama = IcraMudurluguSorgulama;
-  

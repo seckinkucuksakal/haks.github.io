@@ -45,7 +45,10 @@ class YillikIzinHesaplama {
                     <button id="izinHesaplaBtn" class="hesapla-btn">Hesapla</button>
                     <button id="izinTemizleBtn" class="temizle-btn">Temizle</button>
                 </div>
-                
+                <!-- PDF Çıkarma Butonu -->
+                <div id="pdfCikarBtnContainer" style="margin-top:24px;display:flex;justify-content:center;display:none;">
+                    <button id="pdfCikarBtn" class="hesapla-btn" style="padding:10px 24px;font-size:1rem;">PDF Olarak Kaydet</button>
+                </div>
                 <div id="izinResult" class="tapu-result"></div>
             </div>
             
@@ -70,6 +73,23 @@ class YillikIzinHesaplama {
                     outline: none;
                     border-color: #007bff;
                     box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+                }
+
+                .pdf-btn {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 10px 20px;
+                    background-color: #007bff;
+                    color: white;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    font-size: 16px;
+                }
+
+                .pdf-btn i {
+                    margin-right: 5px;
                 }
             </style>
         `;
@@ -254,6 +274,8 @@ class YillikIzinHesaplama {
             const brutModeBtn = document.getElementById('brutModeBtn');
             const netModeBtn = document.getElementById('netModeBtn');
             const maasLabel = document.getElementById('maasLabel');
+            const pdfBtnContainer = document.getElementById('pdfCikarBtnContainer');
+            const pdfBtn = document.getElementById('pdfCikarBtn');
             let hesaplamaModu = 'brut'; // 'brut' veya 'net'
 
             if (!izinHesaplaBtn || !izinTemizleBtn || !izinResult) {
@@ -287,11 +309,21 @@ class YillikIzinHesaplama {
             // Hesapla butonu
             izinHesaplaBtn.addEventListener('click', () => {
                 this.hesapla(hesaplamaModu);
+                // PDF butonunu göster/gizle
+                const resultDiv = document.getElementById('izinResult');
+                if (pdfBtnContainer) {
+                    if (resultDiv && resultDiv.innerHTML.trim()) {
+                        pdfBtnContainer.style.display = 'flex';
+                    } else {
+                        pdfBtnContainer.style.display = 'none';
+                    }
+                }
             });
 
             // Temizle butonu
             izinTemizleBtn.addEventListener('click', () => {
                 this.temizle();
+                if (pdfBtnContainer) pdfBtnContainer.style.display = 'none';
             });
 
             // Enter tuşları
@@ -303,6 +335,23 @@ class YillikIzinHesaplama {
                 });
             });
 
+            if (pdfBtn) {
+                pdfBtn.onclick = () => {
+                    const resultDiv = document.getElementById('izinResult');
+                    let htmlContent = '';
+                    if (resultDiv) {
+                        // Tüm child'ları birleştir (scrollable container'ın içeriği)
+                        const parent = resultDiv.querySelector('.tapu-hesaplama-sonuc');
+                        if (parent) {
+                            htmlContent = parent.innerHTML;
+                        } else {
+                            htmlContent = resultDiv.innerHTML;
+                        }
+                    }
+                    const tarih = new Date().toLocaleDateString('tr-TR');
+                    PdfCikar.showPdfModal(htmlContent, tarih);
+                };
+            }
         }, 100);
     }
 

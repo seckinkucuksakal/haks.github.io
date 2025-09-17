@@ -35,6 +35,9 @@ class FazlaCalismaMessaiUcretiHesaplama {
                     <button id="mesaiHesaplaBtn" class="hesapla-btn">Hesapla</button>
                     <button id="mesaiTemizleBtn" class="temizle-btn">Temizle</button>
                 </div>
+                <div id="pdfCikarBtnContainer" style="margin-top:24px;display:flex;justify-content:center;display:none;">
+                    <button id="pdfCikarBtn" class="hesapla-btn" style="padding:10px 24px;font-size:1rem;">PDF Olarak Kaydet</button>
+                </div>
                 <div id="mesaiResult" class="tapu-result"></div>
             </div>
         `;
@@ -61,6 +64,8 @@ class FazlaCalismaMessaiUcretiHesaplama {
             const hesaplaBtn = document.getElementById('mesaiHesaplaBtn');
             const temizleBtn = document.getElementById('mesaiTemizleBtn');
             const resultDiv = document.getElementById('mesaiResult');
+            const pdfBtnContainer = document.getElementById('pdfCikarBtnContainer');
+            const pdfBtn = document.getElementById('pdfCikarBtn');
 
             if (!netMaasInput || !sozlesmeHaftalikSaatInput || !hafta1Input || !hafta2Input || !hafta3Input || !hafta4Input || !hesaplaBtn || !temizleBtn || !resultDiv) return;
 
@@ -161,6 +166,9 @@ class FazlaCalismaMessaiUcretiHesaplama {
                         }  
                     </syle>
                 `;
+
+                // PDF Olarak Kaydet butonunu göster
+                if (pdfBtnContainer) pdfBtnContainer.style.display = 'flex';
             };
 
             temizleBtn.onclick = () => {
@@ -171,7 +179,18 @@ class FazlaCalismaMessaiUcretiHesaplama {
                 hafta3Input.value = '';
                 hafta4Input.value = '';
                 resultDiv.innerHTML = '';
+
+                if (pdfBtnContainer) pdfBtnContainer.style.display = 'none';
             };
+
+            if (pdfBtn) {
+                pdfBtn.onclick = () => {
+                    const resultDiv = document.getElementById('mesaiResult');
+                    const htmlContent = resultDiv ? resultDiv.innerHTML : '';
+                    const tarih = new Date().toLocaleDateString('tr-TR');
+                    PdfCikar.showPdfModal(htmlContent, tarih);
+                };
+            }
 
             // Otomatik para formatı (cursor pozisyonunu korur)
             if (netMaasInput) {

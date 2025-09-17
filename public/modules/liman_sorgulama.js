@@ -73,6 +73,9 @@ class LimanSorgulama {
                     <input type="text" id="limanInput" placeholder="Liman kodunu girin (örn: TRALA-001, TRIST-005)" class="plaka-input">
                     <button id="limanSearchBtn" class="plaka-search-btn">Ara</button>
                 </div>
+                <div id="pdfCikarBtnContainer" style="margin-top:24px;display:flex;justify-content:center;display:none;">
+                    <button id="pdfCikarBtn" class="hesapla-btn" style="padding:10px 24px;font-size:1rem;">PDF Olarak Kaydet</button>
+                </div>
                 <div id="limanResult" class="plaka-result"></div>
                 <div class="results-container">
                     <h4>Tüm Eşleşmeler:</h4>
@@ -91,9 +94,11 @@ class LimanSorgulama {
         const limanSearchBtn = document.getElementById('limanSearchBtn');
         const limanResult = document.getElementById('limanResult');
         const allResults = document.getElementById('allResults');
-        
+        const pdfBtnContainer = document.getElementById('pdfCikarBtnContainer');
+        const pdfBtn = document.getElementById('pdfCikarBtn');
+
         let currentMode = 'kod';
-        
+
         // Mode switching
         limanKodMode.addEventListener('click', () => {
             currentMode = 'kod';
@@ -102,8 +107,9 @@ class LimanSorgulama {
             limanInput.placeholder = 'Liman kodunu girin (örn: TRALA-001, TRIST-005)';
             limanResult.innerHTML = '';
             allResults.innerHTML = '<p class="no-results">Arama yapın ve tüm eşleşmeler burada görünecek</p>';
+            if (pdfBtnContainer) pdfBtnContainer.style.display = 'none';
         });
-        
+
         limanIsimMode.addEventListener('click', () => {
             currentMode = 'isim';
             limanIsimMode.classList.add('active');
@@ -111,33 +117,30 @@ class LimanSorgulama {
             limanInput.placeholder = 'Liman adını girin (örn: Alanya, İstanbul)';
             limanResult.innerHTML = '';
             allResults.innerHTML = '<p class="no-results">Arama yapın ve tüm eşleşmeler burada görünecek</p>';
+            if (pdfBtnContainer) pdfBtnContainer.style.display = 'none';
         });
-        
+
         // Search functionality
         const performSearch = () => {
-            // Wait for data to be loaded
             if (!this.dataLoaded) {
                 limanResult.innerHTML = '<p style="color: black;">Veriler yükleniyor, lütfen bekleyin...</p>';
                 allResults.innerHTML = '<p class="no-results">Veriler yükleniyor...</p>';
+                if (pdfBtnContainer) pdfBtnContainer.style.display = 'none';
                 setTimeout(() => performSearch(), 500);
                 return;
             }
-
             const searchTerm = limanInput.value.trim();
+            let foundCount = 0;
             if (!searchTerm) {
                 limanResult.innerHTML = '<p style="color: black;">Lütfen bir değer girin.</p>';
                 allResults.innerHTML = '<p class="no-results">Arama yapın ve tüm eşleşmeler burada görünecek</p>';
+                if (pdfBtnContainer) pdfBtnContainer.style.display = 'none';
                 return;
             }
-            
             if (currentMode === 'kod') {
-                // Search by port code (like TRALA-001)
                 const searchTermUpper = searchTerm.toUpperCase();
-                
-                // Find exact match and partial matches
                 let exactMatch = null;
                 let partialMatches = [];
-                
                 for (const code in this.portData) {
                     if (code === searchTermUpper) {
                         exactMatch = {code: code, name: this.portData[code]};
@@ -145,11 +148,10 @@ class LimanSorgulama {
                         partialMatches.push({code: code, name: this.portData[code]});
                     }
                 }
-                
+                let allResultsHtml = '';
                 if (exactMatch) {
-                    // Show all matches (exact + partial)
                     let allMatches = [exactMatch, ...partialMatches];
-                    let allResultsHtml = '';
+                    foundCount = allMatches.length;
                     allMatches.forEach(result => {
                         allResultsHtml += `<div class="result-item">
                             <strong>${result.code}</strong><br>
@@ -157,10 +159,9 @@ class LimanSorgulama {
                         </div>`;
                     });
                     allResults.innerHTML = allResultsHtml;
-                    
                     limanResult.innerHTML = `<div class="result-count">${allMatches.length} adet eşleşme bulundu</div>`;
                 } else if (partialMatches.length > 0) {
-                    let allResultsHtml = '';
+                    foundCount = partialMatches.length;
                     partialMatches.forEach(result => {
                         allResultsHtml += `<div class="result-item">
                             <strong>${result.code}</strong><br>
@@ -170,11 +171,11 @@ class LimanSorgulama {
                     allResults.innerHTML = allResultsHtml;
                     limanResult.innerHTML = `<div class="result-count">${partialMatches.length} adet eşleşme bulundu</div>`;
                 } else {
+                    foundCount = 0;
                     limanResult.innerHTML = '<div class="result-box error">Bu liman kodu bulunamadı.</div>';
                     allResults.innerHTML = '<p class="no-results">Eşleşme bulunamadı</p>';
                 }
             } else {
-                // Search by port name - show all matches
                 let searchTermUpper = searchTerm
                     .replace(/ı/g, 'I')
                     .replace(/i/g, 'İ')
@@ -184,20 +185,16 @@ class LimanSorgulama {
                     .replace(/ö/g, 'Ö')
                     .replace(/ç/g, 'Ç')
                     .toUpperCase();
-                
                 let foundCodes = [];
-                
-                // Find all matches - search more comprehensively
                 for (const code in this.portData) {
                     const portName = this.portData[code].trim();
                     if (portName.includes(searchTermUpper)) {
                         foundCodes.push({code: code, name: portName});
                     }
                 }
-                
+                let allResultsHtml = '';
                 if (foundCodes.length > 0) {
-                    // Show all results in scrollable list
-                    let allResultsHtml = '';
+                    foundCount = foundCodes.length;
                     foundCodes.forEach(result => {
                         allResultsHtml += `<div class="result-item">
                             <strong>${result.code}</strong><br>
@@ -205,26 +202,37 @@ class LimanSorgulama {
                         </div>`;
                     });
                     allResults.innerHTML = allResultsHtml;
-                    
-                    // Only show count for name searches
                     limanResult.innerHTML = `<div class="result-count">${foundCodes.length} adet eşleşme bulundu</div>`;
                 } else {
+                    foundCount = 0;
                     limanResult.innerHTML = '<div class="result-box error">Bu liman adı bulunamadı. Liman adının bir kısmını yazın.</div>';
                     allResults.innerHTML = '<p class="no-results">Eşleşme bulunamadı</p>';
                 }
             }
+            // PDF butonunu göster/gizle
+            if (pdfBtnContainer) pdfBtnContainer.style.display = foundCount > 0 ? 'flex' : 'none';
         };
-        
+
         limanSearchBtn.addEventListener('click', performSearch);
         limanInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 performSearch();
             }
         });
+
+        if (pdfBtn) {
+            pdfBtn.onclick = () => {
+                const allResultsDiv = document.getElementById('allResults');
+                const htmlContent = allResultsDiv ? allResultsDiv.innerHTML : '';
+                const tarih = new Date().toLocaleDateString('tr-TR');
+                PdfCikar.showPdfModal(htmlContent, tarih);
+            };
+        }
     }
 }
 // Export for use in main script
 window.LimanSorgulama = LimanSorgulama;
+
 
 
 

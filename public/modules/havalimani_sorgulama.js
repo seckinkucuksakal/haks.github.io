@@ -124,6 +124,9 @@ class HavalimaniSorgulama {
                     <input type="text" id="havalimaniInput" placeholder="Havalimanı adı, şehir, ülke veya kod girin (örn: İstanbul, LTBA, IST)" class="plaka-input">
                     <button id="havalimaniSearchBtn" class="plaka-search-btn">Ara</button>
                 </div>
+                <div id="pdfCikarBtnContainer" style="margin-top:24px;display:flex;justify-content:center;display:none;">
+                    <button id="pdfCikarBtn" class="hesapla-btn" style="padding:10px 24px;font-size:1rem;">PDF Olarak Kaydet</button>
+                </div>
                 <div id="havalimaniResult" class="plaka-result"></div>
                 <div class="results-container">
                     <h4>Tüm Eşleşmeler:</h4>
@@ -150,6 +153,8 @@ class HavalimaniSorgulama {
         const havalimaniSearchBtn = document.getElementById('havalimaniSearchBtn');
         const havalimaniResult = document.getElementById('havalimaniResult');
         const allHavalimaniResults = document.getElementById('allHavalimaniResults');
+        const pdfBtnContainer = document.getElementById('pdfCikarBtnContainer');
+        const pdfBtn = document.getElementById('pdfCikarBtn');
         
         // Search functionality
         const performSearch = () => {
@@ -165,6 +170,7 @@ class HavalimaniSorgulama {
             if (!searchTerm) {
                 havalimaniResult.innerHTML = '<p style="color: black;">Lütfen bir değer girin.</p>';
                 allHavalimaniResults.innerHTML = '<p class="no-results">Arama yapın ve tüm eşleşmeler burada görünecek</p>';
+                if (pdfBtnContainer) pdfBtnContainer.style.display = 'none';
                 return;
             }
             
@@ -247,9 +253,11 @@ class HavalimaniSorgulama {
                 
                 // Show count
                 havalimaniResult.innerHTML = `<div class="result-count">${foundAirports.length} adet eşleşme bulundu${exactMatch ? ' (1 tam eşleşme)' : ''}</div>`;
+                if (pdfBtnContainer) pdfBtnContainer.style.display = 'flex';
             } else {
                 havalimaniResult.innerHTML = '<div class="result-box error">Eşleşme bulunamadı. Havalimanı adı, şehir, ülke veya kod ile arayın.</div>';
                 allHavalimaniResults.innerHTML = '<p class="no-results">Eşleşme bulunamadı</p>';
+                if (pdfBtnContainer) pdfBtnContainer.style.display = 'none';
             }
         };
         
@@ -259,6 +267,15 @@ class HavalimaniSorgulama {
                 performSearch();
             }
         });
+
+        if (pdfBtn) {
+            pdfBtn.onclick = () => {
+                const allResultsDiv = document.getElementById('allHavalimaniResults');
+                const htmlContent = allResultsDiv ? allResultsDiv.innerHTML : '';
+                const tarih = new Date().toLocaleDateString('tr-TR');
+                PdfCikar.showPdfModal(htmlContent, tarih);
+            };
+        }
     }
 }
 

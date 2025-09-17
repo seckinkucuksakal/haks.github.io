@@ -277,7 +277,9 @@ class TapuHarciHesaplama {
                     <button id="hesaplaBtn" class="hesapla-btn">Hesapla</button>
                     <button id="temizleBtn" class="temizle-btn">Temizle</button>
                 </div>
-                
+                <div id="pdfCikarBtnContainer" style="margin-top:24px;display:flex;justify-content:center;display:none;">
+                    <button id="pdfCikarBtn" class="hesapla-btn" style="padding:10px 24px;font-size:1rem;">PDF Olarak Kaydet</button>
+                </div>
                 <div id="tapuResult" class="tapu-result"></div>
             </div>
         `;
@@ -290,7 +292,9 @@ class TapuHarciHesaplama {
         const hesaplaBtn = document.getElementById('hesaplaBtn');
         const temizleBtn = document.getElementById('temizleBtn');
         const tapuResult = document.getElementById('tapuResult');
-        
+        const pdfBtnContainer = document.getElementById('pdfCikarBtnContainer');
+        const pdfBtn = document.getElementById('pdfCikarBtn');
+
         // İl seçimi değiştiğinde ilçeleri güncelle
         ilSelect.addEventListener('change', () => {
             const selectedIl = ilSelect.value;
@@ -395,6 +399,8 @@ class TapuHarciHesaplama {
                     </style>
                 </div>
             `;
+            // PDF butonunu göster
+            if (pdfBtnContainer) pdfBtnContainer.style.display = 'flex';
         });
         
         // Temizle butonu
@@ -404,7 +410,17 @@ class TapuHarciHesaplama {
             ilceSelect.disabled = true;
             satisBedeli.value = '';
             tapuResult.innerHTML = '';
+            if (pdfBtnContainer) pdfBtnContainer.style.display = 'none';
         });
+        
+        if (pdfBtn) {
+            pdfBtn.onclick = () => {
+                const resultDiv = document.getElementById('tapuResult');
+                const htmlContent = resultDiv ? resultDiv.innerHTML : '';
+                const tarih = new Date().toLocaleDateString('tr-TR');
+                PdfCikar.showPdfModal(htmlContent, tarih);
+            };
+        }
         
         // Enter tuşu ile hesaplama (sadece satış bedeli alanı için)
         satisBedeli.addEventListener('keypress', (e) => {

@@ -269,9 +269,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const kidemTazminatiHesaplamaModule = new KidemTazminatiHesaplama();
     const fazlaCalismaMessaiUcretiHesaplamaModule = new FazlaCalismaMessaiUcretiHesaplama();
     const verasetIntikatUcretiHesaplamaModule = new VerasetIntikatUcretiHesaplama();
-    const adeliMevduatFaiziHesaplamaModule = new VadeliMevduatFaiziHesaplama();
+    const vadeliMevduatFaiziHesaplamaModule = new VadeliMevduatFaiziHesaplama();
     const gelirVergisiHesaplamaModule = new GelirVergisiHesaplama();
-    const operatorSorgulamaModule = new OperatorSorgulama();
     const vekaletUcretiHesaplamaModule = new VekaletUcretiHesaplama();
     const postaKoduSorgulamaModule = new PostaKoduSorgulama(); // EKLENDİ
     const hakkimizdaModule = new Hakkimizda();
@@ -299,19 +298,18 @@ document.addEventListener('DOMContentLoaded', function() {
         tab10: 'kira-artis-orani-hesaplama',
         tab11: 'miras-hesaplama',
         tab12: 'noter-sorgulama',
-        tab13: 'operator-sorgulama',
-        tab14: 'plaka-sorgulama',
-        tab15: 'posta-kodu-sorgulama',
-        tab16: 'tapu-harci-hesaplama',
-        tab17: 'telefon-alan-kodu-sorgulama',
-        tab18: 'turkiye-liman-sorgulama',
-        tab19: 'uluslararasi-havalimani-sorgulama',
-        tab20: 'vadeli-mevduat-faizi-hesaplama',
-        tab21: 'vekalet-ucreti-hesaplama',
-        tab22: 'veraset-intikal-ucreti-hesaplama',
-        tab23: 'yas-hesaplama',
-        tab24: 'yetkili-mahkeme-sorgulama',
-        tab25: 'yillik-izin-hesaplama'
+        tab13: 'plaka-sorgulama',
+        tab14: 'posta-kodu-sorgulama',
+        tab15: 'tapu-harci-hesaplama',
+        tab16: 'telefon-alan-kodu-sorgulama',
+        tab17: 'turkiye-liman-sorgulama',
+        tab18: 'uluslararasi-havalimani-sorgulama',
+        tab19: 'vadeli-mevduat-faizi-hesaplama',
+        tab20: 'vekalet-ucreti-hesaplama',
+        tab21: 'veraset-intikal-ucreti-hesaplama',
+        tab22: 'yas-hesaplama',
+        tab23: 'yetkili-mahkeme-sorgulama',
+        tab24: 'yillik-izin-hesaplama'
     };
 
     // Route -> tab id eşleşmesi
@@ -344,19 +342,18 @@ document.addEventListener('DOMContentLoaded', function() {
                     case 'tab10': content = kiraArtisOraniHesaplamaModule.getTabContent(); break;
                     case 'tab11': content = mirasHesaplamaModule.getTabContent(); break;
                     case 'tab12': content = noterSorgulamaModule.getTabContent(); break;
-                    case 'tab13': content = operatorSorgulamaModule.getTabContent(); break;
-                    case 'tab14': content = ilSorgulamaModule.getTabContent(); break;
-                    case 'tab15': content = postaKoduSorgulamaModule.getTabContent(); break;
-                    case 'tab16': content = tapuHarciHesaplamaModule.getTabContent(); break;
-                    case 'tab17': content = telefonAlanSorgulamaModule.getTabContent(); break;
-                    case 'tab18': content = limanSorgulamaModule.getTabContent(); break;
-                    case 'tab19': content = havalimaniSorgulamaModule.getTabContent(); break;
-                    case 'tab20': content = adeliMevduatFaiziHesaplamaModule.getTabContent(); break;
-                    case 'tab21': content = vekaletUcretiHesaplamaModule.getTabContent(); break;
-                    case 'tab22': content = verasetIntikatUcretiHesaplamaModule.getTabContent(); break;
-                    case 'tab23': content = yasHesaplamaModule.getTabContent(); break;
-                    case 'tab24': content = yetkiliMahkemeSorgulamaModule.getTabContent(); break;
-                    case 'tab25': content = yillikIzinHesaplamaModule.getTabContent(); break;
+                    case 'tab13': content = ilSorgulamaModule.getTabContent(); break;
+                    case 'tab14': content = postaKoduSorgulamaModule.getTabContent(); break;
+                    case 'tab15': content = tapuHarciHesaplamaModule.getTabContent(); break;
+                    case 'tab16': content = telefonAlanSorgulamaModule.getTabContent(); break;
+                    case 'tab17': content = limanSorgulamaModule.getTabContent(); break;
+                    case 'tab18': content = havalimaniSorgulamaModule.getTabContent(); break;
+                    case 'tab19': content = vadeliMevduatFaiziHesaplamaModule.getTabContent(); break;
+                    case 'tab20': content = vekaletUcretiHesaplamaModule.getTabContent(); break;
+                    case 'tab21': content = verasetIntikatUcretiHesaplamaModule.getTabContent(); break;
+                    case 'tab22': content = yasHesaplamaModule.getTabContent(); break;
+                    case 'tab23': content = yetkiliMahkemeSorgulamaModule.getTabContent(); break;
+                    case 'tab24': content = yillikIzinHesaplamaModule.getTabContent(); break;
                     default: content = '<p>İçerik bulunamadı.</p>';
                 }
                 rightContent.innerHTML = content;
@@ -386,30 +383,28 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else if (targetTab === 'tab12') {
                     noterSorgulamaModule.initialize();
                 } else if (targetTab === 'tab13') {
-                    operatorSorgulamaModule.initialize();
-                } else if (targetTab === 'tab14') {
                     ilSorgulamaModule.initialize();
-                } else if (targetTab === 'tab15') {
+                } else if (targetTab === 'tab14') {
                     postaKoduSorgulamaModule.initialize();
-                } else if (targetTab === 'tab16') {
+                } else if (targetTab === 'tab15') {
                     tapuHarciHesaplamaModule.initialize();
-                } else if (targetTab === 'tab17') {
+                } else if (targetTab === 'tab16') {
                     telefonAlanSorgulamaModule.initialize();
-                } else if (targetTab === 'tab18') {
+                } else if (targetTab === 'tab17') {
                     limanSorgulamaModule.initialize();
-                } else if (targetTab === 'tab19') {
+                } else if (targetTab === 'tab18') {
                     havalimaniSorgulamaModule.initialize();
+                } else if (targetTab === 'tab19') {
+                    vadeliMevduatFaiziHesaplamaModule.initialize();
                 } else if (targetTab === 'tab20') {
-                    adeliMevduatFaiziHesaplamaModule.initialize();
-                } else if (targetTab === 'tab21') {
                     vekaletUcretiHesaplamaModule.initialize();
-                } else if (targetTab === 'tab22') {
+                } else if (targetTab === 'tab21') {
                     verasetIntikatUcretiHesaplamaModule.initialize();
-                } else if (targetTab === 'tab23') {
+                } else if (targetTab === 'tab22') {
                     yasHesaplamaModule.initialize();
-                } else if (targetTab === 'tab24') {
+                } else if (targetTab === 'tab23') {
                     yetkiliMahkemeSorgulamaModule.initialize();
-                } else if (targetTab === 'tab25') {
+                } else if (targetTab === 'tab24') {
                     yillikIzinHesaplamaModule.initialize();
                 }
                 
