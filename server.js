@@ -58,8 +58,8 @@ async function fetchFiyatlar() {
         // TCMB Döviz Kurları için tarih hesaplama
         const now = new Date();
         let tcmbDate = new Date(now);
-        if (now.getHours() > 15 || (now.getHours() === 15 && now.getMinutes() >= 30)) {
-            tcmbDate.setDate(tcmbDate.getDate() + 1); // 15:30'dan sonra bir sonraki gün
+        if (now.getHours() > 19 || (now.getHours() === 19 && now.getMinutes() >= 30)) {
+            tcmbDate.setDate(tcmbDate.getDate() + 1); // 19:30'dan sonra bir sonraki gün
         }
         const dd = String(tcmbDate.getDate()).padStart(2, '0');
         const mm = String(tcmbDate.getMonth() + 1).padStart(2, '0');

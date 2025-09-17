@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchBtn = document.getElementById('searchBtn');
     const searchInput = document.getElementById('searchInput');
     const homeBtn = document.getElementById('homeBtn');
+    const hakkimizdaBtn = document.getElementById('hakkimizdaBtn');
     const infoBtn = document.getElementById('infoBtn');
     const flagBtn = document.getElementById('flagBtn');
     
@@ -273,6 +274,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const operatorSorgulamaModule = new OperatorSorgulama();
     const vekaletUcretiHesaplamaModule = new VekaletUcretiHesaplama();
     const postaKoduSorgulamaModule = new PostaKoduSorgulama(); // EKLENDİ
+    const hakkimizdaModule = new Hakkimizda();
+    const bizeUlasinModule = new BizeUlasin(); // EKLENDİ
+    const anaSayfaModule = new AnaSayfa(); // EKLENDİ
 
     // Make cezaeviSorgulamaModule globally accessible for PDF download
     window.cezaeviSorgulamaModule = cezaeviSorgulamaModule;
@@ -559,49 +563,49 @@ document.addEventListener('DOMContentLoaded', function() {
         marqueeContainer.addEventListener('touchend', startMarqueeAutoScroll);
     }
 
-    if (homeBtn && infoBtn && flagBtn && rightContent) {
-        homeBtn.addEventListener('click', function() {
-            window.history.pushState({}, '', '/home');
-            rightContent.innerHTML = `
-                <div style="padding:32px;text-align:center;">
-                    <img src="visuals/home.png" alt="Home" style="height:48px;margin-bottom:12px;">
-                    <h2>Ana Sayfa</h2>
-                    <p>Hoş geldiniz! Burada ana sayfa içeriği olacak.</p>
-                </div>
-            `;
+    if (homeBtn && rightContent) {
+        homeBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.history.pushState({}, '', '/');
+            rightContent.innerHTML = anaSayfaModule.getContent();
         });
-        infoBtn.addEventListener('click', function() {
-            window.history.pushState({}, '', '/info');
-            rightContent.innerHTML = `
-                <div style="padding:32px;text-align:center;">
-                    <img src="visuals/info.png" alt="Info" style="height:48px;margin-bottom:12px;">
-                    <h2>Bilgi</h2>
-                    <p>Bu sayfa hakkında bilgi metni burada yer alacak.</p>
-                </div>
-            `;
-        });
-        flagBtn.addEventListener('click', function() {
-            window.history.pushState({}, '', '/report');
-            rightContent.innerHTML = `
-                <div style="padding:32px;text-align:center;">
-                    <img src="visuals/flag.png" alt="Flag" style="height:48px;margin-bottom:12px;">
-                    <h2>Hata Bildir</h2>
-                    <p>Bir hata mı buldunuz? Lütfen aşağıdan bildiriniz.</p>
-                    <textarea style="width:80%;height:80px;margin-top:16px;"></textarea>
-                    <br>
-                    <button style="margin-top:12px;padding:8px 16px;">Gönder</button>
-                </div>
-            `;
-        });
-
-        // SPA: Sayfa yenilendiğinde route'a göre right-content'i göster
-        function showHeaderPageFromRoute() {
-            const path = window.location.pathname.replace(/^\//, '');
-            if (path === 'home') homeBtn.click();
-            else if (path === 'info') infoBtn.click();
-            else if (path === 'report') flagBtn.click();
-        }
-        window.addEventListener('popstate', showHeaderPageFromRoute);
-        showHeaderPageFromRoute();
     }
+
+    if (hakkimizdaBtn && rightContent && typeof hakkimizdaModule !== 'undefined') {
+        hakkimizdaBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.history.pushState({}, '', '/hakkimizda');
+            rightContent.innerHTML = hakkimizdaModule.getContent();
+        });
+    }
+
+    // Bize Ulaşın SPA
+    const bizeUlasinLink = document.querySelector('a[href="/bize-ulasin"]');
+    if (bizeUlasinLink && rightContent) {
+        bizeUlasinLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.history.pushState({}, '', '/bize-ulasin');
+            rightContent.innerHTML = bizeUlasinModule.getContent();
+        });
+    }
+
+    // SPA: Sayfa yenilendiğinde route'a göre right-content'i göster
+    function showHeaderPageFromRoute() {
+        const path = window.location.pathname.replace(/^\//, '');
+        if (path === '' || path === 'ana-sayfa') {
+            rightContent.innerHTML = anaSayfaModule.getContent();
+        } else if (path === 'hakkimizda') {
+            if (hakkimizdaBtn) hakkimizdaBtn.click();
+        } else if (path === 'bize-ulasin') {
+            rightContent.innerHTML = bizeUlasinModule.getContent();
+        }
+        // ...diğer route kontrolleri...
+    }
+    window.addEventListener('popstate', showHeaderPageFromRoute);
+    showHeaderPageFromRoute();
+    
+    hakkimizdaBtn.addEventListener('click', function() {
+        window.history.pushState({}, '', '/hakkimizda');
+        rightContent.innerHTML = hakkimizdaModule.getContent();
+    });
 });

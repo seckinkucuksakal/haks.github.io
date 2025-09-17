@@ -1166,7 +1166,6 @@ footer {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        transform: translateX(10px);
     }
     
     .subtitle {
@@ -1619,8 +1618,8 @@ footer {
     .header-icons {
         left: 20px;
         top: 50%;
-        transform: translateY(-62%) translateX(30px);
-        gap: 2px;
+        transform: translateY(-62%) translateX(35px);
+        gap: 10px;
     }
     .header-btn {
         width: 30px;
@@ -1628,7 +1627,7 @@ footer {
         padding: 5px;
     }
     .header-btn img {
-        width: 22px;
+        width: 24px;
         height: 2px;
     }
     .header-icon-labels {
