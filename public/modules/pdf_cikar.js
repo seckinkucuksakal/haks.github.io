@@ -56,6 +56,18 @@ class PdfCikar {
 
         document.getElementById('pdfPrintBtn').onclick = () => {
             let fullContent = htmlContent;
+            // Saat ve tarih bilgisini al
+            const now = new Date();
+            const tarihSaat = now.toLocaleString('tr-TR');
+            const filigranlar = `
+                <div class="ehaks-filigran" style="top:20%;left:20%;">
+                    ehaks.com<br>
+                    <span style="font-size:1.2rem;">${tarihSaat}</span>
+                </div>
+                <div class="ehaks-filigran" style="top:80%;left:20%;">ehaks.com</div>
+                <div class="ehaks-filigran" style="top:20%;left:80%;">ehaks.com</div>
+                <div class="ehaks-filigran" style="top:80%;left:80%;">ehaks.com</div>
+            `;
             const printWindow = window.open('', '_blank');
             printWindow.document.write(`
                 <html>
@@ -63,10 +75,24 @@ class PdfCikar {
                     <title>e-HAKS Hesaplama/Sorgulama Raporu</title>
                     <style>
                         body { background: #fff; font-family: Arial, sans-serif; position: relative; }
-                        .tapu-hesaplama-sonuc { background: #fff; border-radius: 10px; border: 1px solid #007bff; box-shadow: 0 3px 10px rgba(0,0,0,0.1); padding: 20px; }
+                        .pdf-report-title {
+                            text-align: center;
+                            font-size: 2rem;
+                            font-weight: bold;
+                            color: black;
+                            margin-bottom: 32px;
+                        }
+                        .tapu-hesaplama-sonuc {
+                            background: #fff;
+                            border-radius: 10px;
+                            border: 1px solid #007bff;
+                            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+                            padding: 20px;
+                            margin-bottom: 48px; /* kutu ile footer arasında boşluk */
+                        }
                         .cezaevi-sonuc-container { max-height: none !important; overflow: visible !important; }
                         .il-grup { margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
-                        .kurum-detay { margin-bottom: 15px; padding: 10px; background-color: #f8f9fa; border-radius: 4px; }
+                        .kurum-detay { margin-bottom: 15px; padding: 10px; background-color: #f8f9fa; border-radius: 4px; page-break-inside: avoid; }
                         .sonuc-satir { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #eee; }
                         .sonuc-satir .label { font-weight: bold; color: #333; }
                         .sonuc-satir .value { color: #007bff; }
@@ -74,42 +100,80 @@ class PdfCikar {
                         .uyari { margin-top: 10px; font-size: 0.95rem; color: #333; }
                         .ehaks-filigran {
                             position: fixed;
-                            top: 50%;
-                            left: 50%;
                             transform: translate(-50%, -50%) rotate(-30deg);
-                            font-size: 6rem;
+                            font-size: 3rem;
                             color: rgba(0,0,0,0.10);
                             font-weight: bold;
                             z-index: 9999;
                             pointer-events: none;
                             user-select: none;
                             white-space: nowrap;
+                            text-align: center;
+                        }
+                        footer {
+                            position: relative;
+                            margin: 0 auto;
+                            max-width: 700px;
+                            width: 95vw;
+                            text-align: left;
+                            font-size: 1rem;
+                            color: #000;
+                            background: transparent;
+                            padding: 8px 24px 8px 24px;
+                            z-index: 10000;
+                            white-space: pre-line;
+                            line-height: 1.5;
                         }
                         @media print {
                             .ehaks-filigran {
                                 position: fixed !important;
-                                top: 50% !important;
-                                left: 50% !important;
                                 transform: translate(-50%, -50%) rotate(-30deg) !important;
-                                font-size: 6rem !important;
+                                font-size: 3rem !important;
                                 color: rgba(0,0,0,0.10) !important;
                                 font-weight: bold !important;
                                 z-index: 9999 !important;
                                 pointer-events: none !important;
                                 user-select: none !important;
                                 white-space: nowrap !important;
+                                text-align: center !important;
+                            }
+                            footer {
+                                position: relative !important;
+                                margin: 0 auto !important;
+                                max-width: 700px !important;
+                                width: 95vw !important;
+                                text-align: left !important;
+                                font-size: 1rem !important;
+                                color: #000 !important;
+                                background: transparent !important;
+                                padding: 8px 24px 8px 24px !important;
+                                z-index: 10000 !important;
+                                white-space: pre-line !important;
+                                line-height: 1.5 !important;
+                                text-align: justify !important;
+                            }
+                            .kurum-detay {
+                                page-break-inside: avoid !important;
                             }
                         }
                     </style>
                 </head>
                 <body>
-                    <div class="ehaks-filigran">ehaks.com</div>
+                    <h1 class="pdf-report-title">e-HAKS Hesaplama/Sorgulama Raporu</h1>
+                    ${filigranlar}
                     ${fullContent}
                     <div class="uyari">Sorgulama tarihi: ${sorgulamaTarihi}</div>
+                    <footer>
+                        <div style="font-weight:bold; text-align:left; margin-bottom:4px;">Önemli Uyarı:</div>
+                        <div class="footer-content">
+                            Sitemizde yer alan bilgiler sadece genel bilgilendirme amaçlıdır. Hesaplama veya sorgulama sonuçları profesyonel tavsiye veya hizmet niteliğinde değildir. Mali yahut hukuki durumunuzu etkileyecek kararlar almadan önce ilgili alanda danışma hizmeti veren profesyonel uzmanlara danışılması önemle tavsiye olunur. e-HAKS, bu sitede yer alan bilgilerin üçüncü kişiler tarafından kullanılması halinde ortaya çıkabilecek <strong>zarar veya ziyandan sorumlu değildir.</strong>
+                        </div>
+                    </footer>
                 </body>
                 </html>
             `);
             printWindow.document.close();
+            printWindow.document.title = 'e-HAKS Hesaplama/Sorgulama Raporu';
             printWindow.focus();
             printWindow.print();
         };
@@ -117,3 +181,7 @@ class PdfCikar {
 }
 
 window.PdfCikar = PdfCikar;
+
+// Not: PDF çıktısının en altında görünen "about:blank" yazısı tarayıcı veya yazıcı ayarlarından kaynaklanır.
+// Bunu kod ile kaldırmak mümkün değildir. Yazdırma ekranında "Header/Footer" kapatılırsa görünmez.
+
