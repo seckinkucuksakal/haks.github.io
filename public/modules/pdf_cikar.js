@@ -7,6 +7,11 @@ class PdfCikar {
 
         modal = document.createElement('div');
         modal.id = 'pdfModal';
+        // Tarih ve saat bilgisini oluştur
+        const now = new Date();
+        const tarihSaatStr = sorgulamaTarihi
+            ? `${sorgulamaTarihi} ${now.toLocaleTimeString('tr-TR')}`
+            : now.toLocaleString('tr-TR');
         modal.innerHTML = `
             <div class="pdf-modal-overlay"></div>
             <div class="pdf-modal-content">
@@ -16,7 +21,7 @@ class PdfCikar {
                 </div>
                 <div id="pdfModalTable" style="margin-top:18px;">${htmlContent}</div>
                 <div style="margin-top:18px;text-align:right;font-size:0.95rem;color:#333;">
-                    Sorgulama tarihi: ${sorgulamaTarihi}
+                    Sorgulama tarihi ve saati: ${tarihSaatStr}
                 </div>
                 <div style="margin-top:24px;text-align:center;">
                     <button id="pdfPrintBtn" style="padding:10px 24px;font-size:1rem;background:#007bff;color:#fff;border:none;border-radius:6px;cursor:pointer;">PDF Olarak Yazdır / İndir</button>
@@ -79,7 +84,7 @@ class PdfCikar {
                             text-align: center;
                             font-size: 2rem;
                             font-weight: bold;
-                            color: black;
+                            color: #007bff;
                             margin-bottom: 32px;
                         }
                         .tapu-hesaplama-sonuc {
@@ -162,7 +167,7 @@ class PdfCikar {
                     <h1 class="pdf-report-title">e-HAKS Hesaplama/Sorgulama Raporu</h1>
                     ${filigranlar}
                     ${fullContent}
-                    <div class="uyari">Sorgulama tarihi: ${sorgulamaTarihi}</div>
+                    <div class="uyari">Sorgulama tarihi ve saati: ${tarihSaatStr}</div>
                     <footer>
                         <div style="font-weight:bold; text-align:left; margin-bottom:4px;">Önemli Uyarı:</div>
                         <div class="footer-content">

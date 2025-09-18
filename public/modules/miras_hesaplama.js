@@ -1206,6 +1206,7 @@ class MirasHesaplama {
                             </div>` : ''}
                             
                             ${result.ozKardesPay > 0 ? `
+
                             <div class="sonuc-satir toplam">
                                 <span class="label">Anne-Baba Öz Kardeşlerin Her Birine:</span>
                                 <span class="value">${(result.ozKardesPay / result.ozKardesSayisi).toLocaleString('tr-TR', {minimumFractionDigits: 2})} TL (%${((result.ozKardesPay / result.toplamVarlik) * 100).toFixed(1)})</span>
@@ -1317,6 +1318,20 @@ class MirasHesaplama {
                         pdfBtnContainer.style.display = 'none';
                     }
                 }
+
+                // Sorgulama kaydını gönder
+                const now = new Date();
+                const logData = {
+                    visitor: 'visitor',
+                    tab: 'Miras Hesaplama',
+                    tarih: now.toISOString().split('T')[0], // YYYY-MM-DD formatı
+                    saat: now.toLocaleTimeString('tr-TR')
+                };
+                fetch('/api/log', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(logData)
+                });
             });
         }
 

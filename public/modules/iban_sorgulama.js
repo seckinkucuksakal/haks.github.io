@@ -446,6 +446,20 @@ class IbanSorgulama {
                     `;
                 }
                 if (pdfBtnContainer) pdfBtnContainer.style.display = 'flex';
+
+                // Sorgulama kaydını gönder
+                const now = new Date();
+                const logData = {
+                    visitor: 'visitor',
+                    tab: 'IBAN Sorgulama',
+                    tarih: now.toISOString().split('T')[0], // YYYY-MM-DD formatı
+                    saat: now.toLocaleTimeString('tr-TR')
+                };
+                fetch('/api/log', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(logData)
+                });
             } else {
                 IBANResult.innerHTML = `<div class="result-box error">${validation.message}</div>`;
                 if (pdfBtnContainer) pdfBtnContainer.style.display = 'none';

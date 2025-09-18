@@ -559,10 +559,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     if (homeBtn && rightContent) {
-        homeBtn.addEventListener('click', function(e) {
+        homeBtn.addEventListener('click', async function(e) {
             e.preventDefault();
             window.history.pushState({}, '', '/');
-            rightContent.innerHTML = anaSayfaModule.getContent();
+            rightContent.innerHTML = await anaSayfaModule.getContent();
         });
     }
 
@@ -585,10 +585,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // SPA: Sayfa yenilendiğinde route'a göre right-content'i göster
-    function showHeaderPageFromRoute() {
+    async function showHeaderPageFromRoute() {
         const path = window.location.pathname.replace(/^\//, '');
         if (path === '' || path === 'ana-sayfa') {
-            rightContent.innerHTML = anaSayfaModule.getContent();
+            rightContent.innerHTML = await anaSayfaModule.getContent();
         } else if (path === 'hakkimizda') {
             if (hakkimizdaBtn) hakkimizdaBtn.click();
         } else if (path === 'bize-ulasin') {

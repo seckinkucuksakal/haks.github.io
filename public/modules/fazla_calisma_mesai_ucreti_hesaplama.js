@@ -169,6 +169,22 @@ class FazlaCalismaMessaiUcretiHesaplama {
 
                 // PDF Olarak Kaydet butonunu göster
                 if (pdfBtnContainer) pdfBtnContainer.style.display = 'flex';
+
+                // Sorgulama kaydını gönder
+                if (haftalikSaatler.length > 0 && !isNaN(netMaas) && netMaas > 0 && !isNaN(sozlesmeSaat) && sozlesmeSaat > 0 && sozlesmeSaat <= 45) {
+                    const now = new Date();
+                    const logData = {
+                        visitor: 'visitor',
+                        tab: 'Fazla Çalışma Mesai Ücreti Hesaplama',
+                        tarih: now.toISOString().split('T')[0], // YYYY-MM-DD formatı
+                        saat: now.toLocaleTimeString('tr-TR')
+                    };
+                    fetch('/api/log', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(logData)
+                    });
+                }
             };
 
             temizleBtn.onclick = () => {

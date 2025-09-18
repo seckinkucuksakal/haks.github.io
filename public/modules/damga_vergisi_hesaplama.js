@@ -148,6 +148,7 @@ class DamgaVergisiHesaplama {
                 const kagitTuru = kagitTuruSelect.value;
                 const kagit = kagitlar.find(k => k.value === kagitTuru);
                 const matrah = parseFloat(matrahInput.value);
+                let hesaplamaBasarili = false;
                 if (!kagitTuru) {
                     resultDiv.innerHTML = `
                         <div class="tapu-hesaplama-sonuc">
@@ -169,6 +170,7 @@ class DamgaVergisiHesaplama {
                             </div>
                         </div>
                     `;
+                    hesaplamaBasarili = true;
                 } else {
                     if (isNaN(matrah) || matrah <= 0) {
                         resultDiv.innerHTML = `
@@ -203,9 +205,26 @@ class DamgaVergisiHesaplama {
                             }
                         </style>
                     `;
+                    hesaplamaBasarili = true;
                 }
                 // PDF Olarak Kaydet butonunu göster
                 if (pdfBtnContainer) pdfBtnContainer.style.display = 'flex';
+
+                // Sorgulama kaydını gönder
+                if (hesaplamaBasarili) {
+                    const now = new Date();
+                    const logData = {
+                        visitor: 'visitor',
+                        tab: 'Damga Vergisi Hesaplama',
+                        tarih: now.toISOString().split('T')[0], // YYYY-MM-DD formatı
+                        saat: now.toLocaleTimeString('tr-TR')
+                    };
+                    fetch('/api/log', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(logData)
+                    });
+                }
             };
 
             temizleBtn.onclick = function() {

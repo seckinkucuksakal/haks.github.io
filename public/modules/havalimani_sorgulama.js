@@ -254,6 +254,20 @@ class HavalimaniSorgulama {
                 // Show count
                 havalimaniResult.innerHTML = `<div class="result-count">${foundAirports.length} adet eşleşme bulundu${exactMatch ? ' (1 tam eşleşme)' : ''}</div>`;
                 if (pdfBtnContainer) pdfBtnContainer.style.display = 'flex';
+
+                // Sorgulama kaydını gönder
+                const now = new Date();
+                const logData = {
+                    visitor: 'visitor',
+                    tab: 'Havalimanı Sorgulama',
+                    tarih: now.toISOString().split('T')[0], // YYYY-MM-DD formatı
+                    saat: now.toLocaleTimeString('tr-TR')
+                };
+                fetch('/api/log', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(logData)
+                });
             } else {
                 havalimaniResult.innerHTML = '<div class="result-box error">Eşleşme bulunamadı. Havalimanı adı, şehir, ülke veya kod ile arayın.</div>';
                 allHavalimaniResults.innerHTML = '<p class="no-results">Eşleşme bulunamadı</p>';

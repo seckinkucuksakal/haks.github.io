@@ -243,7 +243,7 @@ class CezaeviSorgulama {
 
     // Gelişmiş Türkçe karakter eşleştirme fonksiyonu
     turkishCharacterMatch(searchText, targetText) {
-        // Hem arama metnini hem hedef metni normalize et
+        // Hem arama metnini hem de hedef metni normalize et
         const normalizedSearch = this.normalizeTurkish(searchText.toLowerCase());
         const normalizedTarget = this.normalizeTurkish(targetText.toLowerCase());
         
@@ -692,6 +692,21 @@ class CezaeviSorgulama {
         }
 
         this.showSonuclar(sonuclar);
+
+        // Sorgulama kaydını gönder
+        const now = new Date();
+        const tarih = now.toISOString().split('T')[0]; // YYYY-MM-DD formatı
+        const saat = now.toLocaleTimeString('tr-TR');
+        fetch('/api/log', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                visitor: 'visitor', // IP, session veya başka bir tanımlayıcı
+                tab: 'Cezaevi Sorgulama',
+                tarih,
+                saat
+            })
+        });
     }
 
     sorgulaKurum() {
@@ -699,19 +714,14 @@ class CezaeviSorgulama {
         const cezaeviResult = document.getElementById('cezaeviResult');
         const kurumAdi = kurumAdiInput.value.trim();
 
-        console.log('Kurum adı:', kurumAdi);
-        console.log('cezaeviResult:', cezaeviResult);
-        console.log('kurumAdiInput:', kurumAdiInput);
-
         if (!kurumAdi) {
             cezaeviResult.innerHTML = '<div class="result-box error">Lütfen bir kurum adı girin.</div>';
             return;
         }
 
+        // Arama yap
         const sonuclar = this.searchCezaeviByName(kurumAdi);
 
-        console.log('Arama sonuçları:', sonuclar);
-        
         if (sonuclar.length === 0) {
             cezaeviResult.innerHTML = `
                 <div class="result-box">
@@ -722,7 +732,28 @@ class CezaeviSorgulama {
             return;
         }
 
-        this.showSonuclar(sonuclar);
+        // Eğer tek bir tam eşleşme varsa detaylı göster
+        if (sonuclar.length === 1) {
+            this.showKurumDetay(sonuclar[0]);
+        } else {
+            // Birden fazla sonuç varsa liste göster
+            this.showSonuclar(sonuclar);
+        }
+
+        // Sorgulama kaydını gönder
+        const now = new Date();
+        const tarih = now.toISOString().split('T')[0]; // YYYY-MM-DD formatı
+        const saat = now.toLocaleTimeString('tr-TR');
+        fetch('/api/log', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                visitor: 'visitor',
+                tab: 'Cezaevi Sorgulama (Kurum Adı)',
+                tarih,
+                saat
+            })
+        });
     }
 
     showSonuclar(sonuclar) {

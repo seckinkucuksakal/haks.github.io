@@ -208,6 +208,22 @@ class TelefonAlanSorgulama {
             }
             // PDF butonunu göster/gizle
             if (pdfBtnContainer) pdfBtnContainer.style.display = found ? 'flex' : 'none';
+
+            // Sorgulama kaydını gönder
+            if (found) {
+                const now = new Date();
+                const logData = {
+                    visitor: 'visitor',
+                    tab: 'Telefon Alan Kodu Sorgulama',
+                    tarih: now.toISOString().split('T')[0], // YYYY-MM-DD formatı
+                    saat: now.toLocaleTimeString('tr-TR')
+                };
+                fetch('/api/log', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(logData)
+                });
+            }
         };
         
         telefonSearchBtn.addEventListener('click', performSearch);

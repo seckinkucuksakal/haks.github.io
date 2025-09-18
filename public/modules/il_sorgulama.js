@@ -124,12 +124,19 @@ class IlSorgulama {
                 return;
             }
             let found = false;
+            let logData = null;
             if (currentMode === 'plaka') {
                 // Search by plate code
                 const paddedCode = searchTerm.padStart(2, '0');
                 if (this.cityData[paddedCode]) {
                     plakaResult.innerHTML = `<div class="result-box"><strong>${paddedCode}</strong> plaka kodu: <span style="color: #007bff; font-weight: bold;">${this.cityData[paddedCode]}</span></div>`;
                     found = true;
+                    logData = {
+                        visitor: 'visitor',
+                        tab: 'Plaka Sorgulama',
+                        tarih: new Date().toISOString().split('T')[0], // YYYY-MM-DD formatı
+                        saat: new Date().toLocaleTimeString('tr-TR')
+                    };
                 } else {
                     plakaResult.innerHTML = '<div class="result-box error">Bu plaka kodu bulunamadı.</div>';
                 }
@@ -166,12 +173,27 @@ class IlSorgulama {
                 if (foundCode) {
                     plakaResult.innerHTML = `<div class="result-box"><strong>${this.cityData[foundCode]}</strong> ili plaka kodu: <span style="color: #007bff; font-weight: bold;">${foundCode}</span></div>`;
                     found = true;
+                    logData = {
+                        visitor: 'visitor',
+                        tab: 'Plaka Sorgulama',
+                        tarih: new Date().toLocaleDateString('tr-TR'),
+                        saat: new Date().toLocaleTimeString('tr-TR')
+                    };
                 } else {
                     plakaResult.innerHTML = '<div class="result-box error">Bu il adı bulunamadı. Türkçe karakterlerle tam il adını yazın (örn: İzmir, Ankara).</div>';
                 }
             }
             // PDF butonunu göster/gizle
             if (pdfBtnContainer) pdfBtnContainer.style.display = found ? 'flex' : 'none';
+
+            // Sorgulama kaydını gönder
+            if (found && logData) {
+                fetch('/api/log', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(logData)
+                });
+            }
         };
         
         plakaSearchBtn.addEventListener('click', performSearch);

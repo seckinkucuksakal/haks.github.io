@@ -1,21 +1,32 @@
 // server.js
-import 'dotenv/config'; // dotenv otomatik olarak yüklenir
+import 'dotenv/config';
 import express from 'express';
 import path from 'path';
 import cors from 'cors';
 import fetch from 'node-fetch';
 import { fileURLToPath } from 'url';
+import { Pool } from 'pg';
 
 // __dirname çözümü ESM için
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 
 // TCMB API key
 const TCMB_KEY = process.env.TCMB_KEY;
 if (!TCMB_KEY) console.warn("⚠️ TCMB_KEY environment variable ayarlanmamış!");
+
+// PostgreSQL bağlantı ayarları (✅ SSL eklendi)
+const pool = new Pool({
+    user: 'haksdb_user',
+    host: 'dpg-d360j5ripnbc739snp6g-a.frankfurt-postgres.render.com',
+    database: 'haksdb',
+    password: 'NuQhQNwzSoGZizLInNVL9VgfXfIWytI7',
+    port: 5432,
+    ssl: { rejectUnauthorized: false }  // 🔑 ÖNEMLİ
+});
 
 // Middleware
 app.use(cors());
@@ -38,10 +49,16 @@ function getArrow(newVal, oldVal) {
     return '';
 }
 
-async function fetchWithRetry(url, options = {}, retries = 3) {
+// ✅ Timeout destekli fetch
+async function fetchWithRetry(url, options = {}, retries = 3, timeoutMs = 10000) {
     for (let i = 0; i < retries; i++) {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), timeoutMs);
+
         try {
-            const response = await fetch(url, { ...options, timeout: 10000 });
+            const response = await fetch(url, { ...options, signal: controller.signal });
+            clearTimeout(timeout);
+
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const data = await response.json();
             return data;
@@ -55,11 +72,11 @@ async function fetchWithRetry(url, options = {}, retries = 3) {
 
 async function fetchFiyatlar() {
     try {
-        // TCMB Döviz Kurları için tarih hesaplama
+        // 1️⃣ TCMB Döviz Kurları
         const now = new Date();
         let tcmbDate = new Date(now);
         if (now.getHours() > 19 || (now.getHours() === 19 && now.getMinutes() >= 30)) {
-            tcmbDate.setDate(tcmbDate.getDate() + 1); // 19:30'dan sonra bir sonraki gün
+            tcmbDate.setDate(tcmbDate.getDate() + 1);
         }
         const dd = String(tcmbDate.getDate()).padStart(2, '0');
         const mm = String(tcmbDate.getMonth() + 1).padStart(2, '0');
@@ -81,11 +98,11 @@ async function fetchFiyatlar() {
         const altinRes = await fetch("https://www.izko.org.tr/Home/GuncelKur");
         const altinHtml = await altinRes.text();
         const match = altinHtml.match(/<font id="ons"[^>]*>([\d.,]+)<\/font>/);
+
         let ons, gramAltin;
         if (match) {
-          ons = parseFloat(match[1].replace(",", "."));
-          gramAltin = (ons / 31.1035).toFixed(2);
-
+            ons = parseFloat(match[1].replace(",", "."));
+            gramAltin = (ons / 31.1035).toFixed(2);
         }
 
         // 3️⃣ Binance BTC / ETH (TRY)
@@ -94,17 +111,18 @@ async function fetchFiyatlar() {
 
         let btcPrice, ethPrice;
         binanceData.forEach(coin => {
-          const price = parseFloat(coin.price).toFixed(2);
-          if (coin.symbol === 'BTCTRY') btcPrice = price;
-          else if (coin.symbol === 'ETHTRY') ethPrice = price;
+            const price = parseFloat(coin.price).toFixed(2);
+            if (coin.symbol === 'BTCTRY') btcPrice = price;
+            else if (coin.symbol === 'ETHTRY') ethPrice = price;
         });
 
+        // 4️⃣ TL bazlı altın hesaplamaları
         const gramAltinTL = dolar && gramAltin ? (parseFloat(gramAltin) * parseFloat(dolar)).toFixed(2) : null;
-        const ceyrekAltinTL = gramAltinTL ? (parseFloat(gramAltinTL) * 0.25 * 7).toFixed(2) : null; // 1 çeyrek = 1.75 gr, gramAltınTL zaten TL
-        const yarimAltinTL = gramAltinTL ? (parseFloat(gramAltinTL) * 0.5 * 7).toFixed(2) : null; // 1 yarım = 3.5 gr
-        const tamAltinTL = gramAltinTL ? (parseFloat(gramAltinTL) * 1 * 7).toFixed(2) : null; // 1 tam = 7 gr
+        const ceyrekAltinTL = gramAltinTL ? (parseFloat(gramAltinTL) * 1.75).toFixed(2) : null;
+        const yarimAltinTL  = gramAltinTL ? (parseFloat(gramAltinTL) * 3.5).toFixed(2) : null;
+        const tamAltinTL    = gramAltinTL ? (parseFloat(gramAltinTL) * 7).toFixed(2) : null;
 
-        // Arrow bilgisi oluştur
+        // 5️⃣ Arrow bilgisi
         const arrows = {};
         if (previousValues) {
             arrows.dolar = getArrow(dolar, previousValues.dolar);
@@ -117,10 +135,11 @@ async function fetchFiyatlar() {
             arrows.btcPrice = getArrow(btcPrice, previousValues.btcPrice);
             arrows.ethPrice = getArrow(ethPrice, previousValues.ethPrice);
         } else {
-            // İlk veri çekildiğinde arrow'lar 'none' olsun
-            arrows.dolar = arrows.euro = arrows.sterlin = arrows.gramAltinTL =
-            arrows.ceyrekAltinTL = arrows.yarimAltinTL = arrows.tamAltinTL =
-            arrows.btcPrice = arrows.ethPrice = 'none';
+            Object.keys({
+                dolar, euro, sterlin, gramAltinTL,
+                ceyrekAltinTL, yarimAltinTL, tamAltinTL,
+                btcPrice, ethPrice
+            }).forEach(key => arrows[key] = 'none');
         }
 
         fiyatlarCache = {
@@ -133,35 +152,27 @@ async function fetchFiyatlar() {
             tamAltinTL,
             btcPrice,
             ethPrice,
-            arrows // ok işaretleri burada!
+            arrows
         };
-        previousValues = {
-            dolar,
-            euro,
-            sterlin,
-            gramAltinTL,
-            ceyrekAltinTL,
-            yarimAltinTL,
-            tamAltinTL,
-            btcPrice,
-            ethPrice
-        };
+
+        previousValues = { ...fiyatlarCache };
         lastFetchTime = Date.now();
+
     } catch (err) {
         console.error('Fiyatlar fetch error:', err.message);
     }
 }
 
 // Server'ın kapanmasını önle
-process.on("unhandledRejection", (reason, promise) => {
+process.on("unhandledRejection", (reason) => {
     console.error("Unhandled Rejection:", reason);
 });
 
-// Sunucu başlatıldığında hemen çek
+// Başlangıçta veri çek
 await fetchFiyatlar();
-// Sonra her dakika bir güncelle
 setInterval(fetchFiyatlar, 60000);
 
+// API endpointleri
 app.get('/api/fiyatlar', (req, res) => {
     if (fiyatlarCache) {
         res.json(fiyatlarCache);
@@ -170,7 +181,32 @@ app.get('/api/fiyatlar', (req, res) => {
     }
 });
 
-// SPA fallback: bilinmeyen tüm GET isteklerinde index.html gönder
+app.post("/api/log", async (req, res) => {
+  try {
+    const { visitor, tab, tarih, saat } = req.body;
+
+    const result = await pool.query(
+      "INSERT INTO ziyaretler (ziyaretci, tab, tarih, saat) VALUES ($1, $2, $3, $4) RETURNING *",
+      [visitor, tab, tarih, saat]
+    );
+
+    res.status(200).json({ success: true, data: result.rows[0] });
+  } catch (err) {
+    console.error("❌ DB INSERT ERROR:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/sorgulama_sayisi', async (req, res) => {
+    try {
+        const result = await pool.query('SELECT COUNT(*) AS toplam FROM ziyaretler');
+        res.json({ toplam: parseInt(result.rows[0].toplam, 10) });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// SPA fallback
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });

@@ -211,6 +211,22 @@ class LimanSorgulama {
             }
             // PDF butonunu göster/gizle
             if (pdfBtnContainer) pdfBtnContainer.style.display = foundCount > 0 ? 'flex' : 'none';
+
+            // Sorgulama kaydını gönder
+            if (foundCount > 0) {
+                const now = new Date();
+                const logData = {
+                    visitor: 'visitor',
+                    tab: 'Liman Sorgulama',
+                    tarih: now.toISOString().split('T')[0], // YYYY-MM-DD formatı
+                    saat: now.toLocaleTimeString('tr-TR')
+                };
+                fetch('/api/log', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(logData)
+                });
+            }
         };
 
         limanSearchBtn.addEventListener('click', performSearch);
